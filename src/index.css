@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: #f0fdf4;
+  --color-primary-100: #dcfce7;
+  --color-primary-500: #22c55e;
+  --color-primary-600: #16a34a;
+  --color-primary-700: #15803d;
+}
+
+body {
+  @apply bg-gray-50 text-slate-800 antialiased;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  @apply text-slate-900;
+  text-wrap: balance;
+}
+
+p {
+  margin-bottom: 1.25rem;
+  @apply text-slate-500;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* Base modern utilities for UI */
+.glass {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-xl;
+}
