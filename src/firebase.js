@@ -2,19 +2,16 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-// TODO: Replace this with your app's Firebase project configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAvCiFaJHqF8YgplqujG0KEz4f_URuCECU",
-  authDomain: "id-card-87460.firebaseapp.com",
-  projectId: "id-card-87460",
-  storageBucket: "id-card-87460.firebasestorage.app",
-  messagingSenderId: "242255838690",
-  appId: "1:242255838690:web:a1b875e3261dd24db3cdbb"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
-export { db, auth };
+export const db = getFirestore(app);
+export const auth = getAuth(app);
