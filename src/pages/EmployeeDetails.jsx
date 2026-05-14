@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Mail, Phone, Building, UserCircle2, Calendar, Briefcase, HeartPulse, MapPin, ShieldCheck, ExternalLink, Cake, Award, Globe, Linkedin, Twitter, Github } from 'lucide-react';
+import { Mail, Phone, Building, UserCircle2, Calendar, Briefcase, HeartPulse, MapPin, ShieldCheck, ExternalLink, Cake, Award, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const EmployeeDetails = () => {
@@ -253,8 +253,8 @@ const EmployeeDetails = () => {
                   </a>
                   <div className="flex-1"></div>
                   <div className="flex gap-2">
-                    <button className="p-4 bg-white/5 text-slate-400 rounded-2xl border border-white/10 hover:text-white transition-all"><Linkedin className="w-5 h-5" /></button>
-                    <button className="p-4 bg-white/5 text-slate-400 rounded-2xl border border-white/10 hover:text-white transition-all"><Github className="w-5 h-5" /></button>
+                    <button className="p-4 bg-white/5 text-slate-400 rounded-2xl border border-white/10 hover:text-white transition-all"><Globe className="w-5 h-5" /></button>
+                    <button className="p-4 bg-white/5 text-slate-400 rounded-2xl border border-white/10 hover:text-white transition-all"><Mail className="w-5 h-5" /></button>
                   </div>
                 </div>
               </div>
