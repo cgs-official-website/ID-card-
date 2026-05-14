@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Mail, Phone, Building, UserCircle2, Calendar, Briefcase, HeartPulse, MapPin, ShieldCheck, ExternalLink, MessageSquare } from 'lucide-react';
+import { Mail, Phone, Building, UserCircle2, Calendar, Briefcase, HeartPulse, MapPin, ShieldCheck, ExternalLink, Cake, Award, Globe, Linkedin, Twitter, Github } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const EmployeeDetails = () => {
@@ -36,17 +36,22 @@ const EmployeeDetails = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 overflow-hidden relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/20 via-slate-900 to-blue-900/20"></div>
         <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="flex flex-col items-center gap-6"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="relative z-10 flex flex-col items-center gap-8"
         >
-          <div className="relative">
-            <div className="w-16 h-16 border-4 border-primary-100 rounded-full"></div>
-            <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
+          <div className="relative w-24 h-24">
+            <div className="absolute inset-0 border-4 border-primary-500/20 rounded-full"></div>
+            <div className="absolute inset-0 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="absolute inset-4 border-4 border-blue-500/20 rounded-full animate-pulse"></div>
           </div>
-          <p className="text-slate-400 font-bold tracking-widest text-xs uppercase">Verifying Digital Identity</p>
+          <div className="text-center">
+            <h2 className="text-white text-xl font-black tracking-widest uppercase mb-2">ID Verify Pro</h2>
+            <p className="text-primary-400 font-bold text-xs animate-pulse">AUTHENTICATING SECURE IDENTITY...</p>
+          </div>
         </motion.div>
       </div>
     );
@@ -54,17 +59,21 @@ const EmployeeDetails = () => {
 
   if (error || !employee) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-900/10 via-slate-950 to-slate-950"></div>
         <motion.div 
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="bg-white p-10 rounded-[2.5rem] shadow-xl border border-red-50 max-w-sm w-full text-center"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="bg-white/5 backdrop-blur-2xl p-12 rounded-[3rem] border border-white/10 max-w-sm w-full text-center shadow-2xl relative z-10"
         >
-          <div className="w-20 h-20 bg-red-50 text-red-500 rounded-3xl flex items-center justify-center mx-auto mb-6 transform -rotate-12">
-            <ShieldCheck className="w-10 h-10" />
+          <div className="w-24 h-24 bg-red-500/10 text-red-500 rounded-[2rem] flex items-center justify-center mx-auto mb-8 transform -rotate-12 border border-red-500/20 shadow-lg shadow-red-500/10">
+            <ShieldCheck className="w-12 h-12" />
           </div>
-          <h2 className="text-2xl font-black text-slate-900 mb-2 tracking-tight">Access Denied</h2>
-          <p className="text-slate-500 font-medium leading-relaxed">{error || 'This digital identity could not be verified in our secure registry.'}</p>
+          <h2 className="text-3xl font-black text-white mb-4 tracking-tight leading-tight">Verification Failed</h2>
+          <p className="text-slate-400 font-medium leading-relaxed mb-8">{error || 'This digital identity could not be verified in our secure registry.'}</p>
+          <button onClick={() => window.location.reload()} className="w-full py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl border border-white/10 transition-all">
+            Retry Verification
+          </button>
         </motion.div>
       </div>
     );
@@ -74,37 +83,49 @@ const EmployeeDetails = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 }
     }
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1 }
+    hidden: { y: 30, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100, damping: 15 }
+    }
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] selection:bg-primary-100 selection:text-primary-900">
-      {/* Dynamic Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary-200/20 blur-[120px] rounded-full"></div>
-        <div className="absolute top-[20%] -right-[10%] w-[30%] h-[30%] bg-blue-200/20 blur-[100px] rounded-full"></div>
-        <div className="absolute -bottom-[10%] left-[20%] w-[50%] h-[50%] bg-indigo-100/30 blur-[150px] rounded-full"></div>
+    <div className="min-h-screen bg-[#0f172a] text-slate-200 selection:bg-primary-500/30 selection:text-white overflow-x-hidden">
+      
+      {/* Animated Gradient Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary-600/20 blur-[120px] rounded-full animate-pulse-slow"></div>
+        <div className="absolute top-[20%] right-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[100px] rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-[-10%] left-[10%] w-[60%] h-[60%] bg-indigo-600/10 blur-[150px] rounded-full animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 contrast-150 brightness-100"></div>
       </div>
 
-      <div className="relative max-w-2xl mx-auto px-4 py-12 md:py-20">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 md:py-16">
         
-        {/* Header / Logo */}
+        {/* Navigation / Brand Header */}
         <motion.div 
-          initial={{ y: -20, opacity: 0 }}
+          initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="flex justify-center mb-12"
+          className="flex justify-between items-center mb-16 px-4"
         >
-          <div className="flex items-center gap-3 bg-white/50 backdrop-blur-md px-6 py-3 rounded-full border border-white shadow-sm">
-            <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
-            <span className="font-black text-slate-900 tracking-tighter text-lg uppercase">ID Verify Pro</span>
+          <div className="flex items-center gap-3 bg-white/5 backdrop-blur-xl px-5 py-2.5 rounded-2xl border border-white/10 shadow-xl">
+            <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center shadow-lg shadow-primary-500/20">
+              <img src="/logo.png" alt="Logo" className="w-5 h-5 object-contain brightness-0 invert" />
+            </div>
+            <span className="font-black text-white tracking-tighter text-sm uppercase">ID Verify <span className="text-primary-400">Pro</span></span>
+          </div>
+          <div className="flex gap-2">
+            <div className="bg-emerald-500/10 text-emerald-400 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-emerald-500/20">
+              <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+              Secure Identity
+            </div>
           </div>
         </motion.div>
 
@@ -114,130 +135,241 @@ const EmployeeDetails = () => {
           animate="visible"
           className="space-y-8"
         >
-          {/* Profile Hero Card */}
+          {/* Profile Hero Section */}
           <motion.div 
             variants={itemVariants}
-            className="bg-white rounded-[3rem] shadow-2xl shadow-slate-200/50 border border-white p-8 md:p-12 relative overflow-hidden"
+            className="relative group"
           >
-            {/* Top Right Status */}
-            <div className="absolute top-8 right-8">
-              <div className="bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 border border-emerald-100">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                Verified
-              </div>
-            </div>
-
-            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-10">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-primary-500 rounded-[2.5rem] blur-2xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                <div className="w-40 h-40 md:w-48 md:h-48 rounded-[2.5rem] bg-slate-50 p-1.5 border border-white shadow-lg relative overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-500">
-                  <div className="w-full h-full rounded-[2rem] overflow-hidden bg-white flex items-center justify-center">
-                    {employee.photoUrl ? (
-                      <img src={employee.photoUrl} alt={employee.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                    ) : (
-                      <UserCircle2 className="w-24 h-24 text-slate-200" />
-                    )}
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 to-blue-600 rounded-[3.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+            <div className="relative bg-slate-900/40 backdrop-blur-3xl rounded-[3.5rem] border border-white/10 p-8 md:p-14 overflow-hidden shadow-2xl">
+              
+              {/* Decorative Background Element */}
+              <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-primary-500/10 blur-3xl rounded-full"></div>
+              
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-16 relative z-10">
+                
+                {/* Photo Container */}
+                <div className="relative">
+                  <motion.div 
+                    whileHover={{ scale: 1.05, rotate: 2 }}
+                    className="w-48 h-48 md:w-64 md:h-64 rounded-[3.5rem] p-1.5 bg-gradient-to-br from-white/20 to-white/5 shadow-2xl relative overflow-hidden"
+                  >
+                    <div className="w-full h-full rounded-[3rem] overflow-hidden bg-slate-800 flex items-center justify-center">
+                      {employee.photoUrl ? (
+                        <img src={employee.photoUrl} alt={employee.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <UserCircle2 className="w-32 h-32 text-slate-700" />
+                      )}
+                    </div>
+                  </motion.div>
+                  {/* Badge */}
+                  <div className="absolute -bottom-4 -right-4 bg-primary-500 text-white p-4 rounded-3xl shadow-xl border-4 border-slate-900 transform rotate-12">
+                    <Award className="w-6 h-6" />
                   </div>
                 </div>
-              </div>
 
-              <div className="text-center md:text-left">
-                <div className="text-primary-600 font-black text-xs uppercase tracking-[0.3em] mb-3">
-                  {employee.employeeType || 'Employee'}
-                </div>
-                <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mb-2 leading-tight">
-                  {employee.name}
-                </h1>
-                <p className="text-slate-500 text-lg font-medium">{employee.department}</p>
-                
-                <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-3">
-                  <span className="bg-slate-50 text-slate-600 px-4 py-2 rounded-2xl text-xs font-bold border border-slate-100">
-                    ID: {employee.id}
-                  </span>
-                  <span className="bg-red-50 text-red-600 px-4 py-2 rounded-2xl text-xs font-bold border border-red-100 flex items-center gap-2">
-                    <HeartPulse className="w-3.5 h-3.5" />
-                    {employee.bloodGroup}
-                  </span>
+                <div className="text-center md:text-left flex-1">
+                  <motion.div 
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-500/10 text-primary-400 text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-6 border border-primary-500/20"
+                  >
+                    {employee.employeeType || 'Professional Profile'}
+                  </motion.div>
+                  
+                  <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter mb-4 leading-[0.9]">
+                    {employee.name.split(' ').map((word, i) => (
+                      <span key={i} className={i % 2 !== 0 ? "text-transparent bg-clip-text bg-gradient-to-br from-primary-400 to-blue-500" : ""}>
+                        {word}{' '}
+                      </span>
+                    ))}
+                  </h1>
+                  
+                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-slate-400 font-bold mb-8">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-lg border border-white/5">
+                      <Briefcase className="w-4 h-4 text-primary-400" />
+                      {employee.department}
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-lg border border-white/5">
+                      <MapPin className="w-4 h-4 text-blue-400" />
+                      {employee.currentAddress?.split(',')[0] || 'Remote'}
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                    <div className="bg-slate-950/50 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/10 shadow-inner">
+                      <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Badge ID</p>
+                      <p className="text-white font-mono font-bold">{employee.id}</p>
+                    </div>
+                    <div className="bg-rose-500/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-rose-500/20 shadow-inner">
+                      <p className="text-[10px] font-black text-rose-400 uppercase tracking-widest mb-1">Blood Type</p>
+                      <p className="text-rose-500 font-bold flex items-center gap-2">
+                        <HeartPulse className="w-3.5 h-3.5" />
+                        {employee.bloodGroup}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Contact Details Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Detailed Info Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <motion.div variants={itemVariants} className="bg-white p-8 rounded-[2.5rem] border border-white shadow-xl shadow-slate-200/30 hover:shadow-2xl transition-all duration-500 group">
-              <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Mail className="w-6 h-6" />
+            {/* Contact Card */}
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              className="md:col-span-2 bg-slate-900/40 backdrop-blur-2xl p-8 rounded-[3rem] border border-white/10 shadow-2xl relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Globe className="w-24 h-24 text-primary-400" />
               </div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Professional Email</p>
-              <p className="text-lg font-bold text-slate-800 break-all">{employee.email}</p>
+              
+              <h3 className="text-xl font-black text-white mb-8 flex items-center gap-3">
+                <div className="w-10 h-10 bg-primary-500/20 text-primary-400 rounded-xl flex items-center justify-center border border-primary-500/20">
+                  <Phone className="w-5 h-5" />
+                </div>
+                Connectivity
+              </h3>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 relative z-10">
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Official Email</p>
+                  <p className="text-lg font-bold text-white break-all">{employee.email}</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Voice Call</p>
+                  <p className="text-lg font-bold text-white">{employee.phoneNumber || employee.personalContact || 'N/A'}</p>
+                </div>
+                <div className="sm:col-span-2 pt-4 flex gap-4">
+                  <a href={`mailto:${employee.email}`} className="p-4 bg-primary-500/10 text-primary-400 rounded-2xl border border-primary-500/20 hover:bg-primary-500 hover:text-white transition-all">
+                    <Mail className="w-6 h-6" />
+                  </a>
+                  <a href={`tel:${employee.phoneNumber || employee.personalContact}`} className="p-4 bg-blue-500/10 text-blue-400 rounded-2xl border border-blue-500/20 hover:bg-blue-500 hover:text-white transition-all">
+                    <Phone className="w-6 h-6" />
+                  </a>
+                  <div className="flex-1"></div>
+                  <div className="flex gap-2">
+                    <button className="p-4 bg-white/5 text-slate-400 rounded-2xl border border-white/10 hover:text-white transition-all"><Linkedin className="w-5 h-5" /></button>
+                    <button className="p-4 bg-white/5 text-slate-400 rounded-2xl border border-white/10 hover:text-white transition-all"><Github className="w-5 h-5" /></button>
+                  </div>
+                </div>
+              </div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="bg-white p-8 rounded-[2.5rem] border border-white shadow-xl shadow-slate-200/30 hover:shadow-2xl transition-all duration-500 group">
-              <div className="w-12 h-12 bg-cyan-50 text-cyan-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Phone className="w-6 h-6" />
+            {/* Timeline / Dates Card */}
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              className="bg-slate-900/40 backdrop-blur-2xl p-8 rounded-[3rem] border border-white/10 shadow-2xl"
+            >
+              <h3 className="text-xl font-black text-white mb-8 flex items-center gap-3">
+                <div className="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center border border-blue-500/20">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                Registry
+              </h3>
+              
+              <div className="space-y-8">
+                <div className="flex gap-4">
+                  <div className="w-1 px-0.5 bg-gradient-to-b from-primary-500 to-transparent rounded-full"></div>
+                  <div>
+                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Joined Fleet</p>
+                    <p className="text-lg font-bold text-white">{employee.dateOfJoining || 'Unknown'}</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-1 px-0.5 bg-gradient-to-b from-blue-500 to-transparent rounded-full"></div>
+                  <div>
+                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Born On</p>
+                    <p className="text-lg font-bold text-white">{employee.dateOfBirth || 'N/A'}</p>
+                  </div>
+                </div>
               </div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Primary Phone</p>
-              <p className="text-lg font-bold text-slate-800">{employee.phoneNumber}</p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="bg-white p-8 rounded-[2.5rem] border border-white shadow-xl shadow-slate-200/30 hover:shadow-2xl transition-all duration-500 group">
-              <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Briefcase className="w-6 h-6" />
+            {/* Emergency & Address */}
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              className="md:col-span-3 bg-gradient-to-br from-rose-500/10 to-slate-900/40 backdrop-blur-2xl p-8 rounded-[3rem] border border-white/10 shadow-2xl flex flex-col md:flex-row gap-10 items-center"
+            >
+              <div className="flex-1 w-full">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-rose-500 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-rose-500/20">
+                    <HeartPulse className="w-6 h-6 animate-pulse" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-black uppercase tracking-widest text-xs">Emergency Response</h4>
+                    <p className="text-2xl font-black text-rose-500 leading-none mt-1">{employee.emergencyContact}</p>
+                  </div>
+                </div>
+                <p className="text-slate-400 text-sm font-medium leading-relaxed italic">
+                  "In case of emergency, the above contact is authorized to receive medical and operational updates."
+                </p>
               </div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Employment Details</p>
-              <p className="text-lg font-bold text-slate-800">{employee.department}</p>
-              <p className="text-slate-400 font-medium text-sm mt-1">Joined {employee.dateOfJoining}</p>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="bg-white p-8 rounded-[2.5rem] border border-white shadow-xl shadow-slate-200/30 hover:shadow-2xl transition-all duration-500 group">
-              <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <MapPin className="w-6 h-6" />
+              
+              <div className="w-px h-20 bg-white/10 hidden md:block"></div>
+              
+              <div className="flex-1 w-full">
+                <h4 className="text-slate-500 font-black uppercase tracking-widest text-[10px] mb-3">Primary Station</h4>
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-primary-400 flex-shrink-0 mt-1" />
+                  <p className="text-white font-bold text-lg leading-tight">{employee.currentAddress}</p>
+                </div>
               </div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Primary Location</p>
-              <p className="text-lg font-bold text-slate-800">{employee.currentAddress}</p>
             </motion.div>
 
           </div>
 
-          {/* Emergency Section */}
-          <motion.div variants={itemVariants} className="bg-rose-50 rounded-[2.5rem] border border-rose-100 p-8 flex items-center justify-between group">
-            <div>
-              <p className="text-[10px] font-black text-rose-400 uppercase tracking-[0.2em] mb-1">Emergency Contact</p>
-              <p className="text-xl font-black text-rose-600">{employee.emergencyContact}</p>
-            </div>
-            <div className="w-14 h-14 bg-white text-rose-500 rounded-2xl flex items-center justify-center shadow-sm group-hover:rotate-12 transition-transform">
-              <HeartPulse className="w-7 h-7" />
-            </div>
-          </motion.div>
-
-          {/* Footer Actions */}
-          <motion.div variants={itemVariants} className="flex flex-col md:flex-row gap-4 pt-4">
-            <a 
-              href={`mailto:${employee.email}`}
-              className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-5 px-8 rounded-3xl flex items-center justify-center gap-3 transition-all transform active:scale-95 shadow-xl shadow-slate-900/10"
-            >
-              <Mail className="w-5 h-5" />
-              Send Email
-            </a>
-            <a 
-              href={`tel:${employee.phoneNumber}`}
-              className="flex-1 bg-white hover:bg-slate-50 text-slate-900 font-bold py-5 px-8 rounded-3xl flex items-center justify-center gap-3 transition-all border border-slate-200 transform active:scale-95 shadow-sm"
-            >
-              <Phone className="w-5 h-5 text-primary-600" />
-              Call Now
-            </a>
-          </motion.div>
-
-          <motion.p 
+          {/* Action Footer */}
+          <motion.div 
             variants={itemVariants}
-            className="text-center text-slate-400 font-medium text-xs pt-8 pb-4"
+            className="pt-12 text-center"
           >
-            Digital Identity verified on {new Date().toLocaleDateString()}
-          </motion.p>
+            <div className="inline-flex flex-col items-center gap-6">
+              <div className="h-px w-32 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-slate-500 font-black text-[10px] uppercase tracking-[0.4em]">Digital Seal</p>
+                <div className="bg-white/5 backdrop-blur-md px-6 py-4 rounded-3xl border border-white/10 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-slate-950 flex items-center justify-center shadow-inner">
+                    <ShieldCheck className="w-6 h-6 text-emerald-500" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-white font-black text-xs">VERIFIED IDENTITY</p>
+                    <p className="text-slate-500 font-mono text-[10px]">AUTH_HASH: {id.substring(0, 12)}...</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-slate-600 font-medium text-[10px] max-w-xs">
+                This identity profile is encrypted and verified by the ID Verify Pro Secure Registry on {new Date().toLocaleDateString()}.
+              </p>
+            </div>
+          </motion.div>
+
         </motion.div>
       </div>
+      
+      {/* Custom Styles for Noise and Animations */}
+      <style jsx>{`
+        .animate-pulse-slow {
+          animation: pulse-slow 8s ease-in-out infinite;
+        }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.1; transform: scale(1); }
+          50% { opacity: 0.3; transform: scale(1.1); }
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-30px); }
+        }
+      `}</style>
     </div>
   );
 };

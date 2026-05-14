@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Search, User, ExternalLink, QrCode as QrCodeIcon, Download, X, Eye } from 'lucide-react';
+import { Search, User, ExternalLink, QrCode as QrCodeIcon, Download, X, Eye, Users, ShieldCheck, ArrowUpRight, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { QRCode } from 'react-qr-code';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Dashboard = () => {
   const [employees, setEmployees] = useState([]);
@@ -40,9 +41,6 @@ const Dashboard = () => {
   };
 
   const downloadQR = (emp) => {
-    // We need to temporarily render the QR to capture it if it's not visible
-    // For simplicity, we'll assume the user might have clicked "View" first, 
-    // or we'll create a hidden one.
     const svg = document.getElementById(`qr-${emp.id}`);
     if (!svg) {
       alert("Please click 'View QR' first to generate the download data.");
@@ -77,147 +75,233 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6">
-        <div>
-          <h2 className="text-3xl font-bold text-slate-900 tracking-tight mb-1">Employees</h2>
-          <p className="text-slate-500 text-sm font-medium">Manage and view all registered employee records</p>
+    <div className="space-y-12">
+      
+      {/* Dashboard Header & Stats */}
+      <div className="flex flex-col gap-10">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8">
+          <motion.div 
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+          >
+            <h2 className="text-4xl font-black text-white tracking-tighter mb-2">Personnel Registry</h2>
+            <p className="text-slate-500 font-bold text-sm tracking-widest uppercase">Registry Status: <span className="text-primary-400">ACTIVE & SECURE</span></p>
+          </motion.div>
+          
+          <motion.div 
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            className="relative w-full lg:w-96 group"
+          >
+            <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-slate-500 group-focus-within:text-primary-400 transition-colors" />
+            </div>
+            <input
+              type="text"
+              placeholder="Search by name, ID or department..."
+              className="pl-14 w-full rounded-[2rem] border border-white/10 bg-slate-900/50 backdrop-blur-xl px-6 py-4 text-sm font-bold text-white shadow-2xl focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all placeholder:text-slate-600"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </motion.div>
         </div>
-        
-        <div className="relative w-full lg:w-96">
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-slate-400" />
-          </div>
-          <input
-            type="text"
-            placeholder="Search by name, ID or department..."
-            className="pl-12 w-full rounded-2xl border border-gray-200 bg-white px-5 py-3.5 text-sm font-medium shadow-sm focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all placeholder:text-slate-400"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { label: 'Total Enrolled', value: employees.length, icon: Users, color: 'primary' },
+            { label: 'Verified Identities', value: employees.length, icon: ShieldCheck, color: 'blue' },
+            { label: 'Active Sessions', value: 'Live', icon: TrendingUp, color: 'emerald' },
+          ].map((stat, i) => (
+            <motion.div 
+              key={i}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1 * i }}
+              className="bg-slate-900/40 backdrop-blur-3xl p-8 rounded-[2.5rem] border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors"
+            >
+              <div className={`absolute top-0 right-0 w-24 h-24 bg-${stat.color}-500/5 blur-3xl rounded-full`}></div>
+              <div className="flex items-center gap-6 relative z-10">
+                <div className={`w-14 h-14 bg-${stat.color}-500/10 text-${stat.color}-400 rounded-2xl flex items-center justify-center border border-${stat.color}-500/10 shadow-lg shadow-${stat.color}-500/5 group-hover:scale-110 transition-transform`}>
+                  <stat.icon className="w-7 h-7" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-1">{stat.label}</p>
+                  <p className="text-3xl font-black text-white leading-none">{stat.value}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
-      <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/40 border border-gray-100 overflow-hidden">
+      {/* Main Registry Table */}
+      <motion.div 
+        initial={{ y: 30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="bg-slate-900/40 backdrop-blur-3xl rounded-[3rem] shadow-2xl border border-white/5 overflow-hidden"
+      >
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
-            <thead className="bg-gray-50/50 text-slate-500 font-bold border-b border-gray-100">
+          <table className="w-full text-left border-collapse">
+            <thead className="bg-slate-950/50 text-slate-500 border-b border-white/5">
               <tr>
-                <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Employee</th>
-                <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Employee ID</th>
-                <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Department</th>
-                <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Email Address</th>
-                <th className="px-8 py-5 uppercase tracking-wider text-[10px] text-right">Actions</th>
+                <th className="px-10 py-6 font-black uppercase tracking-[0.2em] text-[10px]">Personnel Profile</th>
+                <th className="px-10 py-6 font-black uppercase tracking-[0.2em] text-[10px]">Registry ID</th>
+                <th className="px-10 py-6 font-black uppercase tracking-[0.2em] text-[10px]">Department</th>
+                <th className="px-10 py-6 font-black uppercase tracking-[0.2em] text-[10px] hidden md:table-cell">Contact Node</th>
+                <th className="px-10 py-6 font-black uppercase tracking-[0.2em] text-[10px] text-right">Operational Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-white/5">
               {loading ? (
                 <tr>
-                  <td colSpan="5" className="px-8 py-16 text-center text-slate-500">
-                    <div className="flex flex-col justify-center items-center gap-4">
-                      <div className="w-8 h-8 border-3 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
-                      <span className="font-medium">Loading employee records...</span>
+                  <td colSpan="5" className="px-10 py-24 text-center">
+                    <div className="flex flex-col justify-center items-center gap-6">
+                      <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
+                      <span className="font-black text-slate-500 uppercase tracking-widest text-xs">Synchronizing Records...</span>
                     </div>
                   </td>
                 </tr>
               ) : filteredEmployees.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="px-8 py-16 text-center text-slate-500">
-                    <div className="flex flex-col items-center gap-2">
-                      <Search className="w-10 h-10 text-slate-200 mb-2" />
-                      <p className="font-medium text-slate-400">No employees found matching "{searchTerm}"</p>
+                  <td colSpan="5" className="px-10 py-24 text-center">
+                    <div className="flex flex-col items-center gap-4">
+                      <div className="w-20 h-20 bg-slate-950 rounded-3xl flex items-center justify-center border border-white/5 mb-2">
+                        <Search className="w-10 h-10 text-slate-700" />
+                      </div>
+                      <p className="font-black text-slate-500 uppercase tracking-widest text-xs">No records detected matching "{searchTerm}"</p>
                     </div>
                   </td>
                 </tr>
               ) : (
-                filteredEmployees.map((emp) => (
-                  <tr key={emp.id} className="hover:bg-gray-50/50 transition-colors group">
-                    <td className="px-8 py-5">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center font-bold flex-shrink-0 overflow-hidden shadow-sm border border-primary-100/50">
-                          {emp.photoUrl ? (
-                            <img src={emp.photoUrl} alt={emp.name} className="w-full h-full object-cover" />
-                          ) : (
-                            <User className="w-6 h-6" />
-                          )}
+                filteredEmployees.map((emp, index) => (
+                  <motion.tr 
+                    key={emp.id} 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                    className="hover:bg-white/[0.02] transition-colors group"
+                  >
+                    <td className="px-10 py-6">
+                      <div className="flex items-center gap-6">
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-primary-500 blur-lg opacity-0 group-hover:opacity-20 transition-opacity rounded-2xl"></div>
+                          <div className="w-16 h-16 rounded-2xl bg-slate-950 border border-white/10 flex items-center justify-center font-bold flex-shrink-0 overflow-hidden shadow-2xl relative z-10 transform group-hover:scale-105 transition-transform">
+                            {emp.photoUrl ? (
+                              <img src={emp.photoUrl} alt={emp.name} className="w-full h-full object-cover" />
+                            ) : (
+                              <User className="w-8 h-8 text-slate-700" />
+                            )}
+                          </div>
                         </div>
-                        <span className="font-bold text-slate-900 text-base">{emp.name}</span>
+                        <div>
+                          <p className="font-black text-white text-lg tracking-tight group-hover:text-primary-400 transition-colors">{emp.name}</p>
+                          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{emp.employeeType || 'Personnel'}</p>
+                        </div>
                       </div>
                     </td>
-                    <td className="px-8 py-5">
-                      <span className="inline-flex items-center px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200/50">
+                    <td className="px-10 py-6">
+                      <span className="font-mono text-sm font-bold text-primary-500/80 bg-primary-500/5 px-4 py-2 rounded-xl border border-primary-500/10">
                         {emp.id}
                       </span>
                     </td>
-                    <td className="px-8 py-5 font-semibold text-slate-600">{emp.department}</td>
-                    <td className="px-8 py-5 text-slate-500 font-medium">{emp.email}</td>
-                    <td className="px-8 py-5 text-right">
-                      <div className="flex items-center justify-end gap-2">
+                    <td className="px-10 py-6">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-blue-500/40"></div>
+                        <span className="font-bold text-slate-400 text-sm">{emp.department}</span>
+                      </div>
+                    </td>
+                    <td className="px-10 py-6 hidden md:table-cell">
+                      <p className="text-slate-500 font-bold text-xs tracking-tight">{emp.email}</p>
+                    </td>
+                    <td className="px-10 py-6 text-right">
+                      <div className="flex items-center justify-end gap-3">
                         <button 
                           onClick={() => setSelectedEmployee(emp)}
-                          className="p-2 text-slate-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all"
-                          title="View QR"
+                          className="p-3.5 text-slate-500 hover:text-primary-400 hover:bg-primary-500/10 rounded-2xl border border-transparent hover:border-primary-500/20 transition-all"
+                          title="Generate QR"
                         >
-                          <QrCodeIcon className="w-5 h-5" />
+                          <QrCodeIcon className="w-6 h-6" />
                         </button>
                         <Link 
                           to={`/admin/employee/${emp.id}`}
-                          className="p-2 text-slate-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all"
-                          title="Manage"
+                          className="p-3.5 text-slate-500 hover:text-white hover:bg-white/5 rounded-2xl border border-transparent hover:border-white/10 transition-all"
+                          title="View Dossier"
                         >
-                          <Eye className="w-5 h-5" />
+                          <ArrowUpRight className="w-6 h-6" />
                         </Link>
                       </div>
                     </td>
-                  </tr>
+                  </motion.tr>
                 ))
               )}
             </tbody>
           </table>
         </div>
-      </div>
+      </motion.div>
 
       {/* QR Viewer Modal */}
-      {selectedEmployee && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
-          <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-sm overflow-hidden animate-in fade-in zoom-in duration-300">
-            <div className="p-8 pb-4 flex justify-between items-center">
-              <h3 className="text-xl font-bold text-slate-900">Employee QR</h3>
-              <button 
-                onClick={() => setSelectedEmployee(null)}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-              >
-                <X className="w-5 h-5 text-slate-400" />
-              </button>
-            </div>
-            
-            <div className="p-8 pt-4 text-center">
-              <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 mb-6 inline-block">
-                <QRCode
-                  id={`qr-${selectedEmployee.id}`}
-                  value={`${window.location.origin}/employee/${selectedEmployee.id}`}
-                  size={200}
-                  level="H"
-                />
+      <AnimatePresence>
+        {selectedEmployee && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedEmployee(null)}
+              className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
+            />
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="bg-slate-900 border border-white/10 rounded-[3.5rem] shadow-2xl w-full max-w-sm overflow-hidden relative z-10"
+            >
+              <div className="p-10 pb-4 flex justify-between items-center">
+                <h3 className="text-2xl font-black text-white tracking-tighter uppercase">QR Access</h3>
+                <button 
+                  onClick={() => setSelectedEmployee(null)}
+                  className="p-3 hover:bg-white/5 rounded-2xl transition-colors border border-transparent hover:border-white/5"
+                >
+                  <X className="w-6 h-6 text-slate-500" />
+                </button>
               </div>
               
-              <div className="mb-6">
-                <p className="text-lg font-bold text-slate-900 mb-0">{selectedEmployee.name}</p>
-                <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider">{selectedEmployee.department}</p>
-                <p className="text-xs font-bold text-slate-400 mt-1">ID: {selectedEmployee.id}</p>
+              <div className="p-10 pt-4 text-center">
+                <div className="bg-white p-10 rounded-[3rem] border-8 border-slate-950 mb-8 inline-block shadow-2xl relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-blue-500/5 rounded-[2.5rem]"></div>
+                  <QRCode
+                    id={`qr-${selectedEmployee.id}`}
+                    value={`${window.location.origin}/employee/${selectedEmployee.id}`}
+                    size={220}
+                    level="H"
+                    className="relative z-10"
+                  />
+                </div>
+                
+                <div className="mb-10">
+                  <p className="text-2xl font-black text-white tracking-tight mb-1">{selectedEmployee.name}</p>
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-[10px] font-black text-primary-400 uppercase tracking-[0.2em] bg-primary-500/10 px-3 py-1 rounded-full border border-primary-500/10">
+                      {selectedEmployee.department}
+                    </span>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono">ID: {selectedEmployee.id}</span>
+                  </div>
+                </div>
+                
+                <button
+                  onClick={() => downloadQR(selectedEmployee)}
+                  className="w-full flex items-center justify-center gap-4 bg-primary-600 hover:bg-primary-500 text-white font-black py-5 px-6 rounded-3xl shadow-2xl shadow-primary-600/20 transition-all uppercase tracking-widest text-sm"
+                >
+                  <Download className="w-6 h-6" />
+                  Extract PNG Image
+                </button>
               </div>
-              
-              <button
-                onClick={() => downloadQR(selectedEmployee)}
-                className="w-full flex items-center justify-center gap-3 bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-primary-600/20 transition-all"
-              >
-                <Download className="w-5 h-5" />
-                Download PNG
-              </button>
-            </div>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </div>
   );
 };
