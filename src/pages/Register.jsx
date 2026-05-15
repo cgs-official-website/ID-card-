@@ -146,10 +146,10 @@ const Register = () => {
                   <option value="">Select Department</option>
                   <option value="Management">Management</option>
                   <option value="Human Resources">Human Resources</option>
-                  <option value="Development">Development</option>
-                  <option value="Designing">Designing</option>
+                  <option value="Development">Development & Designing</option>
+                  {/* <option value="Designing">Designing</option> */}
                   <option value="Business Development">Business Development</option>
-                  <option value="Process Associate">Process Associate</option>
+                  <option value="Process Associate">Associate</option>
                 </select>
                 {errors.department && <p className="text-red-500 text-xs mt-1">{errors.department.message}</p>}
               </div>

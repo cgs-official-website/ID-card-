@@ -214,10 +214,10 @@ const AdminEmployeeView = () => {
                     <select {...register('department', { required: true })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-bold">
                       <option value="Management">Management</option>
                       <option value="Human Resources">Human Resources</option>
-                      <option value="Development">Development</option>
-                      <option value="Designing">Designing</option>
+                      <option value="Development">Development & Designing</option>
+                      {/* <option value="Designing">Designing</option> */}
                       <option value="Business Development">Business Development</option>
-                      <option value="Process Associate">Process Associate</option>
+                      <option value="Process Associate">Associate</option>
                     </select>
                   </div>
                   <div className="space-y-2">
