@@ -64,7 +64,8 @@ const Dashboard = () => {
   const filteredEmployees = employees.filter(emp => 
     emp.name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
     emp.id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    emp.department?.toLowerCase().includes(searchTerm.toLowerCase())
+    emp.department?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    emp.role?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -96,7 +97,7 @@ const Dashboard = () => {
               <tr>
                 <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Employee</th>
                 <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Employee ID</th>
-                <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Department</th>
+                <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Role & Dept</th>
                 <th className="px-8 py-5 uppercase tracking-wider text-[10px] hidden md:table-cell">Email Address</th>
                 <th className="px-8 py-5 uppercase tracking-wider text-[10px] text-right">Actions</th>
               </tr>
@@ -140,7 +141,10 @@ const Dashboard = () => {
                         {emp.id}
                       </span>
                     </td>
-                    <td className="px-8 py-5 font-semibold text-slate-600">{emp.department}</td>
+                    <td className="px-8 py-5">
+                      <div className="font-bold text-slate-700">{emp.role || 'N/A'}</div>
+                      <div className="text-slate-400 text-[10px] uppercase font-black tracking-tight">{emp.department}</div>
+                    </td>
                     <td className="px-8 py-5 text-slate-500 font-medium hidden md:table-cell">{emp.email}</td>
                     <td className="px-8 py-5 text-right">
                       <div className="flex items-center justify-end gap-2">
@@ -194,7 +198,7 @@ const Dashboard = () => {
               
               <div className="mb-6">
                 <p className="text-lg font-bold text-slate-900 mb-0">{selectedEmployee.name}</p>
-                <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider">{selectedEmployee.department}</p>
+                <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider">{selectedEmployee.role} • {selectedEmployee.department}</p>
                 <p className="text-xs font-bold text-slate-400 mt-1">ID: {selectedEmployee.id}</p>
               </div>
               

@@ -48,6 +48,7 @@ const Register = () => {
       const employeeData = {
         id: empId,
         name: data.name,
+        role: data.role,
         department: data.department,
         email: data.email,
         phoneNumber: data.phoneNumber,
@@ -151,6 +152,12 @@ const Register = () => {
                   <option value="Process Associate">Process Associate</option>
                 </select>
                 {errors.department && <p className="text-red-500 text-xs mt-1">{errors.department.message}</p>}
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Job Role *</label>
+                <input {...register('role', { required: 'Role is required' })} className="w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all text-slate-900" placeholder="e.g. Senior Developer" />
+                {errors.role && <p className="text-red-500 text-xs mt-1">{errors.role.message}</p>}
               </div>
 
               <div className="space-y-1">

@@ -221,6 +221,10 @@ const AdminEmployeeView = () => {
                     </select>
                   </div>
                   <div className="space-y-2">
+                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Job Role</label>
+                    <input {...register('role', { required: true })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-bold" />
+                  </div>
+                  <div className="space-y-2">
                     <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Joining Date</label>
                     <input type="date" {...register('dateOfJoining')} className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-bold" />
                   </div>
@@ -287,7 +291,7 @@ const AdminEmployeeView = () => {
                     ID: {employee.id}
                   </div>
                   <h3 className="text-4xl font-black text-slate-900 tracking-tight leading-tight">{employee.name}</h3>
-                  <p className="text-slate-500 text-xl font-medium mt-1">{employee.department}</p>
+                  <p className="text-slate-500 text-xl font-medium mt-1">{employee.role || 'No Role'} • {employee.department}</p>
                   
                   <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
                     <span className="bg-primary-50 text-primary-700 px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-widest border border-primary-100">

@@ -108,11 +108,11 @@ const EmployeeDetails = () => {
               <img src="/logo.png" alt="Office Logo" className="w-6 h-6 object-contain brightness-0 invert" />
             </div>
             <div className="h-8 w-px bg-slate-200"></div>
-            <h1 className="text-xl font-black text-slate-900 tracking-tighter uppercase">ID Verify <span className="text-primary-600">Pro</span></h1>
+            <h1 className="text-xl font-black text-slate-900 tracking-tighter uppercase">CGS ID Verify <span className="text-primary-600"></span></h1>
           </div>
           <div className="bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-100 shadow-sm flex items-center gap-2">
             <ShieldCheck className="w-3.5 h-3.5" />
-            Authenticated Identity Dossier
+            Authenticated Identity 
           </div>
         </motion.div>
 
@@ -160,12 +160,12 @@ const EmployeeDetails = () => {
                   
                   <p className="text-xl font-bold text-slate-400 mb-8 tracking-tight flex items-center justify-center md:justify-start gap-3">
                     <Briefcase className="w-5 h-5 text-primary-500" />
-                    {employee.department}
+                    {employee.role || 'Professional'} • {employee.department}
                   </p>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-slate-50 px-6 py-4 rounded-3xl border border-slate-100 shadow-sm group hover:bg-white transition-colors">
-                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Badge ID</p>
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Employee ID</p>
                       <p className="text-slate-900 font-black tracking-tight">{employee.id}</p>
                     </div>
                     <div className="bg-rose-50 px-6 py-4 rounded-3xl border border-rose-100 shadow-sm group hover:bg-white transition-colors">
@@ -190,7 +190,7 @@ const EmployeeDetails = () => {
                 <div className="w-8 h-8 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
                   <Mail className="w-4 h-4" />
                 </div>
-                Contact Network
+                Contact Details
               </h3>
               
               <div className="space-y-8">
@@ -199,7 +199,7 @@ const EmployeeDetails = () => {
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Digital Mail</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Mail</p>
                     <p className="text-slate-900 font-bold">{employee.email}</p>
                   </div>
                 </div>
@@ -208,7 +208,7 @@ const EmployeeDetails = () => {
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Direct Link</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Contact Number</p>
                     <p className="text-slate-900 font-bold">{employee.phoneNumber || employee.personalContact || 'N/A'}</p>
                   </div>
                 </div>
@@ -217,7 +217,7 @@ const EmployeeDetails = () => {
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Primary Station</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Permanent Address</p>
                     <p className="text-slate-900 font-bold leading-tight">{employee.currentAddress}</p>
                   </div>
                 </div>
