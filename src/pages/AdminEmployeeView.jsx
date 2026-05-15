@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, deleteDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { ArrowLeft, Download, UserCircle2, MapPin, Mail, Phone, Edit2, Check, X, Calendar, Briefcase, HeartPulse, ExternalLink, Cake } from 'lucide-react';
 import { QRCode } from 'react-qr-code';
@@ -47,10 +47,36 @@ const AdminEmployeeView = () => {
     try {
       setUpdating(true);
       const docRef = doc(db, 'employees', id);
-      await updateDoc(docRef, data);
-      setEmployee({ ...employee, ...data });
-      setIsEditing(false);
-      alert('Employee data updated successfully!');
+      const newId = data.id.trim().toUpperCase();
+
+      if (newId !== id) {
+        // ID changed, need to migrate document
+        const newDocRef = doc(db, 'employees', newId);
+        const newDocSnap = await getDoc(newDocRef);
+        
+        if (newDocSnap.exists()) {
+          alert('An employee with this ID already exists. Please use a unique ID.');
+          setUpdating(false);
+          return;
+        }
+
+        // Create new document with new ID
+        await setDoc(newDocRef, { ...employee, ...data, id: newId });
+        // Delete old document
+        await deleteDoc(docRef);
+        
+        setEmployee({ ...employee, ...data, id: newId });
+        setIsEditing(false);
+        alert('Employee ID and record updated successfully!');
+        // Navigate to the new URL since the ID has changed
+        navigate(`/admin/employee/${newId}`, { replace: true });
+      } else {
+        // ID hasn't changed, just update existing document
+        await updateDoc(docRef, data);
+        setEmployee({ ...employee, ...data });
+        setIsEditing(false);
+        alert('Employee data updated successfully!');
+      }
     } catch (err) {
       console.error("Error updating:", err);
       alert('Failed to update employee data.');
@@ -176,6 +202,10 @@ const AdminEmployeeView = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-2">
+                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Employee ID</label>
+                    <input {...register('id', { required: true })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-bold" />
+                  </div>
+                  <div className="space-y-2">
                     <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Full Name</label>
                     <input {...register('name', { required: true })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-bold" />
                   </div>
@@ -189,6 +219,10 @@ const AdminEmployeeView = () => {
                       <option value="Business Development">Business Development</option>
                       <option value="Process Associate">Process Associate</option>
                     </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Joining Date</label>
+                    <input type="date" {...register('dateOfJoining')} className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-bold" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Date of Birth</label>
