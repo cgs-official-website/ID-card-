@@ -10,7 +10,7 @@
 }
 
 body {
-  @apply bg-gray-50 text-slate-800 antialiased;
+  @apply bg-[#0B0F19] text-slate-200 antialiased;
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
   letter-spacing: 0.01em;
@@ -21,13 +21,13 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   letter-spacing: -0.02em;
   font-weight: 700;
-  @apply text-slate-900;
+  @apply text-white;
   text-wrap: balance;
 }
 
 p {
   margin-bottom: 1.25rem;
-  @apply text-slate-500;
+  @apply text-slate-400;
 }
 
 p:last-child {
