@@ -1,0 +1,249 @@
+/* Elegant Light Glassmorphism theme scoped to .invoice-theme */
+
+:root {
+  --invoice-primary: #6366f1;
+  --invoice-primary-dark: #4f46e5;
+  --invoice-secondary: #64748b;
+  --invoice-accent: #10b981;
+  --invoice-bg-color: #f8fafc;
+  --invoice-surface: rgba(255, 255, 255, 0.85);
+  --invoice-text-main: #0f172a;
+  --invoice-text-muted: #64748b;
+  --invoice-border-glass: rgba(255, 255, 255, 0.5);
+}
+
+.invoice-theme {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary: #64748b;
+  --accent: #10b981;
+  --bg-color: #f8fafc;
+  --surface: rgba(255, 255, 255, 0.85);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-glass: rgba(255, 255, 255, 0.5);
+
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color) !important;
+  color: var(--text-main) !important;
+  line-height: 1.6;
+  min-height: 100%;
+  position: relative;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  z-index: 1;
+}
+
+/* Elegant Light Mode Blobs */
+.invoice-theme::before, .invoice-theme::after {
+  content: '';
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: -1;
+  opacity: 0.15;
+  animation: invoiceBlobMove 25s infinite alternate;
+  pointer-events: none;
+}
+
+.invoice-theme::before {
+  background: #6366f1;
+  top: -10%;
+  left: -10%;
+}
+
+.invoice-theme::after {
+  background: #f472b6;
+  bottom: -10%;
+  right: -10%;
+  animation-delay: -12s;
+}
+
+@keyframes invoiceBlobMove {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(5%, 5%) scale(1.1); }
+}
+
+.invoice-theme h1, 
+.invoice-theme h2, 
+.invoice-theme h3, 
+.invoice-theme h4, 
+.invoice-theme h5, 
+.invoice-theme h6 {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.025em;
+  color: var(--invoice-text-main) !important;
+  text-shadow: none;
+  font-weight: 700;
+}
+
+/* Layout */
+.invoice-theme .app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.invoice-theme .main-content {
+  flex: 1;
+  padding: 3rem 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Premium Light Glassmorphism */
+.invoice-theme .glass-card {
+  background: var(--invoice-surface) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  color: var(--invoice-text-main) !important;
+}
+
+.invoice-theme .glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+}
+
+/* Form Styles */
+.invoice-theme .form-group {
+  margin-bottom: 2rem;
+}
+
+.invoice-theme .form-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--invoice-text-muted) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.075em;
+  text-align: left;
+}
+
+.invoice-theme .form-input {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0 !important;
+  background: white !important;
+  color: var(--invoice-text-main) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1rem;
+}
+
+.invoice-theme .form-input:focus {
+  outline: none;
+  background: white !important;
+  border-color: var(--invoice-primary) !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+  transform: translateY(-1px);
+}
+
+/* Button Styles */
+.invoice-theme .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+  gap: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.invoice-theme .btn-primary {
+  background: linear-gradient(135deg, var(--invoice-primary), var(--invoice-primary-dark)) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+}
+
+.invoice-theme .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+}
+
+.invoice-theme .btn-primary::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(transparent, rgba(255,255,255,0.2), transparent);
+  transform: rotate(45deg);
+  transition: 0.5s;
+}
+
+.invoice-theme .btn-primary:hover::after {
+  left: 100%;
+}
+
+.invoice-theme .btn-secondary {
+  background: white !important;
+  color: var(--invoice-text-main) !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+.invoice-theme .btn-secondary:hover {
+  background: #f8fafc !important;
+  transform: translateY(-1px);
+}
+
+/* Table Enhancements Light */
+.invoice-theme .table-container {
+  border-radius: 1rem;
+  background: white !important;
+  overflow: hidden;
+  border: 1px solid #e2e8f0 !important;
+}
+
+.invoice-theme table tr {
+  background: white !important;
+  color: var(--invoice-text-main) !important;
+}
+
+.invoice-theme table tr:hover {
+  background: #f8fafc !important;
+}
+
+.invoice-theme table td, .invoice-theme table th {
+  color: var(--invoice-text-main) !important;
+}
+
+.invoice-theme table th {
+  color: var(--invoice-text-muted) !important;
+}
+
+/* Animations */
+@keyframes invoiceFadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.invoice-theme .fade-in {
+  animation: invoiceFadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .invoice-theme .form-grid { grid-template-columns: 1fr !important; }
+  .invoice-theme .glass-card { padding: 1.5rem; }
+}

@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, LogOut, Copy, Award, Check } from 'lucide-react';
+import { LayoutDashboard, LogOut, Copy, Award, Check, ReceiptText, History } from 'lucide-react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useState } from 'react';
@@ -34,8 +34,10 @@ const Layout = () => {
   };
 
   const navItems = [
-    { name: 'Dashboard', path: '/', icon: LayoutDashboard },
-    { name: 'Certificates', path: '/certificates', icon: Award },
+    { name: 'Dashboard', mobileName: 'Dash', path: '/', icon: LayoutDashboard },
+    { name: 'Certificates', mobileName: 'Certs', path: '/certificates', icon: Award },
+    { name: 'Invoice Generator', mobileName: 'Invoice', path: '/invoice-generator', icon: ReceiptText },
+    { name: 'Invoice History', mobileName: 'History', path: '/invoice-history', icon: History },
   ];
 
   return (
@@ -128,7 +130,7 @@ const Layout = () => {
       </main>
 
       {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-6 left-6 right-6 bg-[#131726]/90 backdrop-blur-lg border border-[#2D334A]/50 shadow-2xl rounded-2xl flex justify-around p-3 z-50">
+      <div className="md:hidden fixed bottom-6 left-6 right-6 bg-[#131726]/90 backdrop-blur-lg border border-[#2D334A]/50 shadow-2xl rounded-2xl flex justify-around p-2.5 gap-1 z-50">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
@@ -136,21 +138,21 @@ const Layout = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${
+              className={`flex-1 flex flex-col items-center gap-1 py-2 px-1 rounded-xl transition-all ${
                 isActive ? 'text-white bg-gradient-to-r from-violet-600 to-blue-600 shadow-lg shadow-violet-500/20' : 'text-slate-500'
               }`}
             >
-              <Icon className="w-6 h-6" />
-              <span className="text-[10px] font-bold uppercase tracking-wider">{item.name}</span>
+              <Icon className="w-5 h-5" />
+              <span className="text-[9px] font-bold uppercase tracking-wider whitespace-nowrap">{item.mobileName}</span>
             </Link>
           );
         })}
         <button
           onClick={copyRegisterLink}
-          className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl text-slate-500"
+          className="flex-1 flex flex-col items-center gap-1 py-2 px-1 rounded-xl text-slate-500"
         >
-          <Copy className="w-6 h-6" />
-          <span className="text-[10px] font-bold uppercase tracking-wider">Link</span>
+          <Copy className="w-5 h-5" />
+          <span className="text-[9px] font-bold uppercase tracking-wider">Link</span>
         </button>
       </div>
     </div>

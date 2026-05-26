@@ -12,6 +12,8 @@ import RegisterCertificate from './pages/RegisterCertificate';
 import CertificatePortfolio from './pages/CertificatePortfolio';
 import CertificatesDashboard from './pages/CertificatesDashboard';
 import AdminCertificateView from './pages/AdminCertificateView';
+import InvoiceGenerator from './pages/InvoiceGenerator';
+import InvoiceHistory from './pages/InvoiceHistory';
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
             <Route path="admin/employee/:id" element={<AdminEmployeeView />} />
             <Route path="certificates" element={<CertificatesDashboard />} />
             <Route path="admin/certificate/:id" element={<AdminCertificateView />} />
+            <Route path="invoice-generator" element={<InvoiceGenerator />} />
+            <Route path="invoice-history" element={<InvoiceHistory />} />
           </Route>
         </Routes>
       </BrowserRouter>
