@@ -83,8 +83,7 @@ export const generateInvoicePDF = async (candidate) => {
 
   doc.setFontSize(8);
   txt(doc, C.subTxt);
-  doc.text("GST No: 33AAFCG1234G1ZY", 52, 35);
-  doc.text("www.teamcarrezza.com  |  info@teamcarrezza.com | +91-91508 86338", 52, 42);
+  doc.text("www.teamcarrezza.com  |  info@teamcarrezza.com | +91-91508 86338", 52, 36);
 
   // ─── INVOICE META STRIP ───────────────────────────────────────────────────
   fill(doc, C.lightBg);
@@ -192,7 +191,6 @@ export const generateInvoicePDF = async (candidate) => {
   const fromRows = [
     "22/33, Carrezza Global Solutions, Opposite to URC Resrts,",
     "(ST)Kovai Main Road, Perundurai - 638052.",
-    "GST: 33AAFCG1234G1ZY",
   ];
   fromRows.forEach((line, i) => doc.text(line, W - 94, cardY + 26 + i * 7));
 
@@ -200,28 +198,21 @@ export const generateInvoicePDF = async (candidate) => {
   const tableY = 140;
 
   // ── Dynamic price computation ────────────────────────────────────────────
-  const BASE_AMOUNT = (candidate.baseAmount !== undefined && candidate.baseAmount !== null) ? Number(candidate.baseAmount) : 3500;
-  const GST_RATE    = (candidate.gstRate !== undefined && candidate.gstRate !== null) ? Number(candidate.gstRate) : 0.18;
-  const gstAmount   = Math.round(BASE_AMOUNT * GST_RATE);
-  const totalAmount = BASE_AMOUNT + gstAmount;
+  const AMOUNT      = (candidate.baseAmount !== undefined && candidate.baseAmount !== null) ? Number(candidate.baseAmount) : 3500;
   const duration    = candidate.duration || "1 Month";
   const courseName  = candidate.course   || "General Internship";
-  const gstPct      = Math.round(GST_RATE * 100);
-  const gstLabel    = `GST ${gstPct}%`;
   const fmt = (n) => `Rs. ${n.toLocaleString("en-IN", { minimumFractionDigits: 2 })}`;
 
   autoTable(doc, {
     startY: tableY,
     margin: { left: 12, right: 12 },
-    head: [["#", "Description", "Duration", "Taxable Amt", gstLabel, "Total"]],
+    head: [["#", "Description", "Duration", "Amount"]],
     body: [
       [
         "01",
         `Internship Training Program\n${courseName}`,
         duration,
-        fmt(BASE_AMOUNT),
-        fmt(gstAmount),
-        fmt(totalAmount),
+        fmt(AMOUNT),
       ],
     ],
     theme: "plain",
@@ -240,10 +231,8 @@ export const generateInvoicePDF = async (candidate) => {
     columnStyles: {
       0: { cellWidth: 10, halign: "center", fontStyle: "bold" },
       1: { cellWidth: "auto" },
-      2: { cellWidth: 25, halign: "center" },
-      3: { cellWidth: 30, halign: "right" },
-      4: { cellWidth: 25, halign: "right" },
-      5: { cellWidth: 30, halign: "right", fontStyle: "bold" },
+      2: { cellWidth: 30, halign: "center" },
+      3: { cellWidth: 40, halign: "right", fontStyle: "bold" },
     },
     alternateRowStyles: { fillColor: C.lightBg },
     tableLineColor: C.border,
@@ -257,40 +246,24 @@ export const generateInvoicePDF = async (candidate) => {
   const tW = 88;
   let tY = afterTable + 6;
 
-  fill(doc, C.lightBg);
-  doc.roundedRect(tX, tY, tW, 46, 3, 3, "F");
+  fill(doc, C.primary);
+  doc.roundedRect(tX, tY, tW, 14, 2, 2, "F");
 
-  // helper row
-  const row = (label, value, y, isBold, isHighlight) => {
-    if (isHighlight) {
-      fill(doc, C.primary);
-      doc.roundedRect(tX, y - 5, tW, 12, 2, 2, "F");
-    }
-    doc.setFont("helvetica", isBold ? "bold" : "normal");
-    doc.setFontSize(isBold ? 10 : 9.5);
-    txt(doc, isHighlight ? C.white : (isBold ? C.dark : C.muted));
-    doc.text(label, tX + 6, y + 1);
-    doc.text(value, tX + tW - 6, y + 1, { align: "right" });
-  };
-
-  row(`Base Amount:`, fmt(BASE_AMOUNT), tY + 9,  false, false);
-  row(`GST (${gstPct}%):`,   fmt(gstAmount),   tY + 21, false, false);
-
-  stroke(doc, C.border);
-  doc.setLineWidth(0.5);
-  doc.line(tX + 4, tY + 28, tX + tW - 4, tY + 28);
-
-  row("TOTAL AMOUNT", fmt(totalAmount), tY + 39, true, true);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10.5);
+  txt(doc, C.white);
+  doc.text("TOTAL AMOUNT", tX + 6, tY + 9);
+  doc.text(fmt(AMOUNT), tX + tW - 6, tY + 9, { align: "right" });
 
   // Amount in words (dynamic)
-  const amtInWords = `Amount in words: ${totalAmount.toLocaleString("en-IN")} Rupees Only`;
+  const amtInWords = `Amount in words: ${AMOUNT.toLocaleString("en-IN")} Rupees Only`;
   doc.setFont("helvetica", "italic");
   doc.setFontSize(8.5);
   txt(doc, C.muted);
-  doc.text(amtInWords, 12, afterTable + 54);
+  doc.text(amtInWords, 12, afterTable + 26);
 
   // ─── TERMS + SIGNATURE ───────────────────────────────────────────────────
-  const termsY = afterTable + 62;
+  const termsY = afterTable + 34;
 
   fill(doc, C.lightBg);
   stroke(doc, C.border);
