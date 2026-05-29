@@ -200,8 +200,8 @@ export const generateInvoicePDF = async (candidate) => {
   const tableY = 140;
 
   // ── Dynamic price computation ────────────────────────────────────────────
-  const BASE_AMOUNT = candidate.baseAmount || 3500;
-  const GST_RATE    = candidate.gstRate    || 0.18;
+  const BASE_AMOUNT = (candidate.baseAmount !== undefined && candidate.baseAmount !== null) ? Number(candidate.baseAmount) : 3500;
+  const GST_RATE    = (candidate.gstRate !== undefined && candidate.gstRate !== null) ? Number(candidate.gstRate) : 0.18;
   const gstAmount   = Math.round(BASE_AMOUNT * GST_RATE);
   const totalAmount = BASE_AMOUNT + gstAmount;
   const duration    = candidate.duration || "1 Month";

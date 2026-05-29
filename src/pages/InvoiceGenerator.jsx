@@ -3,7 +3,7 @@ import Input from "../components/invoice/Input";
 import Select from "../components/invoice/Select";
 import Radio from "../components/invoice/Radio";
 import Button from "../components/invoice/Button";
-import { FileDown, CheckCircle2, Smartphone, Wallet } from "lucide-react";
+import { FileDown, CheckCircle2, Smartphone, Wallet, Percent, Ban } from "lucide-react";
 import { generateInvoicePDF } from "../utils/pdfGenerator";
 import { saveInvoice } from "../firebase/invoiceService";
 
@@ -18,6 +18,8 @@ const InvoiceGenerator = () => {
     college: "",
     location: "",
     payment: "UPI",
+    gstOption: "include",
+    baseAmount: 3500,
   });
 
   const handleChange = (e) => {
@@ -34,19 +36,27 @@ const InvoiceGenerator = () => {
 
     setLoading(true);
     
+    const gstRate = candidate.gstOption === "include" ? 0.18 : 0;
+    const baseAmount = Number(candidate.baseAmount) || 0;
+    const invoiceData = {
+      ...candidate,
+      baseAmount,
+      gstRate,
+    };
+    
     // Attempt to save to Firebase
-    const result = await saveInvoice(candidate);
+    const result = await saveInvoice(invoiceData);
     
     if (result.success) {
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
       // Generate PDF with the saved ID
-      await generateInvoicePDF({ ...candidate, invoiceId: result.id, invoiceNumber: result.invoiceNumber });
+      await generateInvoicePDF({ ...invoiceData, invoiceId: result.id, invoiceNumber: result.invoiceNumber });
     } else {
       console.warn("Firebase save failed, falling back to local PDF generation.");
       const dummyNumber = `CGS-INV-${new Date().getFullYear()}-${Date.now().toString().slice(-4)}`;
       // Generate PDF anyway, even if saving failed
-      await generateInvoicePDF({ ...candidate, invoiceId: "LOCAL-" + dummyNumber, invoiceNumber: dummyNumber });
+      await generateInvoicePDF({ ...invoiceData, invoiceId: "LOCAL-" + dummyNumber, invoiceNumber: dummyNumber });
       
       // Still notify user but don't block them from the PDF
       alert("Note: PDF generated, but could not be saved to history. (Firebase error)");
@@ -54,6 +64,11 @@ const InvoiceGenerator = () => {
     
     setLoading(false);
   };
+
+  const baseAmount = Number(candidate.baseAmount) || 0;
+  const gstRate = candidate.gstOption === "include" ? 0.18 : 0;
+  const gstAmount = Math.round(baseAmount * gstRate);
+  const totalAmount = baseAmount + gstAmount;
 
   return (
     <div className="space-y-8 max-w-4xl mx-auto py-6">
@@ -89,6 +104,27 @@ const InvoiceGenerator = () => {
             onChange={handleChange} 
           />
           <Select 
+            label="Duration *" 
+            name="duration" 
+            value={candidate.duration} 
+            options={[
+              { label: "15 Days", value: "15 Days" },
+              { label: "1 Month", value: "1 Month" },
+              // { label: "2 Months", value: "2 Months" },
+              // { label: "3 Months", value: "3 Months" },
+              // { label: "6 Months", value: "6 Months" },
+            ]}
+            onChange={handleChange} 
+          />
+          <Input 
+            label="Base Amount (₹) *" 
+            name="baseAmount" 
+            type="number"
+            placeholder="3500" 
+            value={candidate.baseAmount} 
+            onChange={handleChange} 
+          />
+          <Select 
             label="Current Year / Status" 
             name="year" 
             value={candidate.year} 
@@ -120,15 +156,38 @@ const InvoiceGenerator = () => {
           />
         </div>
 
+        {/* GST Option Selector */}
+        <div className="space-y-3">
+          <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">GST Option</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Radio 
+              label="Including GST (18%)" 
+              name="gstOption" 
+              value="include" 
+              checked={candidate.gstOption === "include"} 
+              onChange={handleChange} 
+              icon={Percent}
+            />
+            <Radio 
+              label="Excluding GST (0%)" 
+              name="gstOption" 
+              value="exclude" 
+              checked={candidate.gstOption === "exclude"} 
+              onChange={handleChange} 
+              icon={Ban}
+            />
+          </div>
+        </div>
+
         {/* Invoice Summary Box */}
         <div className="p-6 bg-violet-500/5 rounded-2xl border border-violet-500/10 space-y-3">
-          <h4 className="text-sm font-bold text-violet-400 uppercase tracking-wider">Invoice Summary (Fixed)</h4>
+          <h4 className="text-sm font-bold text-violet-400 uppercase tracking-wider">Invoice Summary</h4>
           <div className="grid grid-cols-2 gap-2 text-sm text-slate-300">
-            <span>Duration:</span> <span className="font-semibold text-white text-right">1 Month</span>
-            <span>Base Amount:</span> <span className="font-semibold text-white text-right">₹ 3,500</span>
-            <span>GST (18%):</span> <span className="font-semibold text-white text-right">₹ 630</span>
+            <span>Duration:</span> <span className="font-semibold text-white text-right">{candidate.duration || "N/A"}</span>
+            <span>Base Amount:</span> <span className="font-semibold text-white text-right">₹ {baseAmount.toLocaleString("en-IN")}</span>
+            <span>GST ({candidate.gstOption === "include" ? "18%" : "0%"}):</span> <span className="font-semibold text-white text-right">₹ {gstAmount.toLocaleString("en-IN")}</span>
             <span className="text-base text-white pt-3 border-t border-[#2D334A]/50">Total Amount:</span> 
-            <span className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400 pt-3 border-t border-[#2D334A]/50 text-right">₹ 4,130</span>
+            <span className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400 pt-3 border-t border-[#2D334A]/50 text-right">₹ {totalAmount.toLocaleString("en-IN")}</span>
           </div>
         </div>
 
@@ -170,7 +229,15 @@ const InvoiceGenerator = () => {
             type="button" 
             variant="secondary" 
             onClick={() => setCandidate({
-              name: "", course: "", duration: "1 Month", year: "", college: "", location: "", payment: "UPI"
+              name: "", 
+              course: "", 
+              duration: "1 Month", 
+              year: "", 
+              college: "", 
+              location: "", 
+              payment: "UPI",
+              gstOption: "include",
+              baseAmount: 3500
             })}
             className="w-full sm:w-auto"
           >
