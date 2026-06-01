@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { ShieldCheck, Download, Printer, Copy, Check, Award, Building2, CalendarDays, Hash } from 'lucide-react';
+import { ShieldCheck, Download, Printer, Copy, Check, Award, Building2, CalendarDays, Hash, FileDown } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { jsPDF } from 'jspdf';
 import CertificateSVG from '../components/CertificateSVG';
 import NotifyModal from '../components/NotifyModal';
 
@@ -40,6 +41,7 @@ const CertificatePortfolio = () => {
   }, [id]);
 
   const [downloading, setDownloading] = useState(false);
+  const [downloadingPDF, setDownloadingPDF] = useState(false);
 
   const copyVerificationLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -47,13 +49,11 @@ const CertificatePortfolio = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleDownloadPNG = () => {
-    try {
-      setDownloading(true);
+  const generateCertificateCanvas = () => {
+    return new Promise((resolve, reject) => {
       const svgElement = document.getElementById('portfolio-cert-svg');
       if (!svgElement) {
-        setNotify({ type: 'error', title: 'Export Failed', message: 'Unable to find certificate structure. Please try again.' });
-        setDownloading(false);
+        reject(new Error('Unable to find certificate structure. Please try again.'));
         return;
       }
 
@@ -100,36 +100,92 @@ const CertificatePortfolio = () => {
         const svgImg = new Image();
         svgImg.onload = () => {
           ctx.drawImage(svgImg, 0, 0, canvas.width, canvas.height);
-          
-          // Trigger download
-          const pngFile = canvas.toDataURL('image/png');
-          const downloadLink = document.createElement('a');
-          downloadLink.download = `${cert.candidateName.replace(/\s+/g, '_')}_Certificate.png`;
-          downloadLink.href = pngFile;
-          downloadLink.click();
-          
-          URL.revokeObjectURL(blobURL);
-          setDownloading(false);
+          resolve({ canvas, blobURL });
         };
         svgImg.onerror = () => {
-          console.error("Error drawing SVG onto canvas");
-          setDownloading(false);
+          reject(new Error('Error drawing SVG onto canvas'));
         };
         svgImg.src = blobURL;
       };
 
       bgImg.onerror = () => {
-        console.error("Error loading background template image for export");
-        setDownloading(false);
+        reject(new Error('Error loading background template image for export'));
       };
 
       // Set the appropriate template image URL
       bgImg.src = cert.type === 'Internship' ? '/internship_template.png' : '/training_template.png';
+    });
+  };
+
+  const handleDownloadPNG = async () => {
+    try {
+      setDownloading(true);
+      const { canvas, blobURL } = await generateCertificateCanvas();
       
+      const pngFile = canvas.toDataURL('image/png');
+      const downloadLink = document.createElement('a');
+      downloadLink.download = `${cert.candidateName.replace(/\s+/g, '_')}_Certificate.png`;
+      downloadLink.href = pngFile;
+      downloadLink.click();
+      
+      const URL = window.URL || window.webkitURL || window;
+      URL.revokeObjectURL(blobURL);
+      setDownloading(false);
     } catch (err) {
       console.error("Error exporting PNG:", err);
-      setNotify({ type: 'error', title: 'Export Failed', message: 'Error generating image. Try printing as PDF instead.' });
+      setNotify({ type: 'error', title: 'Export Failed', message: err.message || 'Error generating image.' });
       setDownloading(false);
+    }
+  };
+
+  const handleDownloadPDF = async () => {
+    try {
+      setDownloadingPDF(true);
+      const { canvas, blobURL } = await generateCertificateCanvas();
+      
+      const imgData = canvas.toDataURL('image/png');
+      
+      // A4 landscape is 297mm x 210mm
+      const doc = new jsPDF({
+        orientation: 'landscape',
+        unit: 'mm',
+        format: 'a4'
+      });
+      
+      const pdfWidth = 297;
+      const pdfHeight = 210;
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+      const canvasRatio = canvasWidth / canvasHeight;
+      const pdfRatio = pdfWidth / pdfHeight;
+      
+      let imgWidth = pdfWidth;
+      let imgHeight = pdfHeight;
+      let x = 0;
+      let y = 0;
+      
+      if (canvasRatio > pdfRatio) {
+        // Image is wider than PDF page ratio
+        imgWidth = pdfWidth;
+        imgHeight = pdfWidth / canvasRatio;
+        y = (pdfHeight - imgHeight) / 2;
+      } else {
+        // Image is taller than PDF page ratio
+        imgHeight = pdfHeight;
+        imgWidth = pdfHeight * canvasRatio;
+        x = (pdfWidth - imgWidth) / 2;
+      }
+      
+      doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight, undefined, 'FAST');
+      doc.save(`${cert.candidateName.replace(/\s+/g, '_')}_Certificate.pdf`);
+      
+      const URL = window.URL || window.webkitURL || window;
+      URL.revokeObjectURL(blobURL);
+      setDownloadingPDF(false);
+    } catch (err) {
+      console.error("Error exporting PDF:", err);
+      setNotify({ type: 'error', title: 'Export Failed', message: err.message || 'Error generating PDF.' });
+      setDownloadingPDF(false);
     }
   };
 
@@ -183,7 +239,16 @@ const CertificatePortfolio = () => {
       {/* Print-only CSS layout to hide dashboard components and print ONLY the certificate SVG */}
       <style>{`
         @media print {
-          body {
+          @page {
+            size: landscape;
+            margin: 0;
+          }
+          html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
             background: white !important;
             color: black !important;
           }
@@ -243,7 +308,7 @@ const CertificatePortfolio = () => {
           animate={{ scale: 1, opacity: 1 }}
           className="w-full max-w-4xl print-area mb-10"
         >
-          <div ref={certificateRef} className="w-full bg-slate-900/50 p-2 md:p-4 rounded-2xl border border-slate-800/80 shadow-2xl backdrop-blur-sm print:bg-white print:p-0 print:border-none">
+          <div ref={certificateRef} className="w-full bg-slate-900/50 p-2 md:p-4 rounded-2xl border border-slate-800/80 shadow-2xl backdrop-blur-sm print:bg-white print:p-0 print:border-none flex items-center justify-center">
             <CertificateSVG 
               id="portfolio-cert-svg"
               candidateName={cert.candidateName}
@@ -312,25 +377,26 @@ const CertificatePortfolio = () => {
           <div className="md:col-span-5 bg-[#131726]/80 backdrop-blur-md rounded-3xl border border-[#2D334A]/50 p-8 flex flex-col justify-center space-y-4 shadow-[0_8px_30px_rgb(0,0,0,0.3)]">
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 text-center mb-2">Certificate Actions</p>
             <button
-              onClick={handleDownloadPNG}
-              disabled={downloading}
-              className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 disabled:opacity-70 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-violet-500/25"
+              onClick={handleDownloadPDF}
+              disabled={downloadingPDF}
+              className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 disabled:opacity-70 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-violet-500/25 cursor-pointer"
             >
-              <Download className={`w-5 h-5 ${downloading ? 'animate-bounce' : ''}`} />
-              {downloading ? 'Generating HD PNG...' : 'Download Certificate'}
+              <FileDown className={`w-5 h-5 ${downloadingPDF ? 'animate-bounce' : ''}`} />
+              {downloadingPDF ? 'Generating PDF...' : 'Download PDF'}
             </button>
 
             <button
-              onClick={handlePrint}
-              className="w-full flex items-center justify-center gap-3 bg-[#1E243D] hover:bg-[#252B48] text-white font-bold py-4 rounded-xl transition-all border border-[#2D334A]"
+              onClick={handleDownloadPNG}
+              disabled={downloading}
+              className="w-full flex items-center justify-center gap-3 bg-[#1E243D] hover:bg-[#252B48] disabled:opacity-70 text-white font-bold py-4 rounded-xl transition-all border border-[#2D334A] cursor-pointer"
             >
-              <Printer className="w-5 h-5" />
-              Print / Save as PDF
+              <Download className={`w-5 h-5 ${downloading ? 'animate-bounce' : ''}`} />
+              {downloading ? 'Generating HD PNG...' : 'Download PNG'}
             </button>
 
             <button
               onClick={copyVerificationLink}
-              className="w-full flex items-center justify-center gap-3 bg-[#1E243D] hover:bg-[#252B48] text-white font-bold py-4 rounded-xl transition-all border border-[#2D334A]"
+              className="w-full flex items-center justify-center gap-3 bg-[#1E243D] hover:bg-[#252B48] text-white font-bold py-4 rounded-xl transition-all border border-[#2D334A] cursor-pointer"
             >
               {copied ? <Check className="w-5 h-5 text-emerald-400" /> : <Copy className="w-5 h-5" />}
               {copied ? 'Link Copied!' : 'Copy Verification Link'}

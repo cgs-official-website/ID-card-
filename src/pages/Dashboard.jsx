@@ -14,6 +14,14 @@ const Dashboard = () => {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const qrRef = useRef();
 
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, employees]);
+
   useEffect(() => {
     fetchEmployees();
   }, []);
@@ -76,6 +84,12 @@ const Dashboard = () => {
     emp.department?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     emp.role?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Pagination Calculations
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredEmployees.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
 
   return (
     <div className="space-y-8 bg-transparent">
@@ -142,7 +156,7 @@ const Dashboard = () => {
                     </div>
                   </td>
                 </tr>
-              ) : filteredEmployees.length === 0 ? (
+              ) : currentItems.length === 0 ? (
                 <tr>
                   <td colSpan="5" className="px-8 py-16 text-center text-white">
                     <div className="flex flex-col items-center gap-2">
@@ -152,7 +166,7 @@ const Dashboard = () => {
                   </td>
                 </tr>
               ) : (
-                filteredEmployees.map((emp) => (
+                currentItems.map((emp) => (
                   <tr key={emp.id} className="hover:bg-[#1E243D]/50 transition-colors group">
                     <td className="px-8 py-5">
                       <div className="flex items-center gap-4">
@@ -200,6 +214,46 @@ const Dashboard = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Pagination Footer */}
+        {totalPages > 1 && (
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 border-t border-[#2D334A]/30 bg-[#0B0F19]/20">
+            <div className="text-sm text-slate-400">
+              Showing <span className="font-semibold text-white">{indexOfFirstItem + 1}</span> to{" "}
+              <span className="font-semibold text-white">{Math.min(indexOfLastItem, filteredEmployees.length)}</span> of{" "}
+              <span className="font-semibold text-white">{filteredEmployees.length}</span> employees
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 text-sm font-semibold rounded-xl border border-[#2D334A]/50 text-slate-300 hover:bg-[#1E243D] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
+              >
+                Previous
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`w-10 h-10 text-sm font-bold rounded-xl transition-all cursor-pointer ${
+                    currentPage === page
+                      ? "bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-lg shadow-violet-500/20"
+                      : "border border-[#2D334A]/50 text-slate-300 hover:bg-[#1E243D]"
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 text-sm font-semibold rounded-xl border border-[#2D334A]/50 text-slate-300 hover:bg-[#1E243D] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* QR Viewer Modal */}
