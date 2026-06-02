@@ -57,3 +57,36 @@ p:last-child {
   animation: pulse-slow 8s ease-in-out infinite;
 }
 
+/* Global scrollbar custom styling matching the application's premium dark/indigo theme */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.25) transparent;
+}
+
+/* For Chrome, Safari, and newer Edge browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Makes track transparent so it blends with body/containers */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(139, 92, 246, 0.2); /* Semi-transparent violet-500 */
+  border-radius: 9999px;
+  border: 2px solid transparent; /* Gives a padded, floating appearance */
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(139, 92, 246, 0.5); /* Brighter violet-500 on hover */
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+

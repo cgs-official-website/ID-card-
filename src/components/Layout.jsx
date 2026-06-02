@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, LogOut, Copy, Award, Check, ReceiptText, History } from 'lucide-react';
+import { LayoutDashboard, LogOut, Copy, Award, Check, ReceiptText, History, FileText, Menu, X } from 'lucide-react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useState } from 'react';
@@ -18,6 +18,7 @@ const Layout = () => {
   };
 
   const [copiedLink, setCopiedLink] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const copyRegisterLink = () => {
     const link = `${window.location.origin}/register`;
@@ -38,6 +39,7 @@ const Layout = () => {
     { name: 'Certificates', mobileName: 'Certs', path: '/certificates', icon: Award },
     { name: 'Invoice Generator', mobileName: 'Invoice', path: '/invoice-generator', icon: ReceiptText },
     { name: 'Invoice History', mobileName: 'History', path: '/invoice-history', icon: History },
+    { name: 'Form Builder', mobileName: 'Forms', path: '/form-builder', icon: FileText },
   ];
 
   return (
@@ -131,7 +133,7 @@ const Layout = () => {
 
       {/* Mobile Bottom Navigation */}
       <div className="md:hidden fixed bottom-6 left-6 right-6 bg-[#131726]/90 backdrop-blur-lg border border-[#2D334A]/50 shadow-2xl rounded-2xl flex justify-around p-2.5 gap-1 z-50">
-        {navItems.map((item) => {
+        {navItems.slice(0, 3).map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
           return (
@@ -148,13 +150,116 @@ const Layout = () => {
           );
         })}
         <button
-          onClick={copyRegisterLink}
-          className="flex-1 flex flex-col items-center gap-1 py-2 px-1 rounded-xl text-slate-500"
+          onClick={() => setMobileMenuOpen(true)}
+          className={`flex-1 flex flex-col items-center gap-1 py-2 px-1 rounded-xl transition-all ${
+            mobileMenuOpen ? 'text-white bg-gradient-to-r from-violet-600 to-blue-600 shadow-lg' : 'text-slate-500'
+          }`}
         >
-          <Copy className="w-5 h-5" />
-          <span className="text-[9px] font-bold uppercase tracking-wider">Link</span>
+          <Menu className="w-5 h-5" />
+          <span className="text-[9px] font-bold uppercase tracking-wider whitespace-nowrap">More</span>
         </button>
       </div>
+
+      {/* Mobile More Options Slide-up Drawer */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-[100] flex items-end justify-center">
+          {/* Backdrop overlay */}
+          <div 
+            onClick={() => setMobileMenuOpen(false)}
+            className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in"
+          />
+          
+          {/* Drawer container */}
+          <div className="relative w-full bg-[#131726] border-t border-[#2D334A] rounded-t-[2.5rem] p-6 pb-12 z-10 shadow-2xl flex flex-col gap-6 animate-in slide-in-from-bottom duration-300">
+            {/* Header */}
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-bold text-white">More Options</h3>
+                <p className="text-xs font-semibold text-slate-500">Access utilities and settings</p>
+              </div>
+              <button 
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 hover:bg-[#1E243D] rounded-full text-slate-400 hover:text-white transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            {/* Options grid list */}
+            <div className="grid grid-cols-2 gap-3.5">
+              {/* Invoice History */}
+              <Link
+                to="/invoice-history"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`p-4 rounded-2xl border text-left flex flex-col gap-2.5 transition-all ${
+                  location.pathname === '/invoice-history'
+                    ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white border-transparent'
+                    : 'bg-[#0B0F19]/40 border-[#2D334A]/50 text-slate-300 hover:text-white'
+                }`}
+              >
+                <History className="w-5 h-5" />
+                <div>
+                  <div className="text-xs font-extrabold">Invoice History</div>
+                  <div className="text-[9px] text-slate-500 font-bold mt-0.5">View saved billing logs</div>
+                </div>
+              </Link>
+              
+              {/* Form Builder */}
+              <Link
+                to="/form-builder"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`p-4 rounded-2xl border text-left flex flex-col gap-2.5 transition-all ${
+                  location.pathname === '/form-builder'
+                    ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white border-transparent'
+                    : 'bg-[#0B0F19]/40 border-[#2D334A]/50 text-slate-300 hover:text-white'
+                }`}
+              >
+                <FileText className="w-5 h-5" />
+                <div>
+                  <div className="text-xs font-extrabold">Form Builder</div>
+                  <div className="text-[9px] text-slate-500 font-bold mt-0.5">Build & publish custom forms</div>
+                </div>
+              </Link>
+            </div>
+
+            {/* Utility links */}
+            <div className="bg-[#0B0F19]/30 rounded-2xl border border-[#2D334A]/40 p-4 space-y-1.5">
+              <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest px-1">Utilities</div>
+              
+              <button
+                onClick={() => { copyRegisterLink(); setMobileMenuOpen(false); }}
+                className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#1E243D]/50 text-slate-300 hover:text-white transition-all text-left cursor-pointer"
+              >
+                <div className="flex items-center gap-3">
+                  <Copy className="w-4 h-4 text-slate-500" />
+                  <span className="text-xs font-bold">Employee Reg Link</span>
+                </div>
+                {copiedLink === 'register' && <Check className="w-4 h-4 text-emerald-400" />}
+              </button>
+              
+              <button
+                onClick={() => { copyCertificateLink(); setMobileMenuOpen(false); }}
+                className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#1E243D]/50 text-slate-300 hover:text-white transition-all text-left cursor-pointer"
+              >
+                <div className="flex items-center gap-3">
+                  <Copy className="w-4 h-4 text-slate-500" />
+                  <span className="text-xs font-bold">Certificate Reg Link</span>
+                </div>
+                {copiedLink === 'certificate' && <Check className="w-4 h-4 text-emerald-400" />}
+              </button>
+            </div>
+
+            {/* Logout button */}
+            <button
+              onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
+              className="w-full py-4 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/25 font-bold rounded-2xl text-xs transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+            >
+              <LogOut className="w-4 h-4" />
+              Sign Out Securely
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

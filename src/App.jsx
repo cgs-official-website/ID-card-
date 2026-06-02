@@ -14,6 +14,11 @@ import CertificatesDashboard from './pages/CertificatesDashboard';
 import AdminCertificateView from './pages/AdminCertificateView';
 import InvoiceGenerator from './pages/InvoiceGenerator';
 import InvoiceHistory from './pages/InvoiceHistory';
+import FormBuilderDashboard from './pages/FormBuilderDashboard';
+import FormBuilderEditor from './pages/FormBuilderEditor';
+import FormPublicView from './pages/FormPublicView';
+import FormResponses from './pages/FormResponses';
+import FormAnalytics from './pages/FormAnalytics';
 
 function App() {
   return (
@@ -26,6 +31,7 @@ function App() {
           <Route path="/register-certificate" element={<RegisterCertificate />} />
           <Route path="/employee/:id" element={<EmployeeDetails />} />
           <Route path="/certificate/:id" element={<CertificatePortfolio />} />
+          <Route path="/f/:id" element={<FormPublicView />} />
           
           {/* Protected Admin Routes */}
           <Route path="/" element={
@@ -40,6 +46,13 @@ function App() {
             <Route path="admin/certificate/:id" element={<AdminCertificateView />} />
             <Route path="invoice-generator" element={<InvoiceGenerator />} />
             <Route path="invoice-history" element={<InvoiceHistory />} />
+            
+            {/* Custom Form Builder Module */}
+            <Route path="form-builder" element={<FormBuilderDashboard />} />
+            <Route path="form-builder/create" element={<FormBuilderEditor />} />
+            <Route path="form-builder/edit/:id" element={<FormBuilderEditor />} />
+            <Route path="form-builder/responses/:id" element={<FormResponses />} />
+            <Route path="form-builder/analytics/:id" element={<FormAnalytics />} />
           </Route>
         </Routes>
       </BrowserRouter>
