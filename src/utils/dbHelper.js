@@ -1,4 +1,4 @@
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
 import { 
   collection, getDocs, doc, setDoc, deleteDoc, updateDoc, 
   query, orderBy, getDoc, addDoc 
@@ -8,6 +8,11 @@ import {
 let useLocalStorage = sessionStorage.getItem('use_local_storage') === 'true';
 
 const enableLocalStorageFallback = (reason) => {
+  // If the user is not authenticated, permission-denied errors are normal and expected
+  // during initialization. We should not fall back to local storage in this case.
+  if (!auth.currentUser) {
+    return;
+  }
   if (!useLocalStorage) {
     console.warn("Firestore access restricted or failing. Switching to LocalStorage database fallback. Reason:", reason);
     useLocalStorage = true;

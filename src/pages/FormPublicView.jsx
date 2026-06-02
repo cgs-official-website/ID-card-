@@ -4,6 +4,8 @@ import {
   CheckCircle2, AlertTriangle, ShieldCheck, Upload, Trash2, ShieldAlert,
   Star, Lock, Image as ImageIcon, RefreshCw
 } from 'lucide-react';
+import { auth } from '../firebase';
+import { signInAnonymously } from 'firebase/auth';
 import { 
   fetchFormDetails, fetchFormFields, saveFormResponse, incrementFormViews, fetchFormResponses 
 } from '../utils/dbHelper';
@@ -39,7 +41,17 @@ const FormPublicView = () => {
 
   // Fetch form details & increment view count
   useEffect(() => {
-    fetchForm();
+    const initPublicView = async () => {
+      try {
+        if (!auth.currentUser) {
+          await signInAnonymously(auth);
+        }
+      } catch (err) {
+        console.warn("Anonymous sign-in failed:", err);
+      }
+      fetchForm();
+    };
+    initPublicView();
   }, [formId]);
 
   const generateCaptcha = () => {

@@ -18,6 +18,8 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      sessionStorage.removeItem('use_local_storage');
+      sessionStorage.removeItem('use_local_storage_invoices');
       navigate('/');
     } catch (err) {
       console.error(err);
