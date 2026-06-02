@@ -72,6 +72,12 @@ export function exportToXLSX(headers, rows, keys, fileName = 'export') {
         cellValue = JSON.stringify(val);
       }
 
+      // Clean up base64 signature/image data URLs
+      if (typeof cellValue === 'string' && cellValue.startsWith('data:image')) {
+        cellValue = '[Signature]';
+        cellType = 'String';
+      }
+
       xml += `<Cell><Data ss:Type="${cellType}">${escapeXml(cellValue)}</Data></Cell>`;
     });
     xml += '</Row>';
@@ -121,6 +127,12 @@ export function exportToCSV(headers, rows, keys, fileName = 'export') {
       if (val === null || val === undefined) return '';
       if (typeof val === 'boolean') return val ? 'Yes' : 'No';
       if (typeof val === 'object') val = JSON.stringify(val);
+
+      // Clean up base64 signature/image data URLs
+      if (typeof val === 'string' && val.startsWith('data:image')) {
+        val = '[Signature]';
+      }
+
       return `"${String(val).replace(/"/g, '""')}"`;
     });
     csvContent += rowValues.join(',') + '\r\n';

@@ -226,10 +226,18 @@ const FormResponses = () => {
     });
 
     const exportRows = listToExport.map(res => {
+      let formattedDate = '';
+      if (res.dateObj) {
+        formattedDate = res.dateObj.toLocaleString();
+      } else if (res.submittedAt && res.submittedAt !== 'Disabled') {
+        const d = new Date(res.submittedAt);
+        formattedDate = isNaN(d.getTime()) ? '' : d.toLocaleString();
+      }
+
       const row = {
         id: res.id,
-        submittedAtStr: res.dateObj ? res.dateObj.toLocaleString() : 'Disabled',
-        ipAddress: res.ipAddress || 'Disabled'
+        submittedAtStr: formattedDate,
+        ipAddress: (res.ipAddress && res.ipAddress !== 'Disabled' && res.ipAddress !== 'N/A') ? res.ipAddress : ''
       };
 
       inputFields.forEach(field => {

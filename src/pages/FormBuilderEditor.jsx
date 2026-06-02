@@ -7,7 +7,8 @@ import {
   Star, ToggleLeft, Save, PlusCircle, CheckCircle, AlertCircle, AlertTriangle, FileText
 } from 'lucide-react';
 import { 
-  fetchFormDetails as getFormDetails, fetchFormFields, saveFormObj, createAuditLogObj 
+  fetchFormDetails as getFormDetails, fetchFormFields, saveFormObj, createAuditLogObj,
+  getNextFormId
 } from '../utils/dbHelper';
 
 const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -288,7 +289,7 @@ const FormBuilderEditor = () => {
 
     try {
       setSaving(true);
-      const formId = isEditMode ? id : `form-${Date.now()}`;
+      const formId = isEditMode ? id : await getNextFormId();
       
       const formDocData = {
         title: formTitle,

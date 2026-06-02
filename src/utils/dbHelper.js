@@ -102,6 +102,44 @@ const fetchFormsListLocal = () => {
 };
 
 /**
+ * Generate sequential Form ID (e.g. CGS-form0001, CGS-form0002)
+ */
+export const getNextFormId = async (existingForms = null) => {
+  try {
+    let forms = existingForms;
+    if (!forms) {
+      forms = await fetchFormsList();
+    }
+    if (!Array.isArray(forms)) {
+      forms = [];
+    }
+    
+    // Find all IDs matching CGS[-_]?form[-_]?\d+ case-insensitively and extract the numeric part
+    const ids = forms
+      .map(f => f.id)
+      .filter(id => id && typeof id === 'string')
+      .map(id => {
+        const match = id.match(/^CGS[-_]?form[-_]?(\d+)$/i);
+        return match ? parseInt(match[1], 10) : null;
+      })
+      .filter(num => num !== null && !isNaN(num));
+      
+    if (ids.length === 0) {
+      return 'CGS-form0001';
+    }
+    
+    const maxId = Math.max(...ids);
+    const nextIdVal = maxId + 1;
+    const padded = String(nextIdVal).padStart(4, '0');
+    return `CGS-form${padded}`;
+  } catch (error) {
+    console.error("Error generating next form ID:", error);
+    return `CGS-form-${Date.now()}`;
+  }
+};
+
+
+/**
  * Fetch detailed form options and settings
  */
 export const fetchFormDetails = async (formId) => {

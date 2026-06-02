@@ -217,7 +217,7 @@ const InvoiceGenerator = () => {
 
       {success && (
         <div className="p-4 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-2xl text-center font-bold">
-          Invoice saved successfully to Firebase! PDF download started.
+          Invoice saved successfully! PDF download started.
         </div>
       )}
     </div>

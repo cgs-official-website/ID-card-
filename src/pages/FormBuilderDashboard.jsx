@@ -9,7 +9,7 @@ import { exportToCSV, exportToXLSX } from '../utils/excelExporter';
 import { 
   fetchFormsList, duplicateFormObj, archiveFormObj, deleteFormObj, 
   fetchAuditLogsList, createAuditLogObj, fetchFormResponses, fetchFormFields,
-  updateFormStatusObj
+  updateFormStatusObj, getNextFormId
 } from '../utils/dbHelper';
 
 const FormBuilderDashboard = () => {
@@ -39,8 +39,19 @@ const FormBuilderDashboard = () => {
   // Alert/Confirm modal state
   const [confirmModal, setConfirmModal] = useState(null); // { type, formId, action, title, text }
 
+  // State to track active dropdown menus ('settings-{formId}' or 'export-{formId}')
+  const [activeMenu, setActiveMenu] = useState(null);
+
   useEffect(() => {
     fetchForms();
+  }, []);
+
+  useEffect(() => {
+    const closeMenus = () => {
+      setActiveMenu(null);
+    };
+    document.addEventListener('click', closeMenus);
+    return () => document.removeEventListener('click', closeMenus);
   }, []);
 
   const fetchForms = async () => {
@@ -76,7 +87,7 @@ const FormBuilderDashboard = () => {
   const handleDuplicate = async (form) => {
     try {
       setLoading(true);
-      const newId = `form-${Date.now()}`;
+      const newId = await getNextFormId(forms);
       const newFormDoc = {
         title: `${form.title} (Copy)`,
         description: form.description || '',
@@ -199,12 +210,18 @@ const FormBuilderDashboard = () => {
       });
 
       const exportRows = responses.map(res => {
+        let formattedDate = '';
+        if (res.dateObj) {
+          formattedDate = res.dateObj.toLocaleString();
+        } else if (res.submittedAt && res.submittedAt !== 'Disabled') {
+          const d = new Date(res.submittedAt);
+          formattedDate = isNaN(d.getTime()) ? '' : d.toLocaleString();
+        }
+
         const row = {
           id: res.id,
-          submittedAtStr: res.dateObj
-            ? res.dateObj.toLocaleString()
-            : new Date(res.submittedAt).toLocaleString(),
-          ipAddress: res.ipAddress || 'N/A'
+          submittedAtStr: formattedDate,
+          ipAddress: (res.ipAddress && res.ipAddress !== 'Disabled' && res.ipAddress !== 'N/A') ? res.ipAddress : ''
         };
 
         // Fill field answers
@@ -445,9 +462,13 @@ const FormBuilderDashboard = () => {
                           </Link>
 
                           {/* Quick Excel Export dropdown */}
-                          <div className="relative group/exp">
+                          <div className="relative">
                             <button
                               disabled={form.responsesCount === 0}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveMenu(activeMenu === `export-${form.id}` ? null : `export-${form.id}`);
+                              }}
                               className={`p-2 rounded-lg border transition-all ${
                                 form.responsesCount > 0
                                   ? 'bg-slate-900 border-[#2D334A]/50 text-slate-400 hover:text-emerald-400 cursor-pointer'
@@ -458,7 +479,7 @@ const FormBuilderDashboard = () => {
                               <Download className="w-4 h-4" />
                             </button>
                             {form.responsesCount > 0 && (
-                              <div className="absolute right-0 bottom-full mb-1 w-28 bg-[#181D30] border border-[#2D334A] rounded-xl shadow-2xl overflow-hidden hidden group-hover/exp:block z-30">
+                              <div className={`absolute right-0 bottom-full mb-1 w-28 bg-[#181D30] border border-[#2D334A] rounded-xl shadow-2xl overflow-hidden z-30 ${activeMenu === `export-${form.id}` ? 'block' : 'hidden'}`}>
                                 <button 
                                   onClick={() => handleExportResponses(form, 'csv')}
                                   className="w-full px-3 py-2 text-left text-xs font-bold text-slate-300 hover:bg-slate-800 transition-colors cursor-pointer"
@@ -485,14 +506,18 @@ const FormBuilderDashboard = () => {
                           </Link>
 
                           {/* Actions trigger */}
-                          <div className="relative group/act">
+                          <div className="relative">
                             <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveMenu(activeMenu === `settings-${form.id}` ? null : `settings-${form.id}`);
+                              }}
                               className="p-2 bg-slate-900 border border-[#2D334A]/50 text-slate-400 hover:text-white rounded-lg transition-all cursor-pointer"
                               title="More Options"
                             >
                               <Settings className="w-4 h-4" />
                             </button>
-                            <div className="absolute right-0 bottom-full mb-1 w-32 bg-[#181D30] border border-[#2D334A] rounded-xl shadow-2xl overflow-hidden hidden group-hover/act:block z-30">
+                            <div className={`absolute right-0 bottom-full mb-1 w-32 bg-[#181D30] border border-[#2D334A] rounded-xl shadow-2xl overflow-hidden z-30 ${activeMenu === `settings-${form.id}` ? 'block' : 'hidden'}`}>
                               <button 
                                 onClick={() => setConfirmModal({
                                   type: 'duplicate',
