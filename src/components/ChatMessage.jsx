@@ -5,24 +5,24 @@ function formatTime(date) {
   return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 }
 
-export default function ChatMessage({ message }) {
+export default function ChatMessage({ message, compact = false }) {
   const isUser = message.role === 'user';
   const isError = message.role === 'error';
 
   return (
-    <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'} items-end mb-4`}>
-      {/* Avatar */}
+    <div className={`flex gap-2 ${isUser ? 'flex-row-reverse' : 'flex-row'} items-end mb-2.5`}>
+      {/* Bot Avatar */}
       {!isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30 text-white text-xs font-bold">
-          C
+        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-md shadow-blue-500/30 text-white text-[9px] font-bold">
+          Z
         </div>
       )}
 
       {/* Bubble */}
-      <div className={`max-w-[80%] group`}>
+      <div className="max-w-[82%] group">
         <div
           className={`
-            relative px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-lg
+            relative px-3 py-2 rounded-xl text-xs leading-relaxed shadow-md
             ${isUser
               ? 'bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-br-sm'
               : isError
@@ -34,22 +34,22 @@ export default function ChatMessage({ message }) {
           {isUser ? (
             <p className="whitespace-pre-wrap">{message.content}</p>
           ) : (
-            <div className="prose prose-invert prose-sm max-w-none
-              prose-p:my-1 prose-ul:my-1 prose-li:my-0.5
-              prose-strong:text-blue-300 prose-headings:text-blue-200
-              prose-a:text-blue-400 prose-code:text-blue-300">
+            <div className="prose prose-invert max-w-none
+              [&>*]:text-xs [&>p]:my-0.5 [&>ul]:my-0.5 [&>li]:my-0
+              [&>strong]:text-blue-300 [&>h1]:text-blue-200 [&>h2]:text-blue-200 [&>h3]:text-blue-200
+              [&>a]:text-blue-400 [&>code]:text-blue-300 [&>p]:text-gray-100">
               <ReactMarkdown>{message.content}</ReactMarkdown>
             </div>
           )}
         </div>
-        <p className={`text-[10px] text-gray-500 mt-1 ${isUser ? 'text-right pr-1' : 'text-left pl-1'}`}>
+        <p className={`text-[9px] text-gray-600 mt-0.5 ${isUser ? 'text-right pr-0.5' : 'text-left pl-0.5'}`}>
           {formatTime(message.timestamp)}
         </p>
       </div>
 
       {/* User Avatar */}
       {isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white text-xs font-bold shadow">
+        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white text-[9px] font-bold shadow">
           Y
         </div>
       )}

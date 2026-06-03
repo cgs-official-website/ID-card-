@@ -4,13 +4,13 @@ import { sendMessage } from '../utils/gemini';
 const WELCOME_MESSAGE = {
   id: 'welcome',
   role: 'model',
-  content: `👋 Hello! I'm **CarrezzaBot**, the official AI assistant for **Carrezza Global Solutions (CGS)**!
+  content: `👋 Hi! I'm **Zuna AI**, your CGS assistant!
 
-I can help you with:
-- 🏢 Information about our services (IT & BPO)
-- 💼 Career & internship opportunities
-- 🛠️ Our tech stack & internal tools
-- 📞 How to contact us
+I can help with:
+- 🏢 Our services (IT & BPO)
+- 💼 Careers & internships
+- 🛠️ Internal tools & tech
+- 📞 Contact info
 
 What would you like to know?`,
   timestamp: new Date(),
@@ -46,7 +46,7 @@ export function useChat() {
         timestamp: new Date(),
       };
 
-      // Update history for context continuity
+      // Append to history for context continuity
       historyRef.current = [
         ...historyRef.current,
         { role: 'user', content: userText },
@@ -55,10 +55,18 @@ export function useChat() {
 
       setMessages((prev) => [...prev, botMessage]);
     } catch (err) {
-      console.error('Gemini API error:', err);
-      const errorMessage = err.message?.includes('VITE_GEMINI_API_KEY')
-        ? '⚠️ API key not configured. Please add your VITE_GEMINI_API_KEY to the .env file.'
-        : '⚠️ Sorry, I encountered an error. Please try again in a moment.';
+      console.error('Zuna AI error:', err);
+
+      let errorMessage = '⚠️ Something went wrong. Please try again.';
+      if (err.message?.includes('VITE_GEMINI_API_KEY')) {
+        errorMessage = '🔑 API key missing. Add VITE_GEMINI_API_KEY to your .env file.';
+      } else if (err.message?.includes('API_KEY_INVALID') || err.message?.includes('400')) {
+        errorMessage = '🔑 Invalid API key. Please check your VITE_GEMINI_API_KEY in .env';
+      } else if (err.message?.includes('quota') || err.message?.includes('429')) {
+        errorMessage = '⏳ Rate limit reached. Please wait a moment and try again.';
+      } else if (err.message?.includes('PERMISSION_DENIED') || err.message?.includes('403')) {
+        errorMessage = '🚫 API key lacks permission. Check your Google AI Studio key.';
+      }
 
       setError(errorMessage);
       setMessages((prev) => [
