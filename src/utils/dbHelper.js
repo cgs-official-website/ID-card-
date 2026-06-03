@@ -8,9 +8,10 @@ import {
 let useLocalStorage = sessionStorage.getItem('use_local_storage') === 'true';
 
 const enableLocalStorageFallback = (reason) => {
-  // If the user is not authenticated, permission-denied errors are normal and expected
-  // during initialization. We should not fall back to local storage in this case.
-  if (!auth.currentUser) {
+  // If the user is not authenticated or is logged in anonymously,
+  // permission-denied errors are normal and expected for certain actions.
+  // We should not fall back to local storage in these cases.
+  if (!auth.currentUser || auth.currentUser.isAnonymous) {
     return;
   }
   if (!useLocalStorage) {

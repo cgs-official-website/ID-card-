@@ -94,10 +94,16 @@ const FormPublicView = () => {
       }
 
       // Check submission limit
-      const responsesList = await fetchFormResponses(formId);
-      if (formData.settings?.submissionLimit && responsesList.length >= parseInt(formData.settings.submissionLimit)) {
-        setError("This form has reached its submission limit.");
-        return;
+      if (formData.settings?.submissionLimit) {
+        try {
+          const responsesList = await fetchFormResponses(formId);
+          if (responsesList && responsesList.length >= parseInt(formData.settings.submissionLimit)) {
+            setError("This form has reached its submission limit.");
+            return;
+          }
+        } catch (err) {
+          console.warn("Could not verify submission limit:", err);
+        }
       }
 
       setForm(formData);
