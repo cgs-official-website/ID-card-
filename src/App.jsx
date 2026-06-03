@@ -19,6 +19,7 @@ import FormBuilderEditor from './pages/FormBuilderEditor';
 import FormPublicView from './pages/FormPublicView';
 import FormResponses from './pages/FormResponses';
 import FormAnalytics from './pages/FormAnalytics';
+import ChatWidget from './components/ChatWidget';
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <ChatWidget />
     </AuthProvider>
   );
 }

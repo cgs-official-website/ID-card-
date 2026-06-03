@@ -4,11 +4,10 @@ import {
   CheckCircle2, AlertTriangle, ShieldCheck, Upload, Trash2, ShieldAlert,
   Star, Lock, Image as ImageIcon, RefreshCw
 } from 'lucide-react';
-import { auth } from '../firebase';
-import { signInAnonymously } from 'firebase/auth';
+import { db } from '../firebase';
 import { 
-  fetchFormDetails, fetchFormFields, saveFormResponse, incrementFormViews, fetchFormResponses 
-} from '../utils/dbHelper';
+  doc, getDoc, getDocs, addDoc, updateDoc, collection, query, orderBy
+} from 'firebase/firestore';
 
 const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
@@ -41,17 +40,7 @@ const FormPublicView = () => {
 
   // Fetch form details & increment view count
   useEffect(() => {
-    const initPublicView = async () => {
-      try {
-        if (!auth.currentUser) {
-          await signInAnonymously(auth);
-        }
-      } catch (err) {
-        console.warn("Anonymous sign-in failed:", err);
-      }
-      fetchForm();
-    };
-    initPublicView();
+    fetchForm();
   }, [formId]);
 
   const generateCaptcha = () => {
@@ -69,13 +58,15 @@ const FormPublicView = () => {
   const fetchForm = async () => {
     try {
       setLoading(true);
-      const formData = await fetchFormDetails(formId);
-      
-      if (!formData) {
+
+      // --- Direct Firestore read: bypasses dbHelper LocalStorage fallback ---
+      const formSnap = await getDoc(doc(db, 'forms', formId));
+      if (!formSnap.exists()) {
         setError("This form does not exist.");
         return;
       }
-      
+      const formData = formSnap.data();
+
       // Enforce status checks
       if (formData.status !== 'published') {
         setError("This form is currently closed or in draft status.");
@@ -93,25 +84,15 @@ const FormPublicView = () => {
         return;
       }
 
-      // Check submission limit
-      if (formData.settings?.submissionLimit) {
-        try {
-          const responsesList = await fetchFormResponses(formId);
-          if (responsesList && responsesList.length >= parseInt(formData.settings.submissionLimit)) {
-            setError("This form has reached its submission limit.");
-            return;
-          }
-        } catch (err) {
-          console.warn("Could not verify submission limit:", err);
-        }
-      }
-
       setForm(formData);
 
-      // Fetch Fields
-      const fetchedFields = await fetchFormFields(formId);
+      // Fetch Fields directly from Firestore
+      const fieldsSnap = await getDocs(collection(db, `forms/${formId}/fields`));
+      const fetchedFields = fieldsSnap.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
       setFields(fetchedFields);
-      
+
       // Initialize response fields
       const initialResObj = {};
       fetchedFields.forEach(f => {
@@ -128,6 +109,19 @@ const FormPublicView = () => {
         return;
       }
 
+      // Check submission limit (only if configured)
+      if (formData.settings?.submissionLimit) {
+        try {
+          const resSnap = await getDocs(collection(db, `forms/${formId}/responses`));
+          if (resSnap.size >= parseInt(formData.settings.submissionLimit)) {
+            setError("This form has reached its submission limit.");
+            return;
+          }
+        } catch (err) {
+          console.warn("Could not verify submission limit (ignored):", err);
+        }
+      }
+
       // Setup captcha if enabled
       if (formData.settings?.enableCaptcha !== false) {
         generateCaptcha();
@@ -135,13 +129,18 @@ const FormPublicView = () => {
 
       // Increment View Count (once per session)
       if (!sessionStorage.getItem(`viewed-${formId}`)) {
-        await incrementFormViews(formId);
+        try {
+          const { increment } = await import('firebase/firestore');
+          await updateDoc(doc(db, 'forms', formId), { views: increment(1) });
+        } catch (err) {
+          console.warn("View count increment failed (ignored):", err);
+        }
         sessionStorage.setItem(`viewed-${formId}`, 'true');
       }
 
     } catch (err) {
       console.error("Error loading form:", err);
-      setError("An error occurred while loading this form. Please refresh.");
+      setError("An error occurred while loading this form. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -418,8 +417,20 @@ const FormPublicView = () => {
         }
       });
 
-      // Submit responses via dbHelper
-      await saveFormResponse(formId, submissionPayload, uploadedFiles);
+      // Submit responses directly to Firestore (bypasses dbHelper fallback)
+      const responseDocRef = await addDoc(collection(db, `forms/${formId}/responses`), submissionPayload);
+
+      // Save response file references if any
+      if (uploadedFiles && uploadedFiles.length > 0) {
+        for (const file of uploadedFiles) {
+          await addDoc(collection(db, 'responseFiles'), {
+            responseId: responseDocRef.id,
+            formId,
+            ...file,
+            uploadedAt: new Date().toISOString()
+          });
+        }
+      }
 
       // Record successful submission for back-button session tracking
       sessionStorage.setItem(`submitted-${formId}`, 'true');
