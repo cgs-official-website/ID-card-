@@ -91,3 +91,11 @@ p:last-child {
   background: transparent;
 }
 
+/* Prose fixes for markdown in chat */
+.prose :first-child {
+  margin-top: 0 !important;
+}
+.prose :last-child {
+  margin-bottom: 0 !important;
+}
+
