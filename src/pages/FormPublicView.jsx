@@ -203,14 +203,13 @@ const FormPublicView = () => {
     }));
 
     try {
-      const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
       const googleDriveUrl = import.meta.env.VITE_GOOGLE_DRIVE_UPLOAD_URL;
 
       let secureUrl = '';
       let fileId = null;
 
-      if (isPdf && googleDriveUrl) {
-        // Convert file to base64
+      if (googleDriveUrl) {
+        // Upload ALL file types (images + PDFs) to Google Drive via base64
         const base64Data = await new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.readAsDataURL(file);
@@ -231,12 +230,12 @@ const FormPublicView = () => {
             action: 'upload',
             base64: base64Data,
             fileName: file.name,
-            mimeType: file.type || 'application/pdf'
+            mimeType: file.type || 'application/octet-stream'
           })
         });
 
         if (!uploadResponse.ok) {
-          throw new Error(`HTTP error! status: ${uploadResponse.status}`);
+          throw new Error(`Drive upload failed with HTTP ${uploadResponse.status}`);
         }
         const uploadResult = await uploadResponse.json();
         if (!uploadResult.success) {
@@ -248,7 +247,7 @@ const FormPublicView = () => {
           setUploadedFileIds(prev => [...prev, fileId]);
         }
       } else {
-        // Fallback to Cloudinary upload
+        // Fallback to Cloudinary upload when Drive URL is not configured
         const formData = new FormData();
         formData.append('file', file);
         formData.append('upload_preset', UPLOAD_PRESET);
