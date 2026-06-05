@@ -201,20 +201,60 @@ const FormPublicView = () => {
     }));
 
     try {
-      // 1. Upload to Cloudinary
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', UPLOAD_PRESET);
-      
-      // Auto resource type handles images, PDFs, word files, etc.
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`,
-        { method: 'POST', body: formData }
-      );
-      
-      if (!response.ok) throw new Error("Upload failed");
-      const uploadData = await response.json();
-      const secureUrl = uploadData.secure_url;
+      const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+      const googleDriveUrl = import.meta.env.VITE_GOOGLE_DRIVE_UPLOAD_URL;
+
+      let secureUrl = '';
+
+      if (isPdf && googleDriveUrl) {
+        // Convert file to base64
+        const base64Data = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            const base64String = reader.result.split(',')[1];
+            resolve(base64String);
+          };
+          reader.onerror = (error) => reject(error);
+        });
+
+        const uploadResponse = await fetch(googleDriveUrl, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8',
+          },
+          body: JSON.stringify({
+            base64: base64Data,
+            fileName: file.name,
+            mimeType: file.type || 'application/pdf'
+          })
+        });
+
+        if (!uploadResponse.ok) {
+          throw new Error(`HTTP error! status: ${uploadResponse.status}`);
+        }
+        const uploadResult = await uploadResponse.json();
+        if (!uploadResult.success) {
+          throw new Error(uploadResult.error || 'Google Drive upload was unsuccessful');
+        }
+        secureUrl = uploadResult.url;
+      } else {
+        // Fallback to Cloudinary upload
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', UPLOAD_PRESET);
+        
+        // Auto resource type handles images, PDFs, word files, etc.
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`,
+          { method: 'POST', body: formData }
+        );
+        
+        if (!response.ok) throw new Error("Cloudinary upload failed");
+        const uploadData = await response.json();
+        secureUrl = uploadData.secure_url;
+      }
 
       // 2. Perform a simulated security virus scan
       await new Promise(resolve => setTimeout(resolve, 1500)); // Delay to simulate scan
@@ -231,10 +271,10 @@ const FormPublicView = () => {
 
       handleInputChange(fieldId, secureUrl);
     } catch (err) {
-      console.error("Cloudinary file upload error:", err);
+      console.error("File upload error:", err);
       setFilesData(prev => ({
         ...prev,
-        [fieldId]: { error: 'Secure file upload failed. Try another file.' }
+        [fieldId]: { error: `Secure file upload failed: ${err.message || 'Try another file.'}` }
       }));
     }
   };
