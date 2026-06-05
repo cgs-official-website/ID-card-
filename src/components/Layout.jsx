@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, LogOut, Copy, Award, Check, ReceiptText, History, FileText, Menu, X } from 'lucide-react';
+import { LayoutDashboard, LogOut, Copy, Award, Check, ReceiptText, History, FileText, Menu, X, ClipboardCheck, ChevronRight } from 'lucide-react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useState } from 'react';
@@ -40,6 +40,7 @@ const Layout = () => {
     { name: 'Invoice Generator', mobileName: 'Invoice', path: '/invoice-generator', icon: ReceiptText },
     { name: 'Invoice History', mobileName: 'History', path: '/invoice-history', icon: History },
     { name: 'Form Builder', mobileName: 'Forms', path: '/form-builder', icon: FileText },
+    { name: 'Attendance Tracker', mobileName: 'Attendance', path: '/attendance-tracker', icon: ClipboardCheck },
   ];
 
   return (
@@ -54,7 +55,7 @@ const Layout = () => {
             <h1 className="text-xl font-bold text-white tracking-tight">Admin Panel</h1>
           </Link>
         </div>
-        <nav className="flex-1 px-5 py-8 space-y-3">
+        <nav className="flex-1 px-5 py-8 space-y-3 overflow-y-auto pr-1">
           <div className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 px-3">Main Menu</div>
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -170,89 +171,129 @@ const Layout = () => {
           />
           
           {/* Drawer container */}
-          <div className="relative w-full bg-[#131726] border-t border-[#2D334A] rounded-t-[2.5rem] p-6 pb-12 z-10 shadow-2xl flex flex-col gap-6 animate-in slide-in-from-bottom duration-300">
+          <div className="relative w-full bg-[#131726] border-t border-[#2D334A]/80 rounded-t-[2.5rem] p-8 pb-16 z-10 shadow-2xl flex flex-col gap-8 animate-in slide-in-from-bottom duration-300 max-h-[90vh] overflow-y-auto">
             {/* Header */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between border-b border-[#2D334A]/40 pb-4">
               <div>
-                <h3 className="text-lg font-bold text-white">More Options</h3>
-                <p className="text-xs font-semibold text-slate-500">Access utilities and settings</p>
+                <h3 className="text-xl font-bold text-white tracking-tight">More Options</h3>
+                <p className="text-xs font-semibold text-slate-500 mt-1">Access administration tools & link utilities</p>
               </div>
               <button 
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2 hover:bg-[#1E243D] rounded-full text-slate-400 hover:text-white transition-colors cursor-pointer"
+                className="p-2.5 bg-[#1E243D]/50 hover:bg-[#1E243D] rounded-full text-slate-400 hover:text-white transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
             
-            {/* Options grid list */}
-            <div className="grid grid-cols-2 gap-3.5">
+            {/* Options list */}
+            <div className="flex flex-col gap-3">
+              <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1.5 mb-1">Modules</div>
+
               {/* Invoice History */}
               <Link
                 to="/invoice-history"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`p-4 rounded-2xl border text-left flex flex-col gap-2.5 transition-all ${
+                className={`p-4.5 rounded-2xl border flex items-center justify-between gap-4 transition-all ${
                   location.pathname === '/invoice-history'
-                    ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white border-transparent'
-                    : 'bg-[#0B0F19]/40 border-[#2D334A]/50 text-slate-300 hover:text-white'
+                    ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white border-transparent shadow-lg shadow-violet-500/10'
+                    : 'bg-[#0B0F19]/40 border-[#2D334A]/50 text-slate-300 hover:text-white hover:border-[#2D334A]'
                 }`}
               >
-                <History className="w-5 h-5" />
-                <div>
-                  <div className="text-xs font-extrabold">Invoice History</div>
-                  <div className="text-[9px] text-slate-500 font-bold mt-0.5">View saved billing logs</div>
+                <div className="flex items-center gap-4">
+                  <div className={`p-3 rounded-xl ${location.pathname === '/invoice-history' ? 'bg-white/10 text-white' : 'bg-violet-500/10 text-violet-400'}`}>
+                    <History className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-extrabold">Invoice History</div>
+                    <div className="text-[10px] text-slate-500 font-semibold mt-0.5">View saved billing and invoices</div>
+                  </div>
                 </div>
+                <ChevronRight className="w-5 h-5 text-slate-500" />
               </Link>
               
               {/* Form Builder */}
               <Link
                 to="/form-builder"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`p-4 rounded-2xl border text-left flex flex-col gap-2.5 transition-all ${
+                className={`p-4.5 rounded-2xl border flex items-center justify-between gap-4 transition-all ${
                   location.pathname === '/form-builder'
-                    ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white border-transparent'
-                    : 'bg-[#0B0F19]/40 border-[#2D334A]/50 text-slate-300 hover:text-white'
+                    ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white border-transparent shadow-lg shadow-violet-500/10'
+                    : 'bg-[#0B0F19]/40 border-[#2D334A]/50 text-slate-300 hover:text-white hover:border-[#2D334A]'
                 }`}
               >
-                <FileText className="w-5 h-5" />
-                <div>
-                  <div className="text-xs font-extrabold">Form Builder</div>
-                  <div className="text-[9px] text-slate-500 font-bold mt-0.5">Build & publish custom forms</div>
+                <div className="flex items-center gap-4">
+                  <div className={`p-3 rounded-xl ${location.pathname === '/form-builder' ? 'bg-white/10 text-white' : 'bg-blue-500/10 text-blue-400'}`}>
+                    <FileText className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-extrabold">Form Builder</div>
+                    <div className="text-[10px] text-slate-500 font-semibold mt-0.5">Build & publish custom client forms</div>
+                  </div>
                 </div>
+                <ChevronRight className="w-5 h-5 text-slate-500" />
+              </Link>
+
+              {/* Attendance Tracker */}
+              <Link
+                to="/attendance-tracker"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`p-4.5 rounded-2xl border flex items-center justify-between gap-4 transition-all ${
+                  location.pathname === '/attendance-tracker'
+                    ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white border-transparent shadow-lg shadow-violet-500/10'
+                    : 'bg-[#0B0F19]/40 border-[#2D334A]/50 text-slate-300 hover:text-white hover:border-[#2D334A]'
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <div className={`p-3 rounded-xl ${location.pathname === '/attendance-tracker' ? 'bg-white/10 text-white' : 'bg-emerald-500/10 text-emerald-400'}`}>
+                    <ClipboardCheck className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-extrabold">Attendance Tracker</div>
+                    <div className="text-[10px] text-slate-500 font-semibold mt-0.5">Aggregate, separate & download logs</div>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-slate-500" />
               </Link>
             </div>
 
             {/* Utility links */}
-            <div className="bg-[#0B0F19]/30 rounded-2xl border border-[#2D334A]/40 p-4 space-y-1.5">
-              <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest px-1">Utilities</div>
+            <div className="bg-[#0B0F19]/30 rounded-[1.75rem] border border-[#2D334A]/40 p-5 space-y-3">
+              <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Utilities</div>
               
-              <button
-                onClick={() => { copyRegisterLink(); setMobileMenuOpen(false); }}
-                className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#1E243D]/50 text-slate-300 hover:text-white transition-all text-left cursor-pointer"
-              >
-                <div className="flex items-center gap-3">
-                  <Copy className="w-4 h-4 text-slate-500" />
-                  <span className="text-xs font-bold">Employee Reg Link</span>
-                </div>
-                {copiedLink === 'register' && <Check className="w-4 h-4 text-emerald-400" />}
-              </button>
-              
-              <button
-                onClick={() => { copyCertificateLink(); setMobileMenuOpen(false); }}
-                className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#1E243D]/50 text-slate-300 hover:text-white transition-all text-left cursor-pointer"
-              >
-                <div className="flex items-center gap-3">
-                  <Copy className="w-4 h-4 text-slate-500" />
-                  <span className="text-xs font-bold">Certificate Reg Link</span>
-                </div>
-                {copiedLink === 'certificate' && <Check className="w-4 h-4 text-emerald-400" />}
-              </button>
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => { copyRegisterLink(); setMobileMenuOpen(false); }}
+                  className="w-full flex items-center justify-between p-3.5 bg-[#131726]/40 hover:bg-[#1E243D]/50 border border-[#2D334A]/40 rounded-xl text-slate-300 hover:text-white transition-all text-left cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-1.5 bg-slate-900 border border-[#2D334A]/50 rounded-lg text-slate-500">
+                      <Copy className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-bold">Employee Reg Link</span>
+                  </div>
+                  {copiedLink === 'register' ? <Check className="w-4 h-4 text-emerald-400 font-extrabold" /> : <ChevronRight className="w-4 h-4 text-slate-600" />}
+                </button>
+                
+                <button
+                  onClick={() => { copyCertificateLink(); setMobileMenuOpen(false); }}
+                  className="w-full flex items-center justify-between p-3.5 bg-[#131726]/40 hover:bg-[#1E243D]/50 border border-[#2D334A]/40 rounded-xl text-slate-300 hover:text-white transition-all text-left cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-1.5 bg-slate-900 border border-[#2D334A]/50 rounded-lg text-slate-500">
+                      <Copy className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-bold">Certificate Reg Link</span>
+                  </div>
+                  {copiedLink === 'certificate' ? <Check className="w-4 h-4 text-emerald-400 font-extrabold" /> : <ChevronRight className="w-4 h-4 text-slate-600" />}
+                </button>
+              </div>
             </div>
 
             {/* Logout button */}
             <button
               onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
-              className="w-full py-4 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/25 font-bold rounded-2xl text-xs transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+              className="w-full py-4.5 bg-red-500/5 hover:bg-red-500/10 text-red-400 border border-red-500/20 hover:border-red-500/35 font-extrabold rounded-2xl text-xs transition-all flex items-center justify-center gap-2.5 cursor-pointer mt-1"
             >
               <LogOut className="w-4 h-4" />
               Sign Out Securely

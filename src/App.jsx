@@ -20,6 +20,7 @@ import FormPublicView from './pages/FormPublicView';
 import FormResponses from './pages/FormResponses';
 import FormAnalytics from './pages/FormAnalytics';
 import ChatWidget from './components/ChatWidget';
+import AttendanceTracker from './pages/AttendanceTracker';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             <Route path="admin/certificate/:id" element={<AdminCertificateView />} />
             <Route path="invoice-generator" element={<InvoiceGenerator />} />
             <Route path="invoice-history" element={<InvoiceHistory />} />
+            <Route path="attendance-tracker" element={<AttendanceTracker />} />
             
             {/* Custom Form Builder Module */}
             <Route path="form-builder" element={<FormBuilderDashboard />} />

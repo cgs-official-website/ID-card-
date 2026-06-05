@@ -4,7 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import { 
   ArrowLeft, Plus, Trash2, ChevronUp, ChevronDown, Settings, Sliders, Type, HelpCircle,
   Hash, Mail, Phone, Link2, List, CheckSquare, Radio, Calendar, Clock, Upload, Image, 
-  Star, ToggleLeft, Save, PlusCircle, CheckCircle, AlertCircle, AlertTriangle, FileText
+  Star, ToggleLeft, Save, PlusCircle, CheckCircle, AlertCircle, AlertTriangle, FileText,
+  Sparkles, Check
 } from 'lucide-react';
 import { 
   fetchFormDetails as getFormDetails, fetchFormFields, saveFormObj, createAuditLogObj,
@@ -47,6 +48,17 @@ const FIELD_TYPES = {
   ]
 };
 
+const getInputIcon = (type) => {
+  switch (type) {
+    case 'email': return Mail;
+    case 'phone': return Phone;
+    case 'number': return Hash;
+    case 'url': return Link2;
+    case 'longText': return FileText;
+    default: return Type;
+  }
+};
+
 const FormBuilderEditor = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -56,6 +68,8 @@ const FormBuilderEditor = () => {
   const [loading, setLoading] = useState(isEditMode);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState('builder'); // 'builder' or 'settings'
+  const [editorMobileTab, setEditorMobileTab] = useState('canvas'); // 'toolbox' | 'canvas' | 'properties'
+  const [activePropertySection, setActivePropertySection] = useState('general'); // 'general' | 'validation' | 'visibility'
   
   // Form Details
   const [formTitle, setFormTitle] = useState('New Custom Form');
@@ -176,6 +190,7 @@ const FormBuilderEditor = () => {
 
     setFields([...fields, newField]);
     setSelectedFieldId(newFieldId);
+    setEditorMobileTab('canvas');
   };
 
   const removeField = (fieldId) => {
@@ -340,32 +355,38 @@ const FormBuilderEditor = () => {
   return (
     <div className="space-y-6 bg-transparent pb-16">
       {/* Header bar */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-lg">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#131726]/60 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-xl animate-in fade-in slide-in-from-top-4 duration-300">
         <div className="flex items-center gap-3">
-          <Link to="/form-builder" className="p-2 hover:bg-[#1E243D] text-slate-400 hover:text-white rounded-xl transition-all cursor-pointer">
+          <Link to="/form-builder" className="p-2.5 bg-[#0B0F19]/40 border border-[#2D334A]/40 hover:border-violet-500/40 hover:bg-[#1E243D]/65 text-slate-400 hover:text-white rounded-xl transition-all cursor-pointer hover:scale-[1.05] active:scale-95 duration-200">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h2 className="text-xl font-bold text-white tracking-tight">{isEditMode ? 'Edit Custom Form' : 'Create Custom Form'}</h2>
-            <p className="text-xs font-semibold text-slate-400 mt-0.5">Drag-and-drop or select components to design your form</p>
+            <h2 className="text-xl font-extrabold text-white tracking-tight">{isEditMode ? 'Edit Custom Form' : 'Create Custom Form'}</h2>
+            <p className="text-[11px] font-bold text-slate-400 mt-0.5">Interactive WYSIWYG form designer and options config</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 self-stretch sm:self-auto">
+        <div className="flex items-center gap-3 self-stretch sm:self-auto">
           <select 
             value={formStatus} 
             onChange={(e) => setFormStatus(e.target.value)}
-            className="rounded-xl border border-[#2D334A]/50 bg-[#0B0F19]/50 px-4 py-2.5 text-xs font-bold text-white focus:outline-none focus:border-violet-500 transition-all cursor-pointer"
+            className={`rounded-xl border bg-[#0B0F19]/60 px-4 py-2.5 text-xs font-bold transition-all duration-300 cursor-pointer focus:outline-none focus:ring-1 focus:ring-violet-500/50 ${
+              formStatus === 'published' 
+                ? 'border-emerald-500/30 text-emerald-400' 
+                : formStatus === 'archived' 
+                  ? 'border-slate-500/30 text-slate-400' 
+                  : 'border-amber-500/30 text-amber-400'
+            }`}
           >
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
-            <option value="archived">Archived</option>
+            <option value="draft" className="bg-[#0B0F19] text-amber-400 font-bold">Draft</option>
+            <option value="published" className="bg-[#0B0F19] text-emerald-400 font-bold">Published</option>
+            <option value="archived" className="bg-[#0B0F19] text-slate-400 font-bold">Archived</option>
           </select>
 
           <button
             onClick={handleSaveForm}
             disabled={saving}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white text-xs font-black shadow-lg shadow-violet-500/20 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white text-xs font-black shadow-lg shadow-violet-500/20 hover:shadow-violet-500/30 hover:scale-[1.02] active:scale-95 transition-all duration-200 flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             {saving ? 'Saving...' : 'Save Form'}
@@ -375,593 +396,841 @@ const FormBuilderEditor = () => {
 
       {/* Editor Main Content */}
       {loading ? (
-        <div className="bg-[#131726]/80 border border-[#2D334A]/50 rounded-3xl p-16 text-center text-white">
-          <div className="w-8 h-8 border-3 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
-          <span className="font-semibold text-sm">Loading editor...</span>
+        <div className="bg-[#131726]/60 backdrop-blur-md border border-[#2D334A]/50 rounded-3xl p-24 text-center text-white shadow-xl">
+          <div className="w-10 h-10 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <span className="font-bold text-sm tracking-wide text-slate-300">Loading custom form workspace...</span>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
-          {/* LEFT PANEL: Field Toolbox (3 cols) */}
-          <div className="lg:col-span-3 space-y-5 bg-[#131726]/60 backdrop-blur-md p-5 rounded-3xl border border-[#2D334A]/50 shadow-md">
-            <div>
-              <h3 className="text-sm font-bold text-white">Field Toolbox</h3>
-              <p className="text-[10px] font-semibold text-slate-400 mt-0.5">Click fields below to add to form</p>
-            </div>
-            
-            <div className="space-y-4 max-h-[600px] overflow-y-auto pr-1">
-              {[
-                { name: 'Basic Fields', list: FIELD_TYPES.basic },
-                { name: 'Selection Fields', list: FIELD_TYPES.selection },
-                { name: 'Advanced Fields', list: FIELD_TYPES.advanced },
-                { name: 'Layout Elements', list: FIELD_TYPES.layout }
-              ].map((grp, idx) => (
-                <div key={idx} className="space-y-1.5">
-                  <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest px-1.5">{grp.name}</div>
-                  <div className="grid grid-cols-1 gap-1">
-                    {grp.list.map((preset) => {
-                      const Icon = preset.icon;
-                      return (
-                        <button
-                          key={preset.type}
-                          onClick={() => addField(preset)}
-                          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-slate-300 hover:text-white bg-[#0B0F19]/40 border border-[#2D334A]/40 hover:border-violet-500/30 hover:bg-[#1E243D]/50 transition-all cursor-pointer group"
-                        >
-                          <div className="w-6 h-6 bg-slate-900 border border-[#2D334A]/60 rounded-md flex items-center justify-center text-slate-400 group-hover:text-violet-400 transition-colors">
-                            <Icon className="w-3.5 h-3.5" />
-                          </div>
-                          {preset.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="space-y-4">
+          {/* Mobile Editor Tab Selector (only visible on mobile/tablet) */}
+          <div className="flex lg:hidden bg-[#131726]/40 backdrop-blur-md border border-[#2D334A]/40 p-1.5 rounded-2xl shadow-inner">
+            <button
+              type="button"
+              onClick={() => setEditorMobileTab('toolbox')}
+              className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 ${
+                editorMobileTab === 'toolbox' 
+                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md' 
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              🛠️ Toolbox
+            </button>
+            <button
+              type="button"
+              onClick={() => setEditorMobileTab('canvas')}
+              className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 ${
+                editorMobileTab === 'canvas' 
+                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md' 
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              📱 Canvas
+            </button>
+            <button
+              type="button"
+              onClick={() => setEditorMobileTab('properties')}
+              className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 ${
+                editorMobileTab === 'properties' 
+                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md' 
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              ⚙️ Properties
+            </button>
           </div>
 
-          {/* CENTER PANEL: Canvas/Form Preview (5 cols) */}
-          <div className="lg:col-span-5 space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
-            {/* Tab Selector */}
-            <div className="flex bg-[#131726]/60 border border-[#2D334A]/50 p-1 rounded-2xl">
-              <button
-                onClick={() => setActiveTab('builder')}
-                className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
-                  activeTab === 'builder' 
-                    ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-lg' 
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                Form Canvas
-              </button>
-              <button
-                onClick={() => setActiveTab('settings')}
-                className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
-                  activeTab === 'settings' 
-                    ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-lg' 
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                Form Settings
-              </button>
+            {/* LEFT PANEL: Field Toolbox (3 cols) */}
+            <div className={`lg:col-span-3 space-y-6 bg-[#131726]/60 backdrop-blur-md p-5 rounded-3xl border border-[#2D334A]/50 shadow-xl animate-in fade-in duration-350 ${editorMobileTab === 'toolbox' ? 'block' : 'hidden lg:block'}`}>
+              <div>
+                <h3 className="text-sm font-extrabold text-white tracking-wide">Field Toolbox</h3>
+                <p className="text-[10px] font-bold text-slate-400 mt-0.5">Click a component to append it to the form canvas</p>
+              </div>
+              
+              <div className="space-y-5 max-h-[600px] overflow-y-auto pr-1">
+                {[
+                  { name: 'Basic Fields', list: FIELD_TYPES.basic, iconColor: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/25' },
+                  { name: 'Selection Fields', list: FIELD_TYPES.selection, iconColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/25' },
+                  { name: 'Advanced Fields', list: FIELD_TYPES.advanced, iconColor: 'text-pink-400 bg-pink-500/10 border-pink-500/25' },
+                  { name: 'Layout Elements', list: FIELD_TYPES.layout, iconColor: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/25' }
+                ].map((grp, idx) => (
+                  <div key={idx} className="space-y-2.5 animate-in slide-in-from-left-2 duration-300">
+                    <div className="flex items-center gap-2 px-1">
+                      <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">{grp.name}</span>
+                      <div className="h-[1px] flex-1 bg-[#2D334A]/40"></div>
+                    </div>
+                    <div className="grid grid-cols-2 lg:grid-cols-1 gap-2">
+                      {grp.list.map((preset) => {
+                        const Icon = preset.icon;
+                        return (
+                          <button
+                            key={preset.type}
+                            onClick={() => addField(preset)}
+                            className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-slate-300 hover:text-white bg-[#0B0F19]/40 border border-[#2D334A]/40 hover:border-violet-500/40 hover:bg-[#1E243D]/50 hover:scale-[1.02] active:scale-95 transition-all duration-200 cursor-pointer group"
+                          >
+                            <div className={`w-7 h-7 rounded-lg flex items-center justify-center border transition-all ${grp.iconColor} group-hover:scale-105 duration-200`}>
+                              <Icon className="w-3.5 h-3.5" />
+                            </div>
+                            <span className="truncate">{preset.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {activeTab === 'builder' ? (
-              <div className="bg-[#131726]/80 backdrop-blur-md rounded-3xl border border-[#2D334A]/50 p-6 md:p-8 space-y-6 shadow-xl relative min-h-[500px]">
-                
-                {/* Logo indicator if uploaded */}
-                {logoUrl && (
-                  <div className="w-16 h-16 rounded-2xl border border-[#2D334A] overflow-hidden bg-white flex items-center justify-center p-1.5 mb-2">
-                    <img src={logoUrl} alt="Form Logo" className="w-full h-full object-contain" />
-                  </div>
-                )}
+            {/* CENTER PANEL: Canvas/Form Preview (5 cols) */}
+            <div className={`lg:col-span-5 space-y-4 ${editorMobileTab === 'canvas' ? 'block' : 'hidden lg:block'}`}>
+              
+              {/* Tab Selector */}
+              <div className="flex bg-[#131726]/40 backdrop-blur-md border border-[#2D334A]/50 p-1.5 rounded-2xl shadow-inner">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('builder')}
+                  className={`flex-1 py-2 text-xs font-black rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${
+                    activeTab === 'builder' 
+                      ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-500/10' 
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Form Canvas
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('settings')}
+                  className={`flex-1 py-2 text-xs font-black rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${
+                    activeTab === 'settings' 
+                      ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-500/10' 
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <Settings className="w-3.5 h-3.5" />
+                  Form Settings
+                </button>
+              </div>
 
-                {/* Form Title details */}
-                <div className="border-b border-[#2D334A]/60 pb-6">
-                  <input
-                    type="text"
-                    value={formTitle}
-                    onChange={(e) => setFormTitle(e.target.value)}
-                    className="w-full text-2xl font-black text-white bg-transparent border-b border-transparent hover:border-slate-700 focus:border-violet-500 focus:outline-none transition-all py-1"
-                    placeholder="Form Title"
-                  />
-                  <textarea
-                    value={formDescription}
-                    onChange={(e) => setFormDescription(e.target.value)}
-                    className="w-full text-slate-400 text-sm bg-transparent border-b border-transparent hover:border-slate-700 focus:border-violet-500 focus:outline-none transition-all py-1 resize-none mt-2"
-                    rows="2"
-                    placeholder="Describe your form..."
-                  />
-                </div>
-
-                {/* Dynamic Fields List */}
-                <div className="space-y-4">
-                  {fields.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center py-16 text-slate-500 border border-dashed border-[#2D334A]/80 rounded-2xl bg-[#0B0F19]/20">
-                      <PlusCircle className="w-10 h-10 mb-2 text-slate-600 animate-pulse" />
-                      <p className="text-xs font-bold">Your form canvas is empty</p>
-                      <p className="text-[10px] text-slate-500 mt-1">Select field blocks from the toolbox to start building</p>
+              {activeTab === 'builder' ? (
+                <div className="flex flex-col shadow-2xl animate-in fade-in duration-300">
+                  {/* Mock Browser Header */}
+                  <div className="bg-[#131726]/90 border border-[#2D334A]/60 border-b-0 rounded-t-3xl p-4 flex items-center justify-between shadow-inner">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-3 h-3 rounded-full bg-rose-500/80 shadow-md"></span>
+                      <span className="w-3 h-3 rounded-full bg-amber-500/80 shadow-md"></span>
+                      <span className="w-3 h-3 rounded-full bg-emerald-500/80 shadow-md"></span>
                     </div>
-                  ) : (
-                    fields.map((field, index) => {
-                      const isSelected = field.id === selectedFieldId;
-                      return (
-                        <div 
-                          key={field.id}
-                          onClick={() => setSelectedFieldId(field.id)}
-                          className={`relative p-4 rounded-2xl border transition-all cursor-pointer ${
-                            isSelected 
-                              ? 'bg-[#1E243D]/65 border-violet-500 shadow-md shadow-violet-500/5' 
-                              : 'bg-[#0B0F19]/40 border-[#2D334A]/60 hover:border-slate-600'
-                          }`}
-                        >
-                          {/* Field actions */}
-                          <div className="absolute top-3 right-3 flex items-center gap-1 opacity-0 hover:opacity-100 focus-within:opacity-100 group-hover:opacity-100 md:opacity-100">
-                            <button
-                              onClick={(e) => { e.stopPropagation(); moveField(index, 'up'); }}
-                              disabled={index === 0}
-                              className="p-1 hover:bg-[#2D334A] rounded text-slate-400 disabled:opacity-30 cursor-pointer"
-                            >
-                              <ChevronUp className="w-3.5 h-3.5" />
-                            </button>
-                            <button
-                              onClick={(e) => { e.stopPropagation(); moveField(index, 'down'); }}
-                              disabled={index === fields.length - 1}
-                              className="p-1 hover:bg-[#2D334A] rounded text-slate-400 disabled:opacity-30 cursor-pointer"
-                            >
-                              <ChevronDown className="w-3.5 h-3.5" />
-                            </button>
-                            <button
-                              onClick={(e) => { e.stopPropagation(); removeField(field.id); }}
-                              className="p-1 hover:bg-red-500/10 text-red-400 rounded cursor-pointer"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
-                          </div>
+                    <div className="flex-1 max-w-xs md:max-w-md mx-auto bg-[#0B0F19]/80 border border-[#2D334A]/40 rounded-xl py-1 px-3 text-[10px] text-slate-400 font-mono tracking-tight flex items-center justify-center gap-1.5 shadow-inner select-none truncate">
+                      <span className="text-slate-500">https://</span>
+                      <span>cgs-admin.org/forms/{formTitle.toLowerCase().replace(/[^a-z0-9]/g, '-') || 'new-form'}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 opacity-40">
+                      <span className="w-1 h-1 rounded-full bg-slate-500"></span>
+                      <span className="w-1 h-1 rounded-full bg-slate-500"></span>
+                      <span className="w-1 h-1 rounded-full bg-slate-500"></span>
+                    </div>
+                  </div>
 
-                          {/* Field content view */}
-                          <div className="pr-16">
-                            {field.type === 'divider' ? (
-                              <div className="py-2"><hr className="border-t border-[#2D334A]/80 border-dashed" /></div>
-                            ) : field.type === 'heading' ? (
-                              <h4 className="text-base font-bold text-slate-100">{field.label || 'Heading Title'}</h4>
-                            ) : field.type === 'paragraph' ? (
-                              <p className="text-xs text-slate-400 whitespace-pre-wrap">{field.label || 'Paragraph context description...'}</p>
-                            ) : field.type === 'imageBlock' ? (
-                              <div className="w-full h-32 bg-[#0B0F19]/60 rounded-xl border border-[#2D334A]/80 flex items-center justify-center text-slate-500 text-xs font-bold gap-2">
-                                <Image className="w-4 h-4" />
-                                Custom Image block preview
-                              </div>
-                            ) : (
-                              <div className="space-y-1">
-                                <label className="text-xs font-bold text-slate-300 flex items-center gap-1">
-                                  {field.label || 'Untitled Field'}
-                                  {field.required && <span className="text-red-500">*</span>}
-                                </label>
-                                
-                                <div className="text-[11px] font-semibold text-slate-500 bg-[#0B0F19]/50 border border-[#2D334A]/60 px-3.5 py-2.5 rounded-xl cursor-default flex items-center justify-between">
-                                  <span>{field.placeholder || 'Type here...'}</span>
-                                  {field.helpText && <HelpCircle className="w-3.5 h-3.5 text-slate-600" />}
+                  {/* Canvas Container */}
+                  <div className="bg-[#131726]/60 backdrop-blur-md rounded-b-3xl border border-[#2D334A]/60 p-6 md:p-8 space-y-6 min-h-[500px] relative shadow-2xl">
+                    
+                    {/* Logo indicator if uploaded */}
+                    {logoUrl && (
+                      <div className="w-16 h-16 rounded-2xl border border-[#2D334A]/80 overflow-hidden bg-white flex items-center justify-center p-1.5 mb-2 shadow-lg animate-in zoom-in duration-200">
+                        <img src={logoUrl} alt="Form Logo" className="w-full h-full object-contain" />
+                      </div>
+                    )}
+
+                    {/* Form Title details */}
+                    <div className="border-l-2 border-violet-500 pl-4 space-y-1 mb-6">
+                      <input
+                        type="text"
+                        value={formTitle}
+                        onChange={(e) => setFormTitle(e.target.value)}
+                        className="w-full text-xl md:text-2xl font-black text-white bg-transparent border-b border-transparent hover:border-slate-800/80 focus:border-violet-500 focus:outline-none transition-all py-1"
+                        placeholder="Untitled Custom Form"
+                      />
+                      <textarea
+                        value={formDescription}
+                        onChange={(e) => setFormDescription(e.target.value)}
+                        className="w-full text-slate-400 text-xs md:text-sm bg-transparent border-b border-transparent hover:border-slate-800/80 focus:border-violet-500 focus:outline-none transition-all py-1 resize-none mt-1 leading-relaxed"
+                        rows="2"
+                        placeholder="Describe your form so submitters understand instructions..."
+                      />
+                    </div>
+
+                    {/* Dynamic Fields List */}
+                    <div className="space-y-4">
+                      {fields.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-20 px-6 text-slate-400 border border-dashed border-violet-500/20 rounded-2xl bg-[#0B0F19]/20 relative overflow-hidden group select-none">
+                          <div className="absolute -top-12 -left-12 w-32 h-32 bg-violet-600/5 rounded-full blur-2xl pointer-events-none"></div>
+                          <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-blue-600/5 rounded-full blur-2xl pointer-events-none"></div>
+                          <div className="w-16 h-16 rounded-2xl bg-[#1E243D]/50 border border-slate-700/50 flex items-center justify-center mb-4 text-violet-400 group-hover:scale-110 group-hover:border-violet-500/40 group-hover:shadow-lg transition-all duration-300">
+                            <PlusCircle className="w-8 h-8 animate-pulse text-violet-500" />
+                          </div>
+                          <h4 className="text-sm font-bold text-white tracking-wide">Your form canvas is empty</h4>
+                          <p className="text-xs text-slate-500 text-center max-w-[240px] mt-1.5 leading-relaxed font-semibold">
+                            Click blocks in the <strong className="text-violet-400">Toolbox</strong> on the left to start building your custom form.
+                          </p>
+                        </div>
+                      ) : (
+                        fields.map((field, index) => {
+                          const isSelected = field.id === selectedFieldId;
+                          const InputIcon = getInputIcon(field.type);
+                          return (
+                            <div 
+                              key={field.id}
+                              onClick={() => { setSelectedFieldId(field.id); setEditorMobileTab('properties'); }}
+                              className={`relative p-5 rounded-2xl border transition-all cursor-pointer group/field ${
+                                isSelected 
+                                  ? 'bg-[#1E243D]/65 border-violet-500 shadow-xl shadow-violet-500/5 ring-1 ring-violet-500/20' 
+                                  : 'bg-[#0B0F19]/40 border-[#2D334A]/50 hover:border-slate-600'
+                              }`}
+                            >
+                              {/* Field actions */}
+                              <div className={`absolute -top-3.5 right-4 z-10 flex items-center gap-1.5 scale-95 opacity-0 group-hover/field:scale-100 group-hover/field:opacity-100 focus-within:opacity-100 focus-within:scale-100 transition-all duration-200 ${isSelected ? 'opacity-100 scale-100' : ''}`}>
+                                <span className="text-[8px] font-black text-violet-400 bg-slate-900 border border-violet-500/30 px-2 py-0.5 rounded-md uppercase tracking-wider shadow-md select-none">
+                                  {field.type}
+                                </span>
+                                <div className="flex items-center gap-1 bg-[#131726] border border-[#2D334A] p-0.5 rounded-lg shadow-lg">
+                                  <button
+                                    onClick={(e) => { e.stopPropagation(); moveField(index, 'up'); }}
+                                    disabled={index === 0}
+                                    className="p-1 hover:bg-[#2D334A] rounded text-slate-400 disabled:opacity-20 cursor-pointer transition-colors"
+                                    title="Move Up"
+                                  >
+                                    <ChevronUp className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={(e) => { e.stopPropagation(); moveField(index, 'down'); }}
+                                    disabled={index === fields.length - 1}
+                                    className="p-1 hover:bg-[#2D334A] rounded text-slate-400 disabled:opacity-20 cursor-pointer transition-colors"
+                                    title="Move Down"
+                                  >
+                                    <ChevronDown className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={(e) => { e.stopPropagation(); removeField(field.id); }}
+                                    className="p-1 hover:bg-red-500/20 text-red-400 rounded cursor-pointer transition-colors"
+                                    title="Delete Field"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
                                 </div>
-                                {field.helpText && <p className="text-[10px] text-slate-500 font-medium italic mt-0.5">{field.helpText}</p>}
-                                
-                                {field.visibleIf?.fieldId && (
-                                  <div className="inline-flex items-center gap-1 px-2 py-0.5 mt-2 rounded bg-violet-900/20 text-violet-400 border border-violet-500/20 text-[9px] font-black uppercase">
-                                    <Sliders className="w-2.5 h-2.5" />
-                                    Conditional Visibility Active
+                              </div>
+
+                              {/* Field content view */}
+                              <div className="space-y-2">
+                                {field.type === 'divider' ? (
+                                  <div className="py-3 flex items-center gap-3 select-none">
+                                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#2D334A]/80"></div>
+                                    <span className="text-[8px] font-black tracking-widest text-slate-500 uppercase">Divider</span>
+                                    <div className="h-[1px] flex-1 bg-gradient-to-r from-[#2D334A]/80 to-transparent"></div>
+                                  </div>
+                                ) : field.type === 'heading' ? (
+                                  <div className="py-1 border-l-2 border-violet-500 pl-3">
+                                    <h4 className="text-base md:text-lg font-black text-slate-100 tracking-tight leading-snug">{field.label || 'Heading Title'}</h4>
+                                  </div>
+                                ) : field.type === 'paragraph' ? (
+                                  <p className="text-xs text-slate-400 whitespace-pre-wrap leading-relaxed font-semibold bg-[#0B0F19]/25 p-3.5 border border-[#2D334A]/40 rounded-xl">{field.label || 'Paragraph context description...'}</p>
+                                ) : field.type === 'imageBlock' ? (
+                                  <div className="w-full h-36 bg-[#0B0F19]/40 border border-[#2D334A]/60 rounded-xl flex flex-col items-center justify-center text-slate-400 text-xs font-bold gap-2 p-4 select-none shadow-inner group/imgblock">
+                                    <div className="w-10 h-10 rounded-xl bg-[#1E243D]/50 border border-[#2D334A] flex items-center justify-center text-slate-400 group-hover/imgblock:text-violet-400 transition-colors">
+                                      <Image className="w-5 h-5 animate-pulse" />
+                                    </div>
+                                    <span className="text-[9px] font-black uppercase tracking-wider text-slate-500">Image Block Preview</span>
+                                  </div>
+                                ) : (
+                                  <div className="space-y-1.5">
+                                    <label className="text-xs font-bold text-slate-300 flex items-center gap-1">
+                                      {field.label || 'Untitled Field'}
+                                      {field.required && <span className="text-red-500">*</span>}
+                                    </label>
+                                    
+                                    {/* Inputs WYSIWYG representations */}
+                                    {['shortText', 'longText', 'email', 'phone', 'number', 'url'].includes(field.type) && (
+                                      <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                                          <InputIcon className="w-4 h-4" />
+                                        </div>
+                                        <div className="text-[11px] font-semibold text-slate-400 bg-[#0B0F19]/40 border border-[#2D334A]/50 pl-10 pr-3.5 py-3 rounded-xl cursor-default flex items-center justify-between transition-colors shadow-inner">
+                                          <span>{field.placeholder || `Enter ${field.label || 'value'}...`}</span>
+                                          {field.helpText && <HelpCircle className="w-3.5 h-3.5 text-slate-600" />}
+                                        </div>
+                                      </div>
+                                    )}
+
+                                    {field.type === 'dropdown' && (
+                                      <div className="text-[11px] font-semibold text-slate-400 bg-[#0B0F19]/40 border border-[#2D334A]/50 px-3.5 py-3 rounded-xl cursor-default flex items-center justify-between shadow-inner">
+                                        <span>{field.placeholder || 'Select option...'}</span>
+                                        <ChevronDown className="w-4 h-4 text-slate-500" />
+                                      </div>
+                                    )}
+
+                                    {field.type === 'multiSelect' && (
+                                      <div className="min-h-[42px] font-semibold bg-[#0B0F19]/40 border border-[#2D334A]/50 px-3 py-2 rounded-xl cursor-default flex flex-wrap items-center gap-1.5 shadow-inner">
+                                        {(field.options && field.options.length > 0 ? field.options.slice(0, 2) : ['Option A', 'Option B']).map((opt, oIdx) => (
+                                          <span key={oIdx} className="text-[10px] font-bold text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-lg">
+                                            {opt}
+                                          </span>
+                                        ))}
+                                        <span className="text-[10px] text-slate-500 ml-auto select-none">+ Select Multiple</span>
+                                      </div>
+                                    )}
+
+                                    {field.type === 'radio' && (
+                                      <div className="space-y-2.5 mt-1 px-1">
+                                        {(field.options && field.options.length > 0 ? field.options : ['Option 1', 'Option 2']).map((opt, oIdx) => (
+                                          <div key={oIdx} className="flex items-center gap-2.5">
+                                            <div className="w-4 h-4 rounded-full border border-[#2D334A] flex items-center justify-center bg-[#0B0F19]/50 shadow-inner">
+                                              {oIdx === 0 && <div className="w-2 h-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500"></div>}
+                                            </div>
+                                            <span className="text-xs text-slate-300 font-semibold">{opt}</span>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    )}
+
+                                    {field.type === 'checkbox' && (
+                                      <div className="space-y-2.5 mt-1 px-1">
+                                        {(field.options && field.options.length > 0 ? field.options : ['Option A', 'Option B']).map((opt, oIdx) => (
+                                          <div key={oIdx} className="flex items-center gap-2.5">
+                                            <div className="w-4 h-4 rounded-md border border-[#2D334A] flex items-center justify-center bg-[#0B0F19]/50 shadow-inner">
+                                              {oIdx === 0 && <Check className="w-3 h-3 text-violet-400" />}
+                                            </div>
+                                            <span className="text-xs text-slate-300 font-semibold">{opt}</span>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    )}
+
+                                    {['date', 'time'].includes(field.type) && (
+                                      <div className="text-[11px] font-semibold text-slate-400 bg-[#0B0F19]/40 border border-[#2D334A]/50 px-3.5 py-3 rounded-xl cursor-default flex items-center justify-between shadow-inner">
+                                        <span>{field.placeholder || (field.type === 'date' ? 'YYYY-MM-DD' : 'HH:MM')}</span>
+                                        {field.type === 'date' ? <Calendar className="w-4 h-4 text-slate-500" /> : <Clock className="w-4 h-4 text-slate-500" />}
+                                      </div>
+                                    )}
+
+                                    {['fileUpload', 'imageUpload'].includes(field.type) && (
+                                      <div className="w-full border-2 border-dashed border-[#2D334A] hover:border-violet-500/50 bg-[#0B0F19]/25 hover:bg-[#1E243D]/20 rounded-2xl p-6 transition-all flex flex-col items-center justify-center text-center cursor-default group/upload shadow-inner">
+                                        <div className="w-10 h-10 rounded-xl bg-[#1E243D]/50 border border-[#2D334A] flex items-center justify-center text-slate-400 group-hover/upload:text-violet-400 group-hover/upload:border-violet-500/30 transition-all mb-2">
+                                          {field.type === 'imageUpload' ? <Image className="w-5 h-5" /> : <Upload className="w-5 h-5" />}
+                                        </div>
+                                        <p className="text-[11px] font-bold text-slate-300">Drag & drop or <span className="text-violet-400 hover:underline">browse</span> files</p>
+                                        <p className="text-[9px] text-slate-500 mt-1 font-semibold">Max file limit: {field.validation?.maxFileSize || 5}MB</p>
+                                      </div>
+                                    )}
+
+                                    {field.type === 'rating' && (
+                                      <div className="flex items-center gap-1.5 mt-2 select-none">
+                                        {Array.from({ length: field.validation?.ratingMax || 5 }).map((_, rIdx) => (
+                                          <Star key={rIdx} className="w-6 h-6 text-amber-500 fill-amber-500/10 hover:fill-amber-500 hover:scale-110 transition-all cursor-pointer" />
+                                        ))}
+                                        <span className="text-[9px] text-slate-500 ml-2 font-bold uppercase tracking-widest">({field.validation?.ratingMax || 5} stars)</span>
+                                      </div>
+                                    )}
+
+                                    {field.type === 'toggle' && (
+                                      <div className="flex items-center gap-3 mt-1.5">
+                                        <div className="w-10 h-5.5 rounded-full bg-violet-600 border border-violet-500/30 p-0.5 flex items-center cursor-pointer transition-colors">
+                                          <div className="w-4.5 h-4.5 rounded-full bg-white shadow translate-x-4.5 transition-transform"></div>
+                                        </div>
+                                        <span className="text-xs font-bold text-slate-300 capitalize">{field.defaultValue || 'Yes'}</span>
+                                      </div>
+                                    )}
+
+                                    {field.type === 'signature' && (
+                                      <div className="w-full h-24 bg-[#0B0F19]/40 border border-[#2D334A]/50 rounded-xl relative flex flex-col justify-end p-3 overflow-hidden shadow-inner group/sig">
+                                        <svg className="absolute inset-0 w-full h-full opacity-20 text-slate-500 p-4" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                          <path d="M10 80 Q 20 20, 40 50 T 70 30 T 90 60" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                                        </svg>
+                                        <div className="w-full border-t border-dashed border-[#2D334A]/80 flex items-center justify-between text-[8px] font-black text-slate-500 uppercase tracking-widest pt-1.5 select-none">
+                                          <span>Digital Signature Pad</span>
+                                          <span>✗ Clear</span>
+                                        </div>
+                                      </div>
+                                    )}
+
+                                    {field.helpText && <p className="text-[10px] text-slate-500 font-bold italic mt-1 pl-1">{field.helpText}</p>}
+                                    
+                                    {field.visibleIf?.fieldId && (
+                                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 mt-2.5 rounded-lg bg-violet-900/20 text-violet-400 border border-violet-500/20 text-[9px] font-black uppercase tracking-wide shadow-sm select-none">
+                                        <Sliders className="w-2.5 h-2.5" />
+                                        Conditional Visibility Trigger Active
+                                      </div>
+                                    )}
                                   </div>
                                 )}
                               </div>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
-              </div>
-            ) : (
-              /* FORM SETTINGS CARD */
-              <div className="bg-[#131726]/80 backdrop-blur-md rounded-3xl border border-[#2D334A]/50 p-6 md:p-8 space-y-6 shadow-xl">
-                <div>
-                  <h3 className="text-base font-bold text-white">General Form Settings</h3>
-                  <p className="text-xs font-semibold text-slate-400 mt-0.5">Control access, behaviors and security parameters</p>
-                </div>
-                
-                <div className="space-y-5">
-                  {/* Logo block */}
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Logo/Header Image</label>
-                    <div className="flex items-center gap-4">
-                      {logoUrl && (
-                        <div className="w-14 h-14 rounded-xl bg-white border border-[#2D334A] overflow-hidden flex items-center justify-center p-1">
-                          <img src={logoUrl} alt="Logo preview" className="w-full h-full object-contain" />
-                        </div>
+                            </div>
+                          );
+                        })
                       )}
-                      <div className="flex-1">
-                        <label className="inline-flex items-center justify-center gap-2 border border-[#2D334A] hover:bg-[#1E243D] text-slate-300 font-bold text-xs px-4 py-2.5 rounded-xl cursor-pointer transition-colors w-full">
-                          <Upload className="w-3.5 h-3.5" />
-                          {logoUploading ? 'Uploading Logo...' : logoUrl ? 'Change Logo' : 'Upload Logo'}
-                          <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
-                        </label>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* FORM SETTINGS CARD */
+                <div className="bg-[#131726]/60 backdrop-blur-md rounded-3xl border border-[#2D334A]/60 p-6 md:p-8 space-y-6 shadow-2xl animate-in fade-in duration-300">
+                  <div>
+                    <h3 className="text-base font-extrabold text-white tracking-wide">General Form Settings</h3>
+                    <p className="text-xs font-bold text-slate-400 mt-0.5">Control form details, submission rules, and accessibility logs</p>
+                  </div>
+                  
+                  <div className="space-y-5">
+                    {/* Logo block */}
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Logo / Header Image</label>
+                      <div className="flex items-center gap-4 bg-[#0B0F19]/25 p-4 border border-[#2D334A]/40 rounded-2xl shadow-inner">
                         {logoUrl && (
-                          <button 
-                            onClick={() => setLogoUrl('')}
-                            className="text-[10px] text-red-400 font-bold mt-1.5 hover:underline cursor-pointer block"
-                          >
-                            Remove logo
-                          </button>
+                          <div className="w-14 h-14 rounded-xl bg-white border border-[#2D334A]/85 overflow-hidden flex items-center justify-center p-1 shadow-md">
+                            <img src={logoUrl} alt="Logo preview" className="w-full h-full object-contain" />
+                          </div>
                         )}
+                        <div className="flex-1">
+                          <label className="inline-flex items-center justify-center gap-2 border border-[#2D334A] hover:border-violet-500/40 hover:bg-[#1E243D]/65 text-slate-300 hover:text-white font-bold text-xs px-4 py-3 rounded-xl cursor-pointer transition-all w-full select-none shadow-sm active:scale-98">
+                            <Upload className="w-3.5 h-3.5" />
+                            {logoUploading ? 'Uploading Logo...' : logoUrl ? 'Change Logo Image' : 'Upload Form Logo'}
+                            <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
+                          </label>
+                          {logoUrl && (
+                            <button 
+                              onClick={() => setLogoUrl('')}
+                              className="text-[10px] text-red-400 hover:text-red-300 font-bold mt-2 hover:underline cursor-pointer block select-none"
+                            >
+                              Remove logo image
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Success message */}
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Confirmation Message</label>
-                    <input
-                      type="text"
-                      value={settings.successMessage}
-                      onChange={(e) => setSettings({ ...settings, successMessage: e.target.value })}
-                      className="w-full rounded-xl border border-[#2D334A]/50 bg-[#0B0F19]/50 px-4 py-3 text-sm text-white focus:outline-none focus:border-violet-500 transition-all"
-                      placeholder="e.g. Thanks for submitting!"
-                    />
-                  </div>
-
-                  {/* Redirect URL */}
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Redirect URL after submission</label>
-                    <input
-                      type="text"
-                      value={settings.redirectUrl}
-                      onChange={(e) => setSettings({ ...settings, redirectUrl: e.target.value })}
-                      className="w-full rounded-xl border border-[#2D334A]/50 bg-[#0B0F19]/50 px-4 py-3 text-sm text-white focus:outline-none focus:border-violet-500 transition-all"
-                      placeholder="https://company.com/thank-you (Optional)"
-                    />
-                  </div>
-
-                  {/* Submission limits */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Submission Limit</label>
+                    {/* Success message */}
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Confirmation Message</label>
                       <input
-                        type="number"
-                        value={settings.submissionLimit}
-                        onChange={(e) => setSettings({ ...settings, submissionLimit: e.target.value })}
-                        className="w-full rounded-xl border border-[#2D334A]/50 bg-[#0B0F19]/50 px-4 py-3 text-sm text-white focus:outline-none focus:border-violet-500 transition-all"
-                        placeholder="Unlimited"
+                        type="text"
+                        value={settings.successMessage}
+                        onChange={(e) => setSettings({ ...settings, successMessage: e.target.value })}
+                        className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-4 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                        placeholder="e.g. Thank you! Your response has been submitted."
                       />
                     </div>
-                    
-                    <div className="space-y-1.5 flex flex-col justify-end">
-                      <label className="flex items-center gap-3 px-1 py-3 text-slate-300 font-bold text-xs cursor-pointer select-none">
+
+                    {/* Redirect URL */}
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Redirect URL after submission</label>
+                      <input
+                        type="text"
+                        value={settings.redirectUrl}
+                        onChange={(e) => setSettings({ ...settings, redirectUrl: e.target.value })}
+                        className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-4 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                        placeholder="https://company.com/thank-you (Optional)"
+                      />
+                    </div>
+
+                    {/* Submission limits */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Submission Limit</label>
                         <input
-                          type="checkbox"
-                          checked={settings.allowMultiple}
-                          onChange={(e) => setSettings({ ...settings, allowMultiple: e.target.checked })}
-                          className="w-4 h-4 rounded text-violet-600 focus:ring-violet-500 border-[#2D334A] bg-[#0B0F19]"
+                          type="number"
+                          value={settings.submissionLimit}
+                          onChange={(e) => setSettings({ ...settings, submissionLimit: e.target.value })}
+                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-4 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                          placeholder="Unlimited"
                         />
-                        Allow Multiple Submissions
-                      </label>
+                      </div>
+                      
+                      <div className="flex flex-col justify-end">
+                        <label className="flex items-center justify-between p-3.5 bg-[#0B0F19]/25 border border-[#2D334A]/50 rounded-xl cursor-pointer hover:bg-[#1E243D]/20 transition-colors select-none">
+                          <span className="text-xs font-bold text-slate-300">Allow Multi-Submission</span>
+                          <div className="relative">
+                            <input
+                              type="checkbox"
+                              checked={settings.allowMultiple}
+                              onChange={(e) => setSettings({ ...settings, allowMultiple: e.target.checked })}
+                              className="sr-only peer"
+                            />
+                            <div className="w-9 h-5 bg-[#0B0F19] border border-[#2D334A] rounded-full peer peer-checked:bg-violet-600 peer-checked:border-violet-500/30 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-slate-400 peer-checked:after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:after:translate-x-4"></div>
+                          </div>
+                        </label>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Start/End dates */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Start Date</label>
-                      <input
-                        type="datetime-local"
-                        value={settings.startDate}
-                        onChange={(e) => setSettings({ ...settings, startDate: e.target.value })}
-                        className="w-full rounded-xl border border-[#2D334A]/50 bg-[#0B0F19]/50 px-4 py-3 text-sm text-white focus:outline-none focus:border-violet-500 transition-all cursor-pointer"
-                      />
+                    {/* Start/End dates */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Start Date</label>
+                        <input
+                          type="datetime-local"
+                          value={settings.startDate}
+                          onChange={(e) => setSettings({ ...settings, startDate: e.target.value })}
+                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-4 py-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 transition-all cursor-pointer font-semibold shadow-inner"
+                        />
+                      </div>
+                      
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">End Date</label>
+                        <input
+                          type="datetime-local"
+                          value={settings.endDate}
+                          onChange={(e) => setSettings({ ...settings, endDate: e.target.value })}
+                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-4 py-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 transition-all cursor-pointer font-semibold shadow-inner"
+                        />
+                      </div>
                     </div>
-                    
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">End Date</label>
-                      <input
-                        type="datetime-local"
-                        value={settings.endDate}
-                        onChange={(e) => setSettings({ ...settings, endDate: e.target.value })}
-                        className="w-full rounded-xl border border-[#2D334A]/50 bg-[#0B0F19]/50 px-4 py-3 text-sm text-white focus:outline-none focus:border-violet-500 transition-all cursor-pointer"
-                      />
+
+                    {/* Security options switch layout */}
+                    <div className="space-y-3 pt-4 border-t border-[#2D334A]/60">
+                      <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1.5">Security & Data Collection</div>
+                      
+                      {[
+                        { key: 'enableCaptcha', label: 'Bot Verification (CAPTCHA)', desc: 'Spam protection using bot verification' },
+                        { key: 'collectIp', label: 'Collect Submitter IP Address', desc: 'Secure track submitter geolocation logs' },
+                        { key: 'collectTimestamp', label: 'Collect Time Details', desc: 'Record milliseconds precision timestamps' }
+                      ].map((item) => (
+                        <label key={item.key} className="flex items-center justify-between p-3.5 bg-[#0B0F19]/25 border border-[#2D334A]/55 rounded-2xl cursor-pointer hover:bg-[#1E243D]/20 transition-colors select-none">
+                          <div className="flex flex-col">
+                            <span className="text-xs font-bold text-slate-200">{item.label}</span>
+                            <span className="text-[9px] text-slate-500 font-semibold mt-0.5">{item.desc}</span>
+                          </div>
+                          <div className="relative">
+                            <input
+                              type="checkbox"
+                              checked={settings[item.key]}
+                              onChange={(e) => setSettings({ ...settings, [item.key]: e.target.checked })}
+                              className="sr-only peer"
+                            />
+                            <div className="w-9 h-5 bg-[#0B0F19] border border-[#2D334A] rounded-full peer peer-checked:bg-violet-600 peer-checked:border-violet-500/30 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-slate-400 peer-checked:after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:after:translate-x-4"></div>
+                          </div>
+                        </label>
+                      ))}
                     </div>
-                  </div>
-
-                  {/* Security options */}
-                  <div className="space-y-3 pt-3 border-t border-[#2D334A]/60">
-                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Security & Data Collection</div>
-                    
-                    <label className="flex items-center gap-3 text-slate-300 font-bold text-xs cursor-pointer select-none">
-                      <input
-                        type="checkbox"
-                        checked={settings.enableCaptcha}
-                        onChange={(e) => setSettings({ ...settings, enableCaptcha: e.target.checked })}
-                        className="w-4 h-4 rounded text-violet-600 focus:ring-violet-500 border-[#2D334A] bg-[#0B0F19]"
-                      />
-                      Enable Bot Verification (Math CAPTCHA)
-                    </label>
-
-                    <label className="flex items-center gap-3 text-slate-300 font-bold text-xs cursor-pointer select-none">
-                      <input
-                        type="checkbox"
-                        checked={settings.collectIp}
-                        onChange={(e) => setSettings({ ...settings, collectIp: e.target.checked })}
-                        className="w-4 h-4 rounded text-violet-600 focus:ring-violet-500 border-[#2D334A] bg-[#0B0F19]"
-                      />
-                      Collect Submitter's IP Address
-                    </label>
-
-                    <label className="flex items-center gap-3 text-slate-300 font-bold text-xs cursor-pointer select-none">
-                      <input
-                        type="checkbox"
-                        checked={settings.collectTimestamp}
-                        onChange={(e) => setSettings({ ...settings, collectTimestamp: e.target.checked })}
-                        className="w-4 h-4 rounded text-violet-600 focus:ring-violet-500 border-[#2D334A] bg-[#0B0F19]"
-                      />
-                      Record Detailed Submission Timestamps
-                    </label>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-
-          {/* RIGHT PANEL: Field Configurations (4 cols) */}
-          <div className="lg:col-span-4 bg-[#131726]/60 backdrop-blur-md p-5 rounded-3xl border border-[#2D334A]/50 shadow-md min-h-[500px]">
-            <div>
-              <h3 className="text-sm font-bold text-white">Properties Config</h3>
-              <p className="text-[10px] font-semibold text-slate-400 mt-0.5">Select a field on the canvas to configure properties</p>
+              )}
             </div>
 
-            {activeField ? (
-              <div className="mt-6 space-y-6 animate-in fade-in duration-200">
-                <div className="p-3 bg-[#0B0F19]/40 border border-[#2D334A]/50 rounded-2xl flex items-center justify-between">
-                  <span className="text-xs font-black text-violet-400 capitalize bg-violet-500/10 px-2.5 py-1 rounded-lg">
-                    {activeField.type}
-                  </span>
-                  <button 
-                    onClick={() => removeField(activeField.id)}
-                    className="p-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-xl transition-all flex items-center justify-center cursor-pointer"
-                    title="Remove field"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+            {/* RIGHT PANEL: Field Configurations (4 cols) */}
+            <div className={`lg:col-span-4 bg-[#131726]/60 backdrop-blur-md p-5 rounded-3xl border border-[#2D334A]/50 shadow-xl min-h-[500px] animate-in fade-in duration-350 ${editorMobileTab === 'properties' ? 'block' : 'hidden lg:block'}`}>
+              <div>
+                <h3 className="text-sm font-extrabold text-white tracking-wide">Properties Config</h3>
+                <p className="text-[10px] font-bold text-slate-400 mt-0.5">Select a block on the canvas to configure settings</p>
+              </div>
 
-                {/* Properties fields */}
-                <div className="space-y-4">
-                  
-                  {/* Label config */}
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Field Label</label>
-                    <input
-                      type="text"
-                      value={activeField.label}
-                      onChange={(e) => updateFieldProperty(activeField.id, 'label', e.target.value)}
-                      className="w-full rounded-xl border border-[#2D334A]/50 bg-[#0B0F19]/50 px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold"
-                      placeholder="e.g. Enter full name"
-                    />
+              {activeField ? (
+                <div className="mt-6 space-y-5 animate-in fade-in duration-200">
+                  <div className="p-3.5 bg-[#0B0F19]/40 border border-[#2D334A]/60 rounded-2xl flex items-center justify-between shadow-inner">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[9px] font-black text-violet-400 uppercase tracking-widest bg-violet-500/10 border border-violet-500/20 px-2.5 py-1 rounded-lg">
+                        {activeField.type}
+                      </span>
+                    </div>
+                    <button 
+                      onClick={() => removeField(activeField.id)}
+                      className="p-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl transition-all flex items-center justify-center cursor-pointer hover:scale-[1.05] active:scale-95 duration-200"
+                      title="Remove field"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
 
-                  {/* Placeholder */}
-                  {!['divider', 'heading', 'paragraph', 'imageBlock', 'date', 'time', 'rating', 'toggle', 'signature'].includes(activeField.type) && (
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Placeholder</label>
-                      <input
-                        type="text"
-                        value={activeField.placeholder}
-                        onChange={(e) => updateFieldProperty(activeField.id, 'placeholder', e.target.value)}
-                        className="w-full rounded-xl border border-[#2D334A]/50 bg-[#0B0F19]/50 px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold"
-                        placeholder="Helpful prompt text"
-                      />
-                    </div>
-                  )}
+                  {/* Property Tabs */}
+                  <div className="flex bg-[#0B0F19]/40 border border-[#2D334A]/50 p-1 rounded-xl shadow-inner">
+                    <button
+                      type="button"
+                      onClick={() => setActivePropertySection('general')}
+                      className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all duration-300 cursor-pointer ${
+                        activePropertySection === 'general'
+                          ? 'bg-[#1E243D] text-violet-400 border border-[#2D334A]/60 shadow'
+                          : 'text-slate-400 hover:text-slate-200'
+                      }`}
+                    >
+                      General
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActivePropertySection('validation')}
+                      className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all duration-300 cursor-pointer ${
+                        activePropertySection === 'validation'
+                          ? 'bg-[#1E243D] text-violet-400 border border-[#2D334A]/60 shadow'
+                          : 'text-slate-400 hover:text-slate-200'
+                      }`}
+                    >
+                      Rules
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActivePropertySection('visibility')}
+                      className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all duration-300 cursor-pointer ${
+                        activePropertySection === 'visibility'
+                          ? 'bg-[#1E243D] text-violet-400 border border-[#2D334A]/60 shadow'
+                          : 'text-slate-400 hover:text-slate-200'
+                      }`}
+                    >
+                      Visibility
+                    </button>
+                  </div>
 
-                  {/* Help text */}
-                  {!['divider', 'imageBlock'].includes(activeField.type) && (
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Help / Guidance text</label>
-                      <input
-                        type="text"
-                        value={activeField.helpText}
-                        onChange={(e) => updateFieldProperty(activeField.id, 'helpText', e.target.value)}
-                        className="w-full rounded-xl border border-[#2D334A]/50 bg-[#0B0F19]/50 px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold"
-                        placeholder="Sub-text displayed beneath input"
-                      />
-                    </div>
-                  )}
-
-                  {/* Validation Rules */}
-                  {!['divider', 'heading', 'paragraph', 'imageBlock'].includes(activeField.type) && (
-                    <div className="space-y-3 pt-3 border-t border-[#2D334A]/40">
-                      <div className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Validation Rules</div>
-                      
-                      {/* Required */}
-                      <label className="flex items-center gap-3 text-slate-300 font-bold text-xs cursor-pointer select-none">
-                        <input
-                          type="checkbox"
-                          checked={activeField.required}
-                          onChange={(e) => updateFieldProperty(activeField.id, 'required', e.target.checked)}
-                          className="w-4 h-4 rounded text-violet-600 focus:ring-violet-500 border-[#2D334A] bg-[#0B0F19]"
-                        />
-                        Required (Submitter must fill)
-                      </label>
-
-                      {/* Text inputs min/max length */}
-                      {['shortText', 'longText'].includes(activeField.type) && (
-                        <div className="grid grid-cols-2 gap-2 mt-2">
-                          <div className="space-y-1">
-                            <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Min Length</label>
-                            <input
-                              type="number"
-                              value={activeField.validation?.minLength || ''}
-                              onChange={(e) => updateFieldValidation(activeField.id, 'minLength', e.target.value)}
-                              className="w-full rounded-lg border border-[#2D334A]/50 bg-[#0B0F19]/50 p-2 text-xs text-white focus:outline-none focus:border-violet-500 transition-all"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Max Length</label>
-                            <input
-                              type="number"
-                              value={activeField.validation?.maxLength || ''}
-                              onChange={(e) => updateFieldValidation(activeField.id, 'maxLength', e.target.value)}
-                              className="w-full rounded-lg border border-[#2D334A]/50 bg-[#0B0F19]/50 p-2 text-xs text-white focus:outline-none focus:border-violet-500 transition-all"
-                            />
-                          </div>
-                        </div>
-                      )}
-
-                      {/* File limits */}
-                      {['fileUpload', 'imageUpload'].includes(activeField.type) && (
-                        <div className="space-y-1 mt-2">
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Max File Size (MB)</label>
+                  {/* Properties fields conditionally rendered */}
+                  <div className="space-y-4 min-h-[300px] animate-in fade-in duration-200">
+                    
+                    {activePropertySection === 'general' && (
+                      <div className="space-y-4 animate-in slide-in-from-top-1 duration-200">
+                        {/* Label config */}
+                        <div className="space-y-1.5">
+                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Field Label Title</label>
                           <input
-                            type="number"
-                            value={activeField.validation?.maxFileSize || 5}
-                            onChange={(e) => updateFieldValidation(activeField.id, 'maxFileSize', e.target.value)}
-                            className="w-full rounded-lg border border-[#2D334A]/50 bg-[#0B0F19]/50 p-2 text-xs text-white focus:outline-none focus:border-violet-500 transition-all"
-                            placeholder="5"
+                            type="text"
+                            value={activeField.label}
+                            onChange={(e) => updateFieldProperty(activeField.id, 'label', e.target.value)}
+                            className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-3.5 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                            placeholder="e.g. Enter full name"
                           />
                         </div>
-                      )}
 
-                      {/* Rating scale limit */}
-                      {activeField.type === 'rating' && (
-                        <div className="space-y-1 mt-2">
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Rating Scale Limit</label>
-                          <select
-                            value={activeField.validation?.ratingMax || 5}
-                            onChange={(e) => updateFieldValidation(activeField.id, 'ratingMax', parseInt(e.target.value))}
-                            className="w-full rounded-lg border border-[#2D334A]/50 bg-[#0B0F19]/50 p-2 text-xs text-white focus:outline-none focus:border-violet-500 transition-all cursor-pointer"
-                          >
-                            <option value="5">1 to 5 Stars</option>
-                            <option value="10">1 to 10 Stars</option>
-                          </select>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Selection Choices List */}
-                  {['dropdown', 'radio', 'checkbox', 'multiSelect'].includes(activeField.type) && (
-                    <div className="space-y-2 pt-3 border-t border-[#2D334A]/40">
-                      <div className="flex justify-between items-center">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Selection Choices</label>
-                        <button
-                          type="button"
-                          onClick={() => handleAddFieldOption(activeField.id)}
-                          className="text-[10px] font-black text-violet-400 flex items-center gap-1 hover:underline cursor-pointer"
-                        >
-                          <PlusCircle className="w-3.5 h-3.5" />
-                          Add Option
-                        </button>
-                      </div>
-
-                      <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
-                        {activeField.options?.map((opt, oIdx) => (
-                          <div key={oIdx} className="flex items-center gap-1.5">
+                        {/* Placeholder */}
+                        {!['divider', 'heading', 'paragraph', 'imageBlock', 'date', 'time', 'rating', 'toggle', 'signature'].includes(activeField.type) && (
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Placeholder Text</label>
                             <input
                               type="text"
-                              value={opt}
-                              onChange={(e) => handleUpdateFieldOption(activeField.id, oIdx, e.target.value)}
-                              className="flex-1 rounded-lg border border-[#2D334A]/50 bg-[#0B0F19]/50 p-2 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold"
+                              value={activeField.placeholder}
+                              onChange={(e) => updateFieldProperty(activeField.id, 'placeholder', e.target.value)}
+                              className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-3.5 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                              placeholder="e.g. Type here..."
                             />
-                            <button
-                              type="button"
-                              onClick={() => handleRemoveFieldOption(activeField.id, oIdx)}
-                              className="p-2 hover:bg-red-500/10 text-red-400 rounded-lg cursor-pointer"
-                              title="Delete option"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                        )}
 
-                  {/* Conditional Visibility UI */}
-                  {!['divider'].includes(activeField.type) && (
-                    <div className="space-y-3 pt-3 border-t border-[#2D334A]/40">
-                      <div className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Conditional Visibility</div>
-                      
-                      <div className="p-3 bg-[#0B0F19]/40 border border-[#2D334A]/40 rounded-2xl space-y-2">
-                        <div className="text-[10px] font-bold text-slate-300">IF Question block:</div>
-                        <select
-                          value={activeField.visibleIf?.fieldId || ''}
-                          onChange={(e) => {
-                            updateFieldVisibleIf(activeField.id, 'fieldId', e.target.value);
-                            updateFieldVisibleIf(activeField.id, 'value', '');
-                          }}
-                          className="w-full rounded-lg border border-[#2D334A]/50 bg-[#0B0F19]/50 p-2 text-xs text-slate-300 focus:outline-none focus:border-violet-500 cursor-pointer"
-                        >
-                          <option value="">Always Visible (None)</option>
-                          {eligibleConditionFields.map(f => (
-                            <option key={f.id} value={f.id}>{f.label || f.id}</option>
-                          ))}
-                        </select>
+                        {/* Help text */}
+                        {!['divider', 'imageBlock'].includes(activeField.type) && (
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Guidance Description</label>
+                            <input
+                              type="text"
+                              value={activeField.helpText}
+                              onChange={(e) => updateFieldProperty(activeField.id, 'helpText', e.target.value)}
+                              className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-3.5 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                              placeholder="e.g. Sub-text guide details"
+                            />
+                          </div>
+                        )}
 
-                        {activeField.visibleIf?.fieldId && (
-                          <>
-                            <div className="text-[10px] font-bold text-slate-300 mt-2">EQUALS value:</div>
-                            
-                            {(() => {
-                              const targetField = fields.find(f => f.id === activeField.visibleIf.fieldId);
-                              if (targetField?.options && targetField.options.length > 0) {
-                                return (
-                                  <select
-                                    value={activeField.visibleIf?.value || ''}
-                                    onChange={(e) => updateFieldVisibleIf(activeField.id, 'value', e.target.value)}
-                                    className="w-full rounded-lg border border-[#2D334A]/50 bg-[#0B0F19]/50 p-2 text-xs text-slate-300 focus:outline-none focus:border-violet-500 cursor-pointer"
-                                  >
-                                    <option value="">Select option...</option>
-                                    {targetField.options.map((opt, idx) => (
-                                      <option key={idx} value={opt}>{opt}</option>
-                                    ))}
-                                  </select>
-                                );
-                              } else if (targetField?.type === 'toggle') {
-                                return (
-                                  <select
-                                    value={activeField.visibleIf?.value || ''}
-                                    onChange={(e) => updateFieldVisibleIf(activeField.id, 'value', e.target.value)}
-                                    className="w-full rounded-lg border border-[#2D334A]/50 bg-[#0B0F19]/50 p-2 text-xs text-slate-300 focus:outline-none focus:border-violet-500 cursor-pointer"
-                                  >
-                                    <option value="">Select value...</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                  </select>
-                                );
-                              } else {
-                                return (
+                        {/* Selection Choices List */}
+                        {['dropdown', 'radio', 'checkbox', 'multiSelect'].includes(activeField.type) && (
+                          <div className="space-y-2.5 pt-3 border-t border-[#2D334A]/40">
+                            <div className="flex justify-between items-center px-0.5">
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Selection Choices</label>
+                              <button
+                                type="button"
+                                onClick={() => handleAddFieldOption(activeField.id)}
+                                className="text-[10px] font-black text-violet-400 hover:text-violet-300 flex items-center gap-1 cursor-pointer transition-colors"
+                              >
+                                <PlusCircle className="w-3.5 h-3.5" />
+                                Add Option
+                              </button>
+                            </div>
+
+                            <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                              {activeField.options?.map((opt, oIdx) => (
+                                <div key={oIdx} className="flex items-center gap-2 animate-in slide-in-from-bottom-1 duration-200">
                                   <input
                                     type="text"
-                                    value={activeField.visibleIf?.value || ''}
-                                    onChange={(e) => updateFieldVisibleIf(activeField.id, 'value', e.target.value)}
-                                    className="w-full rounded-lg border border-[#2D334A]/50 bg-[#0B0F19]/50 p-2 text-xs text-white focus:outline-none focus:border-violet-500"
-                                    placeholder="Value condition"
+                                    value={opt}
+                                    onChange={(e) => handleUpdateFieldOption(activeField.id, oIdx, e.target.value)}
+                                    className="flex-1 rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-2.5 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
                                   />
-                                );
-                              }
-                            })()}
-                          </>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRemoveFieldOption(activeField.id, oIdx)}
+                                    className="p-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl cursor-pointer transition-all active:scale-90"
+                                    title="Delete option"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
                         )}
                       </div>
-                    </div>
-                  )}
+                    )}
 
+                    {activePropertySection === 'validation' && (
+                      <div className="space-y-4 animate-in slide-in-from-top-1 duration-200">
+                        {/* Required toggle switch */}
+                        {!['divider', 'heading', 'paragraph', 'imageBlock'].includes(activeField.type) ? (
+                          <div className="space-y-3">
+                            <label className="flex items-center justify-between p-3.5 bg-[#0B0F19]/25 border border-[#2D334A]/50 rounded-2xl cursor-pointer hover:bg-[#1E243D]/25 transition-colors select-none shadow-sm">
+                              <div className="flex flex-col">
+                                <span className="text-xs font-bold text-slate-200">Required Field</span>
+                                <span className="text-[9px] text-slate-500 font-semibold mt-0.5">Force submitters to fill this block</span>
+                              </div>
+                              <div className="relative">
+                                <input
+                                  type="checkbox"
+                                  checked={activeField.required}
+                                  onChange={(e) => updateFieldProperty(activeField.id, 'required', e.target.checked)}
+                                  className="sr-only peer"
+                                />
+                                <div className="w-9 h-5 bg-[#0B0F19] border border-[#2D334A] rounded-full peer peer-checked:bg-violet-600 peer-checked:border-violet-500/30 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-slate-400 peer-checked:after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:after:translate-x-4"></div>
+                              </div>
+                            </label>
+                          </div>
+                        ) : (
+                          <div className="text-[10px] text-slate-500 font-bold p-6 border border-dashed border-[#2D334A]/80 rounded-2xl text-center bg-[#0B0F19]/10 select-none animate-in fade-in duration-200">
+                            No validation constraints applicable for layout modules
+                          </div>
+                        )}
+
+                        {/* Text inputs min/max length */}
+                        {['shortText', 'longText'].includes(activeField.type) && (
+                          <div className="grid grid-cols-2 gap-3 mt-2 border-t border-[#2D334A]/40 pt-4 animate-in fade-in duration-200">
+                            <div className="space-y-1.5">
+                              <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Min Characters</label>
+                              <input
+                                type="number"
+                                value={activeField.validation?.minLength || ''}
+                                onChange={(e) => updateFieldValidation(activeField.id, 'minLength', e.target.value)}
+                                className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                              />
+                            </div>
+                            <div className="space-y-1.5">
+                              <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Max Characters</label>
+                              <input
+                                type="number"
+                                value={activeField.validation?.maxLength || ''}
+                                onChange={(e) => updateFieldValidation(activeField.id, 'maxLength', e.target.value)}
+                                className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        {/* File size limits */}
+                        {['fileUpload', 'imageUpload'].includes(activeField.type) && (
+                          <div className="space-y-1.5 mt-2 border-t border-[#2D334A]/40 pt-4 animate-in fade-in duration-200">
+                            <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Max Allowed File Size (MB)</label>
+                            <input
+                              type="number"
+                              value={activeField.validation?.maxFileSize || 5}
+                              onChange={(e) => updateFieldValidation(activeField.id, 'maxFileSize', e.target.value)}
+                              className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                              placeholder="5"
+                            />
+                          </div>
+                        )}
+
+                        {/* Rating scale limit */}
+                        {activeField.type === 'rating' && (
+                          <div className="space-y-1.5 mt-2 border-t border-[#2D334A]/40 pt-4 animate-in fade-in duration-200">
+                            <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Rating Scale Maximum</label>
+                            <select
+                              value={activeField.validation?.ratingMax || 5}
+                              onChange={(e) => updateFieldValidation(activeField.id, 'ratingMax', parseInt(e.target.value))}
+                              className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 transition-all cursor-pointer font-semibold shadow-inner"
+                            >
+                              <option value="5" className="bg-[#0B0F19] text-white">5 Star Scale</option>
+                              <option value="10" className="bg-[#0B0F19] text-white">10 Star Scale</option>
+                            </select>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {activePropertySection === 'visibility' && (
+                      <div className="space-y-4 animate-in slide-in-from-top-1 duration-200">
+                        {!['divider'].includes(activeField.type) ? (
+                          <div className="space-y-3">
+                            <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Conditional Rendering Rules</div>
+                            
+                            <div className="p-4 bg-[#0B0F19]/25 border border-[#2D334A]/60 rounded-2xl space-y-3 shadow-inner">
+                              <div className="text-[10px] font-bold text-slate-300">IF Question Block:</div>
+                              <select
+                                value={activeField.visibleIf?.fieldId || ''}
+                                onChange={(e) => {
+                                  updateFieldVisibleIf(activeField.id, 'fieldId', e.target.value);
+                                  updateFieldVisibleIf(activeField.id, 'value', '');
+                                }}
+                                className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 cursor-pointer font-semibold shadow-inner"
+                              >
+                                <option value="" className="bg-[#0B0F19]">Always Visible (None)</option>
+                                {eligibleConditionFields.map(f => (
+                                  <option key={f.id} value={f.id} className="bg-[#0B0F19]">{f.label || f.id}</option>
+                                ))}
+                              </select>
+
+                              {activeField.visibleIf?.fieldId && (
+                                <>
+                                  <div className="text-[10px] font-bold text-slate-300 mt-2">EQUALS selected value:</div>
+                                  
+                                  {(() => {
+                                    const targetField = fields.find(f => f.id === activeField.visibleIf.fieldId);
+                                    if (targetField?.options && targetField.options.length > 0) {
+                                      return (
+                                        <select
+                                          value={activeField.visibleIf?.value || ''}
+                                          onChange={(e) => updateFieldVisibleIf(activeField.id, 'value', e.target.value)}
+                                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 cursor-pointer font-semibold shadow-inner"
+                                        >
+                                          <option value="" className="bg-[#0B0F19]">Select option...</option>
+                                          {targetField.options.map((opt, idx) => (
+                                            <option key={idx} value={opt} className="bg-[#0B0F19]">{opt}</option>
+                                          ))}
+                                        </select>
+                                      );
+                                    } else if (targetField?.type === 'toggle') {
+                                      return (
+                                        <select
+                                          value={activeField.visibleIf?.value || ''}
+                                          onChange={(e) => updateFieldVisibleIf(activeField.id, 'value', e.target.value)}
+                                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 cursor-pointer font-semibold shadow-inner"
+                                        >
+                                          <option value="" className="bg-[#0B0F19]">Select value...</option>
+                                          <option value="yes" className="bg-[#0B0F19]">Yes</option>
+                                          <option value="no" className="bg-[#0B0F19]">No</option>
+                                        </select>
+                                      );
+                                    } else {
+                                      return (
+                                        <input
+                                          type="text"
+                                          value={activeField.visibleIf?.value || ''}
+                                          onChange={(e) => updateFieldVisibleIf(activeField.id, 'value', e.target.value)}
+                                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-white focus:outline-none focus:border-violet-500 font-semibold shadow-inner"
+                                          placeholder="Enter equality value"
+                                        />
+                                      );
+                                    }
+                                  })()}
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="text-[10px] text-slate-500 font-bold p-6 border border-dashed border-[#2D334A]/80 rounded-2xl text-center bg-[#0B0F19]/10 select-none animate-in fade-in duration-200">
+                            Conditional rendering rules not applicable for divider layouts
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center py-20 text-slate-500 text-center">
-                <Sliders className="w-8 h-8 text-slate-600 mb-2 animate-bounce" />
-                <p className="text-xs font-bold">No active field selected</p>
-                <p className="text-[10px] text-slate-500 mt-1">Select a field on the canvas to configure properties</p>
-              </div>
-            )}
+              ) : (
+                <div className="flex flex-col items-center justify-center py-24 text-slate-500 text-center select-none">
+                  <div className="w-12 h-12 rounded-2xl bg-[#0B0F19]/40 border border-[#2D334A]/60 flex items-center justify-center mb-3">
+                    <Sliders className="w-5 h-5 text-slate-500 animate-pulse" />
+                  </div>
+                  <p className="text-xs font-bold text-slate-300">No active block selected</p>
+                  <p className="text-[9px] text-slate-500 mt-1 max-w-[180px] font-semibold">Select a custom field card on the form canvas to edit properties</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
