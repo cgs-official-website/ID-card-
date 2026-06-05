@@ -99,3 +99,137 @@ p:last-child {
   margin-bottom: 0 !important;
 }
 
+/* Premium Light Theme overrides */
+html.light {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+}
+
+html.light body {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+}
+
+html.light {
+  /* Override core backgrounds */
+  .bg-\[\#0B0F19\], .bg-\[\#0b0f19\] {
+    background-color: #f8fafc !important;
+  }
+  .bg-\[\#131726\], .bg-\[\#131726\]\/80, .bg-\[\#131726\]\/60, .bg-\[\#131726\]\/90 {
+    background-color: #ffffff !important;
+  }
+  .bg-\[\#1E243D\]\/65, .bg-\[\#1e243d\]\/65, .bg-\[\#1E243D\]\/50, .bg-\[\#1E243D\]\/20, .bg-\[\#1E243D\]\/30, .bg-\[\#1e243d\]\/30, .bg-\[\#1E243D\]\/60 {
+    background-color: #f1f5f9 !important;
+  }
+  .bg-\[\#0B0F19\]\/50, .bg-\[\#0B0F19\]\/40, .bg-\[\#0B0F19\]\/20, .bg-\[\#0B0F19\]\/60, .bg-\[\#0B0F19\]\/30 {
+    background-color: #f1f5f9 !important;
+  }
+  .bg-slate-900, .bg-slate-900\/50, .bg-slate-950\/80, .bg-slate-900\/20, .bg-slate-900\/40, .bg-slate-900\/60, .bg-slate-900\/80, .bg-\[\#0B0F19\], .bg-\[\#0b0f19\] {
+    background-color: #f1f5f9 !important;
+  }
+  
+  /* Override core text colors */
+  .text-white, h1, h2, h3, h4, h5, h6, .text-slate-100 {
+    color: #0f172a !important;
+  }
+  .text-slate-200, .text-slate-300 {
+    color: #334155 !important;
+  }
+  .text-slate-400, .text-slate-500 {
+    color: #475569 !important;
+  }
+  .text-slate-600 {
+    color: #64748b !important;
+  }
+
+  /* Status Colors */
+  .text-violet-400 {
+    color: #6d28d9 !important;
+  }
+  .text-blue-400 {
+    color: #1d4ed8 !important;
+  }
+  .text-emerald-400 {
+    color: #047857 !important;
+  }
+  .text-red-400 {
+    color: #b91c1c !important;
+  }
+  .text-amber-400 {
+    color: #b45309 !important;
+  }
+  
+  /* Text inside solid elements / buttons must stay white */
+  .bg-gradient-to-r,
+  .bg-gradient-to-tr,
+  .bg-gradient-to-br,
+  .bg-violet-600,
+  .bg-blue-600,
+  .bg-red-600,
+  .bg-emerald-600,
+  .bg-red-500,
+  .bg-emerald-500,
+  .bg-amber-500,
+  .bg-violet-500,
+  .bg-blue-500,
+  button[class*="bg-violet-"],
+  button[class*="bg-blue-"] {
+    &, & * {
+      color: #ffffff !important;
+    }
+  }
+
+  /* Keep other solid elements legible */
+  .bg-emerald-500\/10 {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+  }
+  .bg-red-500\/10 {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+  }
+  .bg-amber-500\/10 {
+    background-color: rgba(245, 158, 11, 0.15) !important;
+  }
+  
+  /* Borders */
+  .border-\[\#2D334A\]\/50, .border-\[\#2D334A\]\/60, .border-\[\#2D334A\]\/40, .border-\[\#2D334A\]\/80, .border-\[\#2D334A\], .border-slate-800\/80 {
+    border-color: #cbd5e1 !important;
+  }
+  .divide-\[\#2D334A\]\/30 > :not([hidden]) ~ :not([hidden]), .divide-y {
+    border-color: #e2e8f0 !important;
+  }
+
+  /* Table and custom lists styling */
+  table {
+    border-color: #e2e8f0 !important;
+  }
+  thead {
+    background-color: #f1f5f9 !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+  }
+  tr:hover {
+    background-color: rgba(15, 23, 42, 0.02) !important;
+  }
+
+  /* Canvas draw pad text */
+  canvas + div {
+    color: #94a3b8 !important;
+  }
+
+  /* Scrollbar overrides for light mode */
+  * {
+    scrollbar-color: rgba(139, 92, 246, 0.3) transparent !important;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(139, 92, 246, 0.25) !important;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(139, 92, 246, 0.45) !important;
+  }
+
+  /* Subtitle text overrides */
+  p {
+    @apply text-slate-600;
+  }
+}
+
+

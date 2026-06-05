@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, LogOut, Copy, Award, Check, ReceiptText, History, FileText, Menu, X, ClipboardCheck, ChevronRight } from 'lucide-react';
+import { LayoutDashboard, LogOut, Copy, Award, Check, ReceiptText, History, FileText, Menu, X, ClipboardCheck, ChevronRight, Sun, Moon } from 'lucide-react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useState } from 'react';
@@ -19,6 +19,18 @@ const Layout = () => {
 
   const [copiedLink, setCopiedLink] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    localStorage.setItem('theme', nextTheme);
+    if (nextTheme === 'light') {
+      document.documentElement.classList.add('light');
+    } else {
+      document.documentElement.classList.remove('light');
+    }
+  };
 
   const copyRegisterLink = () => {
     const link = `${window.location.origin}/register`;
@@ -95,10 +107,18 @@ const Layout = () => {
           </div>
         </nav>
 
-        <div className="p-6 border-t border-[#2D334A]/50">
+        <div className="p-6 border-t border-[#2D334A]/50 space-y-3">
+          <button
+            onClick={toggleTheme}
+            className="w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:bg-[#1E243D]/50 hover:text-white text-left cursor-pointer"
+          >
+            {theme === 'dark' ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-violet-400" />}
+            <span className="text-sm font-semibold">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+          </button>
+
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 text-red-400 hover:bg-red-500/10 text-left"
+            className="w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 text-red-400 hover:bg-red-500/10 text-left cursor-pointer"
           >
             <LogOut className="w-5 h-5" />
             <span className="text-sm font-bold">Logout</span>
@@ -114,9 +134,14 @@ const Layout = () => {
           </div>
           <h1 className="text-xl font-bold text-white tracking-tight">Admin Panel</h1>
         </div>
-        <button onClick={handleLogout} className="p-2 text-red-400 bg-red-500/10 rounded-xl transition-colors">
-          <LogOut className="w-5 h-5" />
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={toggleTheme} className="p-2.5 bg-[#1E243D]/50 hover:bg-[#1E243D] text-slate-300 rounded-xl transition-colors cursor-pointer">
+            {theme === 'dark' ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-violet-400" />}
+          </button>
+          <button onClick={handleLogout} className="p-2 text-red-400 bg-red-500/10 rounded-xl transition-colors">
+            <LogOut className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
       {/* Main Content */}
@@ -289,6 +314,15 @@ const Layout = () => {
                 </button>
               </div>
             </div>
+
+            {/* Theme switcher */}
+            <button
+              onClick={() => { toggleTheme(); }}
+              className="w-full py-4 bg-[#0B0F19]/40 hover:bg-[#1E243D]/50 border border-[#2D334A]/40 text-slate-300 hover:text-white font-extrabold rounded-2xl text-xs transition-all flex items-center justify-center gap-2.5 cursor-pointer"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-violet-400" />}
+              {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            </button>
 
             {/* Logout button */}
             <button

@@ -19,10 +19,20 @@ import FormBuilderEditor from './pages/FormBuilderEditor';
 import FormPublicView from './pages/FormPublicView';
 import FormResponses from './pages/FormResponses';
 import FormAnalytics from './pages/FormAnalytics';
+import { useEffect } from 'react';
 import ChatWidget from './components/ChatWidget';
 import AttendanceTracker from './pages/AttendanceTracker';
 
 function App() {
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+      document.documentElement.classList.add('light');
+    } else {
+      document.documentElement.classList.remove('light');
+    }
+  }, []);
+
   return (
     <AuthProvider>
       <BrowserRouter>

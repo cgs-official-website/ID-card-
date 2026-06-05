@@ -33,6 +33,7 @@ const FormPublicView = () => {
 
   // File states
   const [filesData, setFilesData] = useState({}); // { fieldId: { name, url, scanning, status, error } }
+  const [uploadedFileIds, setUploadedFileIds] = useState([]);
 
   // Signature canvas refs
   const signatureRefs = useRef({}); // { fieldId: canvasRef }
@@ -206,6 +207,7 @@ const FormPublicView = () => {
       const googleDriveUrl = import.meta.env.VITE_GOOGLE_DRIVE_UPLOAD_URL;
 
       let secureUrl = '';
+      let fileId = null;
 
       if (isPdf && googleDriveUrl) {
         // Convert file to base64
@@ -226,6 +228,7 @@ const FormPublicView = () => {
             'Content-Type': 'text/plain;charset=utf-8',
           },
           body: JSON.stringify({
+            action: 'upload',
             base64: base64Data,
             fileName: file.name,
             mimeType: file.type || 'application/pdf'
@@ -240,6 +243,10 @@ const FormPublicView = () => {
           throw new Error(uploadResult.error || 'Google Drive upload was unsuccessful');
         }
         secureUrl = uploadResult.url;
+        fileId = uploadResult.fileId || null;
+        if (fileId) {
+          setUploadedFileIds(prev => [...prev, fileId]);
+        }
       } else {
         // Fallback to Cloudinary upload
         const formData = new FormData();
@@ -266,7 +273,8 @@ const FormPublicView = () => {
           name: file.name,
           scanning: false,
           status: 'Virus scan passed: Secure file registered.',
-          url: secureUrl
+          url: secureUrl,
+          fileId: fileId
         }
       }));
 
@@ -281,6 +289,10 @@ const FormPublicView = () => {
   };
 
   const handleRemoveFile = (fieldId) => {
+    const fileIdToRemove = filesData[fieldId]?.fileId;
+    if (fileIdToRemove) {
+      setUploadedFileIds(prev => prev.filter(id => id !== fileIdToRemove));
+    }
     setFilesData(prev => {
       const next = { ...prev };
       delete next[fieldId];
@@ -470,6 +482,36 @@ const FormPublicView = () => {
             ...file,
             uploadedAt: new Date().toISOString()
           });
+        }
+      }
+
+      // Call Apps Script to organize the files into a candidate-specific folder
+      if (googleDriveUrl && uploadedFileIds.length > 0) {
+        // Find candidate name in submission payload
+        let candidateName = 'Unknown User';
+        const nameField = fields.find(f => {
+          const lbl = (f.label || '').toLowerCase();
+          return lbl.includes('name') && f.type === 'shortText';
+        });
+        if (nameField && cleanedData[nameField.id]) {
+          candidateName = String(cleanedData[nameField.id]).trim();
+        }
+
+        try {
+          await fetch(googleDriveUrl, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8',
+            },
+            body: JSON.stringify({
+              action: 'organize',
+              candidateName,
+              fileIds: uploadedFileIds
+            })
+          });
+        } catch (orgErr) {
+          console.warn("Could not organize uploaded files in folders:", orgErr);
         }
       }
 
