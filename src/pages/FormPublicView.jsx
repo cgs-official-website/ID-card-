@@ -11,6 +11,7 @@ import {
 
 const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+const GOOGLE_DRIVE_URL = import.meta.env.VITE_GOOGLE_DRIVE_UPLOAD_URL;
 
 const FormPublicView = () => {
   const { id: formId } = useParams();
@@ -203,12 +204,10 @@ const FormPublicView = () => {
     }));
 
     try {
-      const googleDriveUrl = import.meta.env.VITE_GOOGLE_DRIVE_UPLOAD_URL;
-
       let secureUrl = '';
       let fileId = null;
 
-      if (googleDriveUrl) {
+      if (GOOGLE_DRIVE_URL) {
         // Upload ALL file types (images + PDFs) to Google Drive via base64
         const base64Data = await new Promise((resolve, reject) => {
           const reader = new FileReader();
@@ -220,7 +219,7 @@ const FormPublicView = () => {
           reader.onerror = (error) => reject(error);
         });
 
-        const uploadResponse = await fetch(googleDriveUrl, {
+        const uploadResponse = await fetch(GOOGLE_DRIVE_URL, {
           method: 'POST',
           mode: 'cors',
           headers: {
@@ -485,7 +484,7 @@ const FormPublicView = () => {
       }
 
       // Call Apps Script to organize the files into a candidate-specific folder
-      if (googleDriveUrl && uploadedFileIds.length > 0) {
+      if (GOOGLE_DRIVE_URL && uploadedFileIds.length > 0) {
         // Find candidate name in submission payload
         let candidateName = 'Unknown User';
         const nameField = fields.find(f => {
@@ -497,7 +496,7 @@ const FormPublicView = () => {
         }
 
         try {
-          await fetch(googleDriveUrl, {
+          await fetch(GOOGLE_DRIVE_URL, {
             method: 'POST',
             mode: 'cors',
             headers: {
