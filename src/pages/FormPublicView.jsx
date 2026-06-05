@@ -109,11 +109,12 @@ const FormPublicView = () => {
         return;
       }
 
-      // Check submission limit (only if configured)
-      if (formData.settings?.submissionLimit) {
+      // Check submission limit (only if configured and greater than 0)
+      const limit = parseInt(formData.settings?.submissionLimit, 10);
+      if (formData.settings?.submissionLimit && !isNaN(limit) && limit > 0) {
         try {
           const resSnap = await getDocs(collection(db, `forms/${formId}/responses`));
-          if (resSnap.size >= parseInt(formData.settings.submissionLimit)) {
+          if (resSnap.size >= limit) {
             setError("This form has reached its submission limit.");
             return;
           }
