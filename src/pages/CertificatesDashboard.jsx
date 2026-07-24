@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { collection, getDocs, query, orderBy, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Search, Award, Download, X, Eye, Copy, Trash2, ExternalLink, Plus, Check } from 'lucide-react';
+import { Search, Award, Download, X, Eye, Copy, Trash2, ExternalLink, Plus, Check, Briefcase, GraduationCap, Filter } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import CertificateSVG from '../components/CertificateSVG';
 import NotifyModal from '../components/NotifyModal';
@@ -10,6 +10,7 @@ const CertificatesDashboard = () => {
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTypeFilter, setSelectedTypeFilter] = useState('All');
   const [selectedCertificate, setSelectedCertificate] = useState(null);
   const [notify, setNotify] = useState(null);
   const [pendingDelete, setPendingDelete] = useState(null);
@@ -23,7 +24,7 @@ const CertificatesDashboard = () => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, certificates]);
+  }, [searchTerm, selectedTypeFilter, certificates]);
 
   useEffect(() => {
     fetchCertificates();
@@ -75,12 +76,24 @@ const CertificatesDashboard = () => {
     }
   };
 
-  const filteredCertificates = certificates.filter(cert => 
-    cert.candidateName?.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    cert.id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    cert.domain?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    cert.type?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Certificate Counts Calculations
+  const totalCount = certificates.length;
+  const internshipCount = certificates.filter(cert => cert.type?.toLowerCase() === 'internship').length;
+  const trainingCount = certificates.filter(cert => cert.type?.toLowerCase() === 'training').length;
+
+  const filteredCertificates = certificates.filter(cert => {
+    const matchesSearch = 
+      cert.candidateName?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      cert.id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      cert.domain?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      cert.type?.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesType = 
+      selectedTypeFilter === 'All' || 
+      cert.type?.toLowerCase() === selectedTypeFilter.toLowerCase();
+
+    return matchesSearch && matchesType;
+  });
 
   // Pagination Calculations
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -102,15 +115,90 @@ const CertificatesDashboard = () => {
           onConfirm={confirmDelete}
         />
       )}
-      {/* Data Count */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-[0_8px_30px_rgb(0,0,0,0.3)] flex items-center justify-between">
+      
+      {/* Data Count Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {/* Total Certificates Card */}
+        <div 
+          onClick={() => setSelectedTypeFilter('All')}
+          className={`bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border transition-all cursor-pointer flex items-center justify-between group ${
+            selectedTypeFilter === 'All'
+              ? 'border-violet-500 shadow-[0_8px_30px_rgba(139,92,246,0.25)] bg-[#1A1F36]'
+              : 'border-[#2D334A]/50 hover:border-[#3E4566] hover:bg-[#161B2E]'
+          }`}
+        >
           <div>
-            <p className="text-white font-bold uppercase tracking-wider text-xs mb-1">Total Certificates</p>
-            <h3 className="text-4xl font-black text-white">{certificates.length}</h3>
+            <div className="flex items-center gap-2 mb-1">
+              <p className="text-white font-bold uppercase tracking-wider text-xs">Total Certificates</p>
+              {selectedTypeFilter === 'All' && (
+                <span className="text-[10px] bg-violet-500/20 text-violet-300 font-bold px-2 py-0.5 rounded-full border border-violet-500/30">Active</span>
+              )}
+            </div>
+            <h3 className="text-4xl font-black text-white">{totalCount}</h3>
+            <p className="text-xs text-slate-400 mt-1 font-medium">All issued credentials</p>
           </div>
-          <div className="w-16 h-16 bg-violet-500/10 rounded-2xl flex items-center justify-center border border-violet-500/20">
+          <div className={`w-16 h-16 rounded-2xl flex items-center justify-center border transition-all ${
+            selectedTypeFilter === 'All'
+              ? 'bg-violet-500/20 text-violet-300 border-violet-500/40'
+              : 'bg-violet-500/10 text-white border-violet-500/20 group-hover:bg-violet-500/20'
+          }`}>
             <Award className="w-8 h-8 text-white" />
+          </div>
+        </div>
+
+        {/* Internship Certificates Card */}
+        <div 
+          onClick={() => setSelectedTypeFilter('Internship')}
+          className={`bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border transition-all cursor-pointer flex items-center justify-between group ${
+            selectedTypeFilter === 'Internship'
+              ? 'border-blue-500 shadow-[0_8px_30px_rgba(59,130,246,0.25)] bg-[#1A1F36]'
+              : 'border-[#2D334A]/50 hover:border-[#3E4566] hover:bg-[#161B2E]'
+          }`}
+        >
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <p className="text-white font-bold uppercase tracking-wider text-xs">Internship Certificates</p>
+              {selectedTypeFilter === 'Internship' && (
+                <span className="text-[10px] bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded-full border border-blue-500/30">Active</span>
+              )}
+            </div>
+            <h3 className="text-4xl font-black text-white">{internshipCount}</h3>
+            <p className="text-xs text-slate-400 mt-1 font-medium">Internship track credentials</p>
+          </div>
+          <div className={`w-16 h-16 rounded-2xl flex items-center justify-center border transition-all ${
+            selectedTypeFilter === 'Internship'
+              ? 'bg-blue-500/20 text-blue-300 border-blue-500/40'
+              : 'bg-blue-500/10 text-blue-400 border-blue-500/20 group-hover:bg-blue-500/20'
+          }`}>
+            <Briefcase className="w-8 h-8 text-blue-400" />
+          </div>
+        </div>
+
+        {/* Training Certificates Card */}
+        <div 
+          onClick={() => setSelectedTypeFilter('Training')}
+          className={`bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border transition-all cursor-pointer flex items-center justify-between group ${
+            selectedTypeFilter === 'Training'
+              ? 'border-emerald-500 shadow-[0_8px_30px_rgba(16,185,129,0.25)] bg-[#1A1F36]'
+              : 'border-[#2D334A]/50 hover:border-[#3E4566] hover:bg-[#161B2E]'
+          }`}
+        >
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <p className="text-white font-bold uppercase tracking-wider text-xs">Training Certificates</p>
+              {selectedTypeFilter === 'Training' && (
+                <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full border border-emerald-500/30">Active</span>
+              )}
+            </div>
+            <h3 className="text-4xl font-black text-white">{trainingCount}</h3>
+            <p className="text-xs text-slate-400 mt-1 font-medium">Training program credentials</p>
+          </div>
+          <div className={`w-16 h-16 rounded-2xl flex items-center justify-center border transition-all ${
+            selectedTypeFilter === 'Training'
+              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+              : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 group-hover:bg-emerald-500/20'
+          }`}>
+            <GraduationCap className="w-8 h-8 text-emerald-400" />
           </div>
         </div>
       </div>
@@ -123,15 +211,49 @@ const CertificatesDashboard = () => {
         </div>
         
         <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+          {/* Type Filter Pills */}
+          <div className="flex items-center gap-1 bg-[#131726]/80 p-1.5 rounded-2xl border border-[#2D334A]/50">
+            <button
+              onClick={() => setSelectedTypeFilter('All')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                selectedTypeFilter === 'All'
+                  ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-white hover:bg-[#1E243D]/50'
+              }`}
+            >
+              All ({totalCount})
+            </button>
+            <button
+              onClick={() => setSelectedTypeFilter('Internship')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                selectedTypeFilter === 'Internship'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-white hover:bg-[#1E243D]/50'
+              }`}
+            >
+              Internship ({internshipCount})
+            </button>
+            <button
+              onClick={() => setSelectedTypeFilter('Training')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                selectedTypeFilter === 'Training'
+                  ? 'bg-emerald-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-white hover:bg-[#1E243D]/50'
+              }`}
+            >
+              Training ({trainingCount})
+            </button>
+          </div>
+
           {/* Search Input */}
-          <div className="relative flex-1 lg:flex-none lg:w-80">
+          <div className="relative flex-1 lg:flex-none lg:w-72">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-slate-500" />
             </div>
             <input
               type="text"
               placeholder="Search certificates..."
-              className="pl-12 w-full rounded-2xl border border-[#2D334A]/50 bg-[#131726]/50 px-5 py-3.5 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all placeholder:text-slate-500 text-white"
+              className="pl-12 w-full rounded-2xl border border-[#2D334A]/50 bg-[#131726]/50 px-5 py-3 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all placeholder:text-slate-500 text-white"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -140,7 +262,7 @@ const CertificatesDashboard = () => {
           {/* Action Buttons */}
           <button
             onClick={copyRegisterLink}
-            className="flex items-center justify-center gap-2 bg-[#1E243D] hover:bg-[#252B48] text-white border border-[#2D334A]/50 px-5 py-3.5 rounded-2xl text-sm font-bold shadow-sm transition-all"
+            className="flex items-center justify-center gap-2 bg-[#1E243D] hover:bg-[#252B48] text-white border border-[#2D334A]/50 px-5 py-3 rounded-2xl text-sm font-bold shadow-sm transition-all cursor-pointer"
           >
             <Copy className="w-4 h-4" />
             Copy Reg Link
@@ -148,7 +270,7 @@ const CertificatesDashboard = () => {
 
           <Link
             to="/register-certificate"
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white px-5 py-3.5 rounded-2xl text-sm font-bold shadow-lg shadow-violet-500/20 transition-all"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white px-5 py-3 rounded-2xl text-sm font-bold shadow-lg shadow-violet-500/20 transition-all"
           >
             <Plus className="w-4 h-4" />
             New Certificate

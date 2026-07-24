@@ -35,7 +35,7 @@ const InvoiceGenerator = () => {
 
     setLoading(true);
     
-    const baseAmount = Number(candidate.baseAmount) || 0;
+    const baseAmount = Number(candidate.baseAmount) || 3500;
     const invoiceData = {
       ...candidate,
       baseAmount,
@@ -111,14 +111,42 @@ const InvoiceGenerator = () => {
             ]}
             onChange={handleChange} 
           />
-          <Input 
-            label="Base Amount (₹) *" 
-            name="baseAmount" 
-            type="number"
-            placeholder="3500" 
-            value={candidate.baseAmount} 
-            onChange={handleChange} 
-          />
+          <div className="space-y-1">
+            <div className="flex justify-between items-center mb-1">
+              <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Base Amount (₹) *</label>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setCandidate({ ...candidate, baseAmount: 3500 })}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
+                    candidate.baseAmount == 3500
+                      ? "bg-violet-500/20 text-violet-300 border-violet-500"
+                      : "bg-[#0B0F19]/50 text-slate-400 border-[#2D334A]/50 hover:text-white"
+                  }`}
+                >
+                  ₹3,500
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCandidate({ ...candidate, baseAmount: 4130 })}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
+                    candidate.baseAmount == 4130
+                      ? "bg-amber-500/20 text-amber-300 border-amber-500"
+                      : "bg-[#0B0F19]/50 text-slate-400 border-[#2D334A]/50 hover:text-white"
+                  }`}
+                >
+                  ₹4,130 (GST)
+                </button>
+              </div>
+            </div>
+            <Input 
+              name="baseAmount" 
+              type="number"
+              placeholder="3500" 
+              value={candidate.baseAmount} 
+              onChange={handleChange} 
+            />
+          </div>
           <Select 
             label="Current Year / Status" 
             name="year" 
