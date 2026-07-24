@@ -273,17 +273,17 @@ const FormBuilderDashboard = () => {
       {/* Upper Stats Row */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {[
-          { label: 'Total Forms', val: stats.total, color: 'bg-blue-500/10 border-blue-500/20 text-blue-400' },
-          { label: 'Published', val: stats.published, color: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' },
-          { label: 'Drafts', val: stats.draft, color: 'bg-amber-500/10 border-amber-500/20 text-amber-400' },
+          { label: 'Total Forms', val: stats.total, color: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400' },
+          { label: 'Published', val: stats.published, color: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400' },
+          { label: 'Drafts', val: stats.draft, color: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400' },
           { label: 'Archived', val: stats.archived, color: 'bg-rose-500/10 border-rose-500/20 text-rose-400' },
-          { label: 'Total Submissions', val: stats.responses, color: 'bg-violet-500/10 border-violet-500/20 text-violet-400', wide: true }
+          { label: 'Total Submissions', val: stats.responses, color: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400', wide: true }
         ].map((s, idx) => (
           <div 
             key={idx} 
-            className={`bg-[#131726]/80 backdrop-blur-md p-5 rounded-2xl border border-[#2D334A]/50 flex flex-col justify-between shadow-lg ${s.wide ? 'col-span-2 md:col-span-3 lg:col-span-1' : ''}`}
+            className={`bg-[#111111]/80 backdrop-blur-md p-5 rounded-2xl border border-[#222222]/50 flex flex-col justify-between shadow-lg ${s.wide ? 'col-span-2 md:col-span-3 lg:col-span-1' : ''}`}
           >
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{s.label}</p>
+            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">{s.label}</p>
             <div className="flex items-baseline justify-between mt-2">
               <h3 className="text-3xl font-black text-white">{s.val}</h3>
               <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${s.color}`}>Active</span>
@@ -296,13 +296,13 @@ const FormBuilderDashboard = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
           <h2 className="text-3xl font-bold text-white tracking-tight mb-1">Custom Forms Builder</h2>
-          <p className="text-slate-400 text-sm font-medium">Build, publish, and view answers for client/internal forms</p>
+          <p className="text-gray-400 text-sm font-medium">Build, publish, and view answers for client/internal forms</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
           <button
             onClick={fetchAuditLogs}
-            className="px-5 py-3 rounded-xl border border-[#2D334A]/50 bg-[#131726]/50 hover:bg-[#1E243D] text-slate-300 text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer w-full sm:w-auto justify-center"
+            className="px-5 py-3 rounded-xl border border-[#222222]/50 bg-[#111111]/50 hover:bg-[#1A1A1A] text-gray-300 text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer w-full sm:w-auto justify-center"
           >
             <Activity className="w-4 h-4" />
             Audit Logs
@@ -310,7 +310,7 @@ const FormBuilderDashboard = () => {
           
           <Link
             to="/form-builder/create"
-            className="px-5 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white text-sm font-bold shadow-lg shadow-violet-500/20 transition-all flex items-center gap-2 w-full sm:w-auto justify-center"
+            className="px-5 py-3 rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white text-sm font-bold shadow-lg shadow-yellow-500/20 transition-all flex items-center gap-2 w-full sm:w-auto justify-center"
           >
             <Plus className="w-4 h-4" />
             Create Form
@@ -322,26 +322,26 @@ const FormBuilderDashboard = () => {
       <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
         <div className="relative w-full md:w-80">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-            <Search className="h-4.5 w-4.5 text-slate-500" />
+            <Search className="h-4.5 w-4.5 text-gray-500" />
           </div>
           <input
             type="text"
             placeholder="Search forms by title, ID..."
-            className="pl-11 w-full rounded-xl border border-[#2D334A]/50 bg-[#131726]/50 px-4 py-3 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all placeholder:text-slate-500"
+            className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="flex items-center gap-2 bg-[#131726]/50 p-1 border border-[#2D334A]/50 rounded-xl w-full md:w-auto overflow-x-auto">
+        <div className="flex items-center gap-2 bg-[#111111]/50 p-1 border border-[#222222]/50 rounded-xl w-full md:w-auto overflow-x-auto">
           {['all', 'published', 'draft', 'archived'].map((status) => (
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
               className={`flex-1 md:flex-initial px-4 py-2 rounded-lg text-xs font-bold capitalize transition-all cursor-pointer whitespace-nowrap ${
                 statusFilter === status 
-                  ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white' 
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-white' 
+                  : 'text-gray-400 hover:text-white'
               }`}
             >
               {status}
@@ -351,11 +351,11 @@ const FormBuilderDashboard = () => {
       </div>
 
       {/* Forms Table Card */}
-      <div className="bg-[#131726]/80 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 overflow-hidden">
+      <div className="bg-[#111111]/80 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#222222]/50 overflow-hidden">
         <div className="overflow-x-auto">
           {/* Desktop Table View */}
           <table className="hidden md:table w-full text-sm text-left">
-            <thead className="bg-[#0B0F19]/60 text-slate-300 font-bold border-b border-[#2D334A]/50">
+            <thead className="bg-black/60 text-gray-300 font-bold border-b border-[#222222]/50">
               <tr>
                 <th className="px-6 py-4 uppercase tracking-wider text-[10px]">Form Details</th>
                 <th className="px-6 py-4 uppercase tracking-wider text-[10px] text-center">Status</th>
@@ -364,7 +364,7 @@ const FormBuilderDashboard = () => {
                 <th className="px-6 py-4 uppercase tracking-wider text-[10px] text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#2D334A]/30">
+            <tbody className="divide-y divide-[#222222]/30">
               {filteredForms.map((form) => {
                 const createdDate = form.createdAt?.toDate 
                   ? form.createdAt.toDate().toLocaleDateString()
@@ -375,12 +375,12 @@ const FormBuilderDashboard = () => {
                   : new Date(form.updatedAt).toLocaleDateString();
 
                 return (
-                  <tr key={form.id} className="hover:bg-[#1E243D]/30 transition-colors group">
+                  <tr key={form.id} className="hover:bg-[#1A1A1A]/30 transition-colors group">
                     <td className="px-6 py-5">
                       <div>
-                        <div className="font-bold text-slate-100 text-base">{form.title}</div>
-                        <div className="text-slate-400 text-xs mt-1 flex items-center gap-2">
-                          <span className="bg-[#0B0F19] px-2 py-0.5 rounded border border-[#2D334A]/40 font-mono text-[10px]">ID: {form.id}</span>
+                        <div className="font-bold text-gray-100 text-base">{form.title}</div>
+                        <div className="text-gray-400 text-xs mt-1 flex items-center gap-2">
+                          <span className="bg-black px-2 py-0.5 rounded border border-[#222222]/40 font-mono text-[10px]">ID: {form.id}</span>
                           <span className="truncate max-w-[200px]">{form.description || 'No description'}</span>
                         </div>
                       </div>
@@ -388,10 +388,10 @@ const FormBuilderDashboard = () => {
                     <td className="px-6 py-5 text-center">
                       <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border ${
                         form.status === 'published' 
-                          ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                          ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' 
                           : form.status === 'archived'
                           ? 'bg-rose-500/10 text-rose-400 border-rose-500/20'
-                          : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                          : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
                       }`}>
                         {form.status}
                       </span>
@@ -399,21 +399,21 @@ const FormBuilderDashboard = () => {
                     <td className="px-6 py-5 text-center">
                       <Link 
                         to={`/form-builder/responses/${form.id}`}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-900 rounded-lg text-xs font-black text-slate-200 border border-[#2D334A]/50 hover:bg-slate-800 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1 bg-gray-900 rounded-lg text-xs font-black text-gray-200 border border-[#222222]/50 hover:bg-gray-800 transition-colors"
                       >
                         {form.responsesCount}
                       </Link>
                     </td>
-                    <td className="px-6 py-5 text-xs text-slate-400">
-                      <div>Created: <span className="text-slate-200 font-medium">{createdDate}</span></div>
-                      <div className="mt-1">Updated: <span className="text-slate-200 font-medium">{updatedDate}</span></div>
+                    <td className="px-6 py-5 text-xs text-gray-400">
+                      <div>Created: <span className="text-gray-200 font-medium">{createdDate}</span></div>
+                      <div className="mt-1">Updated: <span className="text-gray-200 font-medium">{updatedDate}</span></div>
                     </td>
                     <td className="px-6 py-5 text-right">
                       <div className="flex items-center justify-end gap-1.5">
                         {/* Public Link Copy Button */}
                         <button
                           onClick={() => copyFormLink(form.id)}
-                          className="p-2 bg-slate-900 border border-[#2D334A]/50 text-slate-400 hover:text-white hover:border-violet-500/50 rounded-lg transition-all cursor-pointer"
+                          className="p-2 bg-gray-900 border border-[#222222]/50 text-gray-400 hover:text-white hover:border-yellow-500/50 rounded-lg transition-all cursor-pointer"
                           title={
                             form.status === 'published' 
                               ? "Copy Share Link (Published & Active)" 
@@ -422,13 +422,13 @@ const FormBuilderDashboard = () => {
                               : "Copy Share Link (Draft - Publish to enable responses)"
                           }
                         >
-                          {copiedLink === form.id ? <Check className="w-4 h-4 text-emerald-400" /> : <ExternalLink className="w-4 h-4" />}
+                          {copiedLink === form.id ? <Check className="w-4 h-4 text-yellow-400" /> : <ExternalLink className="w-4 h-4" />}
                         </button>
 
                         {/* Analytics view */}
                         <Link
                           to={`/form-builder/analytics/${form.id}`}
-                          className="p-2 bg-slate-900 border border-[#2D334A]/50 text-slate-400 hover:text-violet-400 hover:bg-violet-500/10 rounded-lg transition-all"
+                          className="p-2 bg-gray-900 border border-[#222222]/50 text-gray-400 hover:text-yellow-400 hover:bg-yellow-500/10 rounded-lg transition-all"
                           title="Analytics Dashboard"
                         >
                           <BarChart2 className="w-4 h-4" />
@@ -437,7 +437,7 @@ const FormBuilderDashboard = () => {
                         {/* Responses list */}
                         <Link
                           to={`/form-builder/responses/${form.id}`}
-                          className="p-2 bg-slate-900 border border-[#2D334A]/50 text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-all"
+                          className="p-2 bg-gray-900 border border-[#222222]/50 text-gray-400 hover:text-yellow-400 hover:bg-yellow-500/10 rounded-lg transition-all"
                           title="View Responses"
                         >
                           <Eye className="w-4 h-4" />
@@ -453,24 +453,24 @@ const FormBuilderDashboard = () => {
                             }}
                             className={`p-2 rounded-lg border transition-all ${
                               form.responsesCount > 0
-                                ? 'bg-slate-900 border-[#2D334A]/50 text-slate-400 hover:text-emerald-400 cursor-pointer'
-                                : 'opacity-40 text-slate-600 border-transparent cursor-not-allowed'
+                                ? 'bg-gray-900 border-[#222222]/50 text-gray-400 hover:text-yellow-400 cursor-pointer'
+                                : 'opacity-40 text-gray-600 border-transparent cursor-not-allowed'
                             }`}
                             title="Export Responses"
                           >
                             <Download className="w-4 h-4" />
                           </button>
                           {form.responsesCount > 0 && (
-                            <div className={`absolute right-0 bottom-full mb-1 w-28 bg-[#181D30] border border-[#2D334A] rounded-xl shadow-2xl overflow-hidden z-30 ${activeMenu === `export-${form.id}` ? 'block' : 'hidden'}`}>
+                            <div className={`absolute right-0 bottom-full mb-1 w-28 bg-[#181D30] border border-[#222222] rounded-xl shadow-2xl overflow-hidden z-30 ${activeMenu === `export-${form.id}` ? 'block' : 'hidden'}`}>
                               <button 
                                 onClick={() => handleExportResponses(form, 'csv')}
-                                className="w-full px-3 py-2 text-left text-xs font-bold text-slate-300 hover:bg-slate-800 transition-colors cursor-pointer"
+                                className="w-full px-3 py-2 text-left text-xs font-bold text-gray-300 hover:bg-gray-800 transition-colors cursor-pointer"
                               >
                                 Export CSV
                               </button>
                               <button 
                                 onClick={() => handleExportResponses(form, 'xlsx')}
-                                className="w-full px-3 py-2 text-left text-xs font-bold text-slate-300 hover:bg-slate-800 transition-colors border-t border-[#2D334A]/50 cursor-pointer"
+                                className="w-full px-3 py-2 text-left text-xs font-bold text-gray-300 hover:bg-gray-800 transition-colors border-t border-[#222222]/50 cursor-pointer"
                               >
                                 Export Excel
                               </button>
@@ -481,7 +481,7 @@ const FormBuilderDashboard = () => {
                         {/* Settings / Edit */}
                         <Link
                           to={`/form-builder/edit/${form.id}`}
-                          className="p-2 bg-slate-900 border border-[#2D334A]/50 text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg transition-all"
+                          className="p-2 bg-gray-900 border border-[#222222]/50 text-gray-400 hover:text-yellow-400 hover:bg-yellow-500/10 rounded-lg transition-all"
                           title="Edit Form"
                         >
                           <Edit2 className="w-4 h-4" />
@@ -494,12 +494,12 @@ const FormBuilderDashboard = () => {
                               e.stopPropagation();
                               setActiveMenu(activeMenu === `settings-${form.id}` ? null : `settings-${form.id}`);
                             }}
-                            className="p-2 bg-slate-900 border border-[#2D334A]/50 text-slate-400 hover:text-white rounded-lg transition-all cursor-pointer"
+                            className="p-2 bg-gray-900 border border-[#222222]/50 text-gray-400 hover:text-white rounded-lg transition-all cursor-pointer"
                             title="More Options"
                           >
                             <Settings className="w-4 h-4" />
                           </button>
-                          <div className={`absolute right-0 bottom-full mb-1 w-32 bg-[#181D30] border border-[#2D334A] rounded-xl shadow-2xl overflow-hidden z-30 ${activeMenu === `settings-${form.id}` ? 'block' : 'hidden'}`}>
+                          <div className={`absolute right-0 bottom-full mb-1 w-32 bg-[#181D30] border border-[#222222] rounded-xl shadow-2xl overflow-hidden z-30 ${activeMenu === `settings-${form.id}` ? 'block' : 'hidden'}`}>
                             <button 
                               onClick={() => setConfirmModal({
                                 type: 'duplicate',
@@ -507,9 +507,9 @@ const FormBuilderDashboard = () => {
                                 title: 'Duplicate Form?',
                                 text: `Are you sure you want to clone "${form.title}"? A new draft copy will be created.`
                               })}
-                              className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors flex items-center gap-2 cursor-pointer"
+                              className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-gray-300 hover:bg-gray-800 hover:text-white transition-colors flex items-center gap-2 cursor-pointer"
                             >
-                              <Copy className="w-3.5 h-3.5 text-slate-500" />
+                              <Copy className="w-3.5 h-3.5 text-gray-500" />
                               Duplicate
                             </button>
                             <button 
@@ -522,9 +522,9 @@ const FormBuilderDashboard = () => {
                                   ? `This will restore "${form.title}" back to draft state, allowing submissions to be re-enabled.`
                                   : `This will archive "${form.title}". Users will no longer be able to submit responses until restored.`
                               })}
-                              className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-t border-[#2D334A]/50 flex items-center gap-2 cursor-pointer"
+                              className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-gray-300 hover:bg-gray-800 hover:text-white transition-colors border-t border-[#222222]/50 flex items-center gap-2 cursor-pointer"
                             >
-                              <Archive className="w-3.5 h-3.5 text-slate-500" />
+                              <Archive className="w-3.5 h-3.5 text-gray-500" />
                               {form.status === 'archived' ? 'Restore' : 'Archive'}
                             </button>
                             {form.status === 'draft' ? (
@@ -537,9 +537,9 @@ const FormBuilderDashboard = () => {
                                   title: 'Publish Form?',
                                   text: `This will publish "${form.title}" and make it active. Anyone with the link will be able to submit responses.`
                                 })}
-                                className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300 transition-colors border-t border-[#2D334A]/50 flex items-center gap-2 cursor-pointer"
+                                className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-yellow-400 hover:bg-yellow-500/10 hover:text-yellow-300 transition-colors border-t border-[#222222]/50 flex items-center gap-2 cursor-pointer"
                               >
-                                <Check className="w-3.5 h-3.5 text-emerald-500" />
+                                <Check className="w-3.5 h-3.5 text-yellow-500" />
                                 Publish Form
                               </button>
                             ) : form.status === 'published' ? (
@@ -552,9 +552,9 @@ const FormBuilderDashboard = () => {
                                   title: 'Revert to Draft?',
                                   text: `This will change "${form.title}" status to Draft. Public users won't be able to submit responses until it is published again.`
                                 })}
-                                className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-amber-400 hover:bg-amber-500/10 hover:text-amber-300 transition-colors border-t border-[#2D334A]/50 flex items-center gap-2 cursor-pointer"
+                                className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-yellow-400 hover:bg-yellow-500/10 hover:text-yellow-300 transition-colors border-t border-[#222222]/50 flex items-center gap-2 cursor-pointer"
                               >
-                                <FileText className="w-3.5 h-3.5 text-amber-500" />
+                                <FileText className="w-3.5 h-3.5 text-yellow-500" />
                                 Revert to Draft
                               </button>
                             ) : null}
@@ -566,7 +566,7 @@ const FormBuilderDashboard = () => {
                                 title: 'Permanently Delete?',
                                 text: `Warning: This will permanently delete "${form.title}", its fields, and ALL its responses. This action CANNOT be undone.`
                               })}
-                              className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors border-t border-[#2D334A]/50 flex items-center gap-2 cursor-pointer"
+                              className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors border-t border-[#222222]/50 flex items-center gap-2 cursor-pointer"
                             >
                               <Trash2 className="w-3.5 h-3.5 text-red-500" />
                               Delete
@@ -589,57 +589,57 @@ const FormBuilderDashboard = () => {
                 : new Date(form.createdAt).toLocaleDateString();
 
               return (
-                <div key={form.id} className="bg-[#181D30]/60 p-5 rounded-2xl border border-[#2D334A]/40 flex flex-col gap-4">
+                <div key={form.id} className="bg-[#181D30]/60 p-5 rounded-2xl border border-[#222222]/40 flex flex-col gap-4">
                   {/* Header */}
                   <div>
                     <div className="flex justify-between items-start gap-2">
                       <h4 className="font-extrabold text-white text-base leading-snug">{form.title}</h4>
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border uppercase ${
                         form.status === 'published' 
-                          ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                          ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' 
                           : form.status === 'archived'
                           ? 'bg-rose-500/10 text-rose-400 border-rose-500/20'
-                          : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                          : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
                       }`}>
                         {form.status}
                       </span>
                     </div>
-                    <div className="text-[10px] text-slate-500 font-mono mt-1">ID: {form.id}</div>
-                    {form.description && <p className="text-xs text-slate-400 mt-2 leading-relaxed">{form.description}</p>}
+                    <div className="text-[10px] text-gray-500 font-mono mt-1">ID: {form.id}</div>
+                    {form.description && <p className="text-xs text-gray-400 mt-2 leading-relaxed">{form.description}</p>}
                   </div>
 
                   {/* Summary row */}
-                  <div className="grid grid-cols-2 gap-2 bg-[#0B0F19]/40 border border-[#2D334A]/30 p-3 rounded-xl text-center text-xs">
+                  <div className="grid grid-cols-2 gap-2 bg-black/40 border border-[#222222]/30 p-3 rounded-xl text-center text-xs">
                     <div>
-                      <div className="text-slate-500 text-[9px] font-bold uppercase tracking-wider">Responses</div>
+                      <div className="text-gray-500 text-[9px] font-bold uppercase tracking-wider">Responses</div>
                       <Link 
                         to={`/form-builder/responses/${form.id}`}
-                        className="inline-block mt-1 font-black text-slate-200 bg-slate-900 border border-[#2D334A]/40 px-2.5 py-0.5 rounded-lg hover:text-white transition-colors"
+                        className="inline-block mt-1 font-black text-gray-200 bg-gray-900 border border-[#222222]/40 px-2.5 py-0.5 rounded-lg hover:text-white transition-colors"
                       >
                         {form.responsesCount}
                       </Link>
                     </div>
                     <div>
-                      <div className="text-slate-500 text-[9px] font-bold uppercase tracking-wider">Created Date</div>
-                      <div className="mt-1 font-bold text-slate-300">{createdDate}</div>
+                      <div className="text-gray-500 text-[9px] font-bold uppercase tracking-wider">Created Date</div>
+                      <div className="mt-1 font-bold text-gray-300">{createdDate}</div>
                     </div>
                   </div>
 
                   {/* Actions Row */}
-                  <div className="flex items-center justify-between gap-3 pt-3 border-t border-[#2D334A]/30">
+                  <div className="flex items-center justify-between gap-3 pt-3 border-t border-[#222222]/30">
                     <div className="flex items-center gap-1.5">
                       {/* Copy Link */}
                       <button
                         onClick={() => copyFormLink(form.id)}
-                        className="p-2.5 bg-slate-900 border border-[#2D334A]/50 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer"
+                        className="p-2.5 bg-gray-900 border border-[#222222]/50 text-gray-400 hover:text-white rounded-lg transition-colors cursor-pointer"
                         title="Copy Share Link"
                       >
-                        {copiedLink === form.id ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <ExternalLink className="w-3.5 h-3.5" />}
+                        {copiedLink === form.id ? <Check className="w-3.5 h-3.5 text-yellow-400" /> : <ExternalLink className="w-3.5 h-3.5" />}
                       </button>
                       {/* Analytics */}
                       <Link
                         to={`/form-builder/analytics/${form.id}`}
-                        className="p-2.5 bg-slate-900 border border-[#2D334A]/50 text-slate-400 hover:text-violet-400 rounded-lg transition-colors"
+                        className="p-2.5 bg-gray-900 border border-[#222222]/50 text-gray-400 hover:text-yellow-400 rounded-lg transition-colors"
                         title="Analytics"
                       >
                         <BarChart2 className="w-3.5 h-3.5" />
@@ -647,7 +647,7 @@ const FormBuilderDashboard = () => {
                       {/* Responses */}
                       <Link
                         to={`/form-builder/responses/${form.id}`}
-                        className="p-2.5 bg-slate-900 border border-[#2D334A]/50 text-slate-400 hover:text-blue-400 rounded-lg transition-colors"
+                        className="p-2.5 bg-gray-900 border border-[#222222]/50 text-gray-400 hover:text-yellow-400 rounded-lg transition-colors"
                         title="View Responses"
                       >
                         <Eye className="w-3.5 h-3.5" />
@@ -655,7 +655,7 @@ const FormBuilderDashboard = () => {
                       {/* Edit */}
                       <Link
                         to={`/form-builder/edit/${form.id}`}
-                        className="p-2.5 bg-slate-900 border border-[#2D334A]/50 text-slate-400 hover:text-amber-400 rounded-lg transition-colors"
+                        className="p-2.5 bg-gray-900 border border-[#222222]/50 text-gray-400 hover:text-yellow-400 rounded-lg transition-colors"
                         title="Edit Form"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
@@ -669,12 +669,12 @@ const FormBuilderDashboard = () => {
                           e.stopPropagation();
                           setActiveMenu(activeMenu === `settings-mobile-${form.id}` ? null : `settings-mobile-${form.id}`);
                         }}
-                        className="p-2.5 bg-slate-900 border border-[#2D334A]/50 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                        className="p-2.5 bg-gray-900 border border-[#222222]/50 text-gray-400 hover:text-white rounded-lg transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-bold"
                       >
                         <Settings className="w-3.5 h-3.5" />
                         Options
                       </button>
-                      <div className={`absolute right-0 bottom-full mb-1.5 w-36 bg-[#181D30] border border-[#2D334A] rounded-xl shadow-2xl overflow-hidden z-30 ${activeMenu === `settings-mobile-${form.id}` ? 'block' : 'hidden'}`}>
+                      <div className={`absolute right-0 bottom-full mb-1.5 w-36 bg-[#181D30] border border-[#222222] rounded-xl shadow-2xl overflow-hidden z-30 ${activeMenu === `settings-mobile-${form.id}` ? 'block' : 'hidden'}`}>
                         <button 
                           onClick={() => setConfirmModal({
                             type: 'duplicate',
@@ -682,9 +682,9 @@ const FormBuilderDashboard = () => {
                             title: 'Duplicate Form?',
                             text: `Are you sure you want to clone "${form.title}"?`
                           })}
-                          className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-slate-300 hover:bg-slate-800 transition-colors flex items-center gap-2 cursor-pointer"
+                          className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-gray-300 hover:bg-gray-800 transition-colors flex items-center gap-2 cursor-pointer"
                         >
-                          <Copy className="w-3.5 h-3.5 text-slate-500" />
+                          <Copy className="w-3.5 h-3.5 text-gray-500" />
                           Duplicate
                         </button>
                         <button 
@@ -697,9 +697,9 @@ const FormBuilderDashboard = () => {
                               ? `Restore "${form.title}" to draft state?`
                               : `Archive "${form.title}"?`
                           })}
-                          className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-slate-300 hover:bg-slate-800 transition-colors border-t border-[#2D334A]/50 flex items-center gap-2 cursor-pointer"
+                          className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-gray-300 hover:bg-gray-800 transition-colors border-t border-[#222222]/50 flex items-center gap-2 cursor-pointer"
                         >
-                          <Archive className="w-3.5 h-3.5 text-slate-500" />
+                          <Archive className="w-3.5 h-3.5 text-gray-500" />
                           {form.status === 'archived' ? 'Restore' : 'Archive'}
                         </button>
                         {form.status === 'draft' ? (
@@ -712,9 +712,9 @@ const FormBuilderDashboard = () => {
                               title: 'Publish Form?',
                               text: `Publish "${form.title}" and make it active?`
                             })}
-                            className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-emerald-400 hover:bg-emerald-500/10 transition-colors border-t border-[#2D334A]/50 flex items-center gap-2 cursor-pointer"
+                            className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-yellow-400 hover:bg-yellow-500/10 transition-colors border-t border-[#222222]/50 flex items-center gap-2 cursor-pointer"
                           >
-                            <Check className="w-3.5 h-3.5 text-emerald-500" />
+                            <Check className="w-3.5 h-3.5 text-yellow-500" />
                             Publish Form
                           </button>
                         ) : form.status === 'published' ? (
@@ -727,9 +727,9 @@ const FormBuilderDashboard = () => {
                               title: 'Revert to Draft?',
                               text: `Revert "${form.title}" to draft?`
                             })}
-                            className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-amber-400 hover:bg-amber-500/10 transition-colors border-t border-[#2D334A]/50 flex items-center gap-2 cursor-pointer"
+                            className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-yellow-400 hover:bg-yellow-500/10 transition-colors border-t border-[#222222]/50 flex items-center gap-2 cursor-pointer"
                           >
-                            <FileText className="w-3.5 h-3.5 text-amber-500" />
+                            <FileText className="w-3.5 h-3.5 text-yellow-500" />
                             Revert Draft
                           </button>
                         ) : null}
@@ -741,7 +741,7 @@ const FormBuilderDashboard = () => {
                             title: 'Delete Form?',
                             text: `Permanently delete "${form.title}"?`
                           })}
-                          className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-red-400 hover:bg-red-500/10 transition-colors border-t border-[#2D334A]/50 flex items-center gap-2 cursor-pointer"
+                          className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-red-400 hover:bg-red-500/10 transition-colors border-t border-[#222222]/50 flex items-center gap-2 cursor-pointer"
                         >
                           <Trash2 className="w-3.5 h-3.5 text-red-500" />
                           Delete
@@ -758,27 +758,27 @@ const FormBuilderDashboard = () => {
 
       {/* Confirmation Modal */}
       {confirmModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="bg-[#131726] rounded-[2rem] shadow-2xl border border-[#2D334A] w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-sm">
+          <div className="bg-[#111111] rounded-[2rem] shadow-2xl border border-[#222222] w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
             <div className="p-6 pb-2 flex justify-between items-center">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                <ShieldAlert className={`w-5 h-5 ${confirmModal.type === 'delete' ? 'text-red-400' : 'text-violet-400'}`} />
+                <ShieldAlert className={`w-5 h-5 ${confirmModal.type === 'delete' ? 'text-red-400' : 'text-yellow-400'}`} />
                 {confirmModal.title}
               </h3>
-              <button onClick={() => setConfirmModal(null)} className="p-1.5 hover:bg-[#1E243D] rounded-full transition-colors cursor-pointer">
-                <X className="w-4 h-4 text-slate-400" />
+              <button onClick={() => setConfirmModal(null)} className="p-1.5 hover:bg-[#1A1A1A] rounded-full transition-colors cursor-pointer">
+                <X className="w-4 h-4 text-gray-400" />
               </button>
             </div>
             
             <div className="p-6 pt-2">
-              <p className="text-sm font-medium text-slate-400 leading-relaxed mb-6">
+              <p className="text-sm font-medium text-gray-400 leading-relaxed mb-6">
                 {confirmModal.text}
               </p>
               
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setConfirmModal(null)}
-                  className="flex-1 py-3 border border-[#2D334A]/80 hover:bg-[#1E243D] text-slate-300 font-bold rounded-xl transition-all cursor-pointer text-sm"
+                  className="flex-1 py-3 border border-[#222222]/80 hover:bg-[#1A1A1A] text-gray-300 font-bold rounded-xl transition-all cursor-pointer text-sm"
                 >
                   Cancel
                 </button>
@@ -792,7 +792,7 @@ const FormBuilderDashboard = () => {
                   className={`flex-1 py-3 font-bold rounded-xl transition-all text-white text-sm shadow-md cursor-pointer ${
                     confirmModal.type === 'delete' 
                       ? 'bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 shadow-red-900/20' 
-                      : 'bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 shadow-violet-900/20'
+                      : 'bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 shadow-violet-900/20'
                   }`}
                 >
                   Confirm
@@ -805,34 +805,34 @@ const FormBuilderDashboard = () => {
 
       {/* Audit Logs Modal */}
       {showLogsModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="bg-[#131726] rounded-[2rem] shadow-2xl border border-[#2D334A] w-full max-w-3xl overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div className="p-6 border-b border-[#2D334A]/50 flex justify-between items-center bg-[#0B0F19]/40">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-sm">
+          <div className="bg-[#111111] rounded-[2rem] shadow-2xl border border-[#222222] w-full max-w-3xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="p-6 border-b border-[#222222]/50 flex justify-between items-center bg-black/40">
               <div>
                 <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-violet-400" />
+                  <Activity className="w-5 h-5 text-yellow-400" />
                   System Activity & Audit Logs
                 </h3>
-                <p className="text-slate-400 text-xs font-semibold mt-1">Authorized actions and tracking history</p>
+                <p className="text-gray-400 text-xs font-semibold mt-1">Authorized actions and tracking history</p>
               </div>
               <button 
                 onClick={() => setShowLogsModal(false)} 
-                className="p-2 hover:bg-[#1E243D] rounded-full transition-colors cursor-pointer"
+                className="p-2 hover:bg-[#1A1A1A] rounded-full transition-colors cursor-pointer"
               >
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-gray-400" />
               </button>
             </div>
             
             <div className="p-6 max-h-[500px] overflow-y-auto">
               {loadingLogs ? (
                 <div className="flex flex-col justify-center items-center py-12 gap-3 text-white">
-                  <RefreshCw className="w-8 h-8 text-violet-500 animate-spin" />
+                  <RefreshCw className="w-8 h-8 text-yellow-500 animate-spin" />
                   <span className="font-semibold text-sm">Loading activity records...</span>
                 </div>
               ) : auditLogs.length === 0 ? (
                 <div className="text-center py-12">
-                  <Activity className="w-12 h-12 text-slate-600 mx-auto mb-2" />
-                  <p className="text-slate-400 font-bold">No system activities recorded yet</p>
+                  <Activity className="w-12 h-12 text-gray-600 mx-auto mb-2" />
+                  <p className="text-gray-400 font-bold">No system activities recorded yet</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -842,28 +842,28 @@ const FormBuilderDashboard = () => {
                       : new Date(log.timestamp).toLocaleString();
                     
                     return (
-                      <div key={log.id} className="p-4 rounded-xl bg-[#0B0F19]/40 border border-[#2D334A]/40 hover:border-violet-500/20 transition-all flex items-start justify-between gap-4">
+                      <div key={log.id} className="p-4 rounded-xl bg-black/40 border border-[#222222]/40 hover:border-yellow-500/20 transition-all flex items-start justify-between gap-4">
                         <div>
                           <div className="flex items-center gap-2">
                             <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-black uppercase ${
                               log.action.includes('Delete')
                                 ? 'bg-red-500/10 text-red-400 border border-red-500/20'
                                 : log.action.includes('Export')
-                                ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                                : 'bg-violet-500/10 text-violet-400 border border-violet-500/20'
+                                ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
+                                : 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
                             }`}>
                               {log.action}
                             </span>
-                            <span className="text-slate-300 text-sm font-semibold">{log.formTitle}</span>
+                            <span className="text-gray-300 text-sm font-semibold">{log.formTitle}</span>
                           </div>
-                          <p className="text-slate-400 text-xs mt-2 font-medium">
-                            Triggered by: <span className="text-slate-200 font-bold">{log.user}</span>
+                          <p className="text-gray-400 text-xs mt-2 font-medium">
+                            Triggered by: <span className="text-gray-200 font-bold">{log.user}</span>
                           </p>
                           {log.formId && (
-                            <p className="text-slate-500 font-mono text-[9px] mt-1">Form ID: {log.formId}</p>
+                            <p className="text-gray-500 font-mono text-[9px] mt-1">Form ID: {log.formId}</p>
                           )}
                         </div>
-                        <div className="text-right text-[10px] text-slate-500 font-bold whitespace-nowrap flex items-center gap-1.5 mt-0.5">
+                        <div className="text-right text-[10px] text-gray-500 font-bold whitespace-nowrap flex items-center gap-1.5 mt-0.5">
                           <Calendar className="w-3.5 h-3.5" />
                           {logDate}
                         </div>
@@ -874,10 +874,10 @@ const FormBuilderDashboard = () => {
               )}
             </div>
             
-            <div className="p-6 border-t border-[#2D334A]/50 bg-[#0B0F19]/20 flex justify-end">
+            <div className="p-6 border-t border-[#222222]/50 bg-black/20 flex justify-end">
               <button
                 onClick={() => setShowLogsModal(false)}
-                className="px-5 py-2.5 rounded-xl bg-slate-900 border border-[#2D334A]/80 hover:bg-[#1E243D] text-slate-300 font-semibold text-sm cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-gray-900 border border-[#222222]/80 hover:bg-[#1A1A1A] text-gray-300 font-semibold text-sm cursor-pointer"
               >
                 Close Logs
               </button>

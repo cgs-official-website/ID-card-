@@ -213,12 +213,12 @@ const AdminEmployeeView = () => {
       {/* Header Actions */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
         <div className="flex items-center gap-4">
-          <Link to="/" className="p-3 bg-[#131726] hover:bg-[#1E243D] rounded-2xl border border-[#2D334A]/50 transition-all shadow-sm">
-            <ArrowLeft className="w-6 h-6 text-slate-300" />
+          <Link to="/" className="p-3 bg-[#111111] hover:bg-[#1A1A1A] rounded-2xl border border-[#222222]/50 transition-all shadow-sm">
+            <ArrowLeft className="w-6 h-6 text-gray-300" />
           </Link>
           <div>
             <h2 className="text-3xl font-black text-white tracking-tight">Employee Details</h2>
-            <p className="text-slate-400 font-medium text-sm">View or modify record for {employee.name}</p>
+            <p className="text-gray-400 font-medium text-sm">View or modify record for {employee.name}</p>
           </div>
         </div>
 
@@ -230,8 +230,8 @@ const AdminEmployeeView = () => {
             }}
             className={`flex-1 md:flex-none flex items-center justify-center gap-2 font-bold py-3 px-6 rounded-2xl border transition-all ${
               isEditing 
-              ? 'bg-[#1E243D] text-slate-300 border-[#2D334A]/50 hover:bg-[#252B48]' 
-              : 'bg-[#131726] text-violet-400 border-[#2D334A]/50 hover:bg-[#1E243D]'
+              ? 'bg-[#1A1A1A] text-gray-300 border-[#222222]/50 hover:bg-[#252B48]' 
+              : 'bg-[#111111] text-yellow-400 border-[#222222]/50 hover:bg-[#1A1A1A]'
             }`}
           >
             {isEditing ? <X className="w-5 h-5" /> : <Edit2 className="w-5 h-5" />}
@@ -254,10 +254,10 @@ const AdminEmployeeView = () => {
         {/* Main Info Col */}
         <div className="lg:col-span-2">
           {isEditing ? (
-            <form onSubmit={handleSubmit(onUpdate)} className="bg-[#131726]/80 backdrop-blur-md rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 overflow-hidden">
+            <form onSubmit={handleSubmit(onUpdate)} className="bg-[#111111]/80 backdrop-blur-md rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#222222]/50 overflow-hidden">
               <div className="p-8 md:p-12 space-y-8">
                 <h3 className="text-xl font-bold text-white flex items-center gap-3">
-                  <div className="w-8 h-8 bg-violet-500/20 text-violet-400 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-yellow-500/20 text-yellow-400 rounded-lg flex items-center justify-center">
                     <Edit2 className="w-4 h-4" />
                   </div>
                   Edit Information
@@ -270,11 +270,11 @@ const AdminEmployeeView = () => {
                       <img
                         src={photoPreview || employee.photoUrl}
                         alt="Profile"
-                        className="w-20 h-20 rounded-full object-cover border-2 border-violet-500/40"
+                        className="w-20 h-20 rounded-full object-cover border-2 border-yellow-500/40"
                       />
                     ) : (
-                      <div className="w-20 h-20 rounded-full bg-violet-500/20 flex items-center justify-center border-2 border-dashed border-violet-500/40">
-                        <UserCircle2 className="w-10 h-10 text-violet-400" />
+                      <div className="w-20 h-20 rounded-full bg-yellow-500/20 flex items-center justify-center border-2 border-dashed border-yellow-500/40">
+                        <UserCircle2 className="w-10 h-10 text-yellow-400" />
                       </div>
                     )}
                     <label className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
@@ -284,7 +284,7 @@ const AdminEmployeeView = () => {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-white">Profile Photo</p>
-                    <label className="mt-1 text-xs text-violet-400 cursor-pointer hover:text-violet-300 transition-colors underline underline-offset-2">
+                    <label className="mt-1 text-xs text-yellow-400 cursor-pointer hover:text-yellow-300 transition-colors underline underline-offset-2">
                       Click photo to change & crop
                       <input type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
                     </label>
@@ -293,16 +293,16 @@ const AdminEmployeeView = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Employee ID</label>
-                    <input {...register('id', { required: true })} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Employee ID</label>
+                    <input {...register('id', { required: true })} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Full Name</label>
-                    <input {...register('name', { required: true })} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Full Name</label>
+                    <input {...register('name', { required: true })} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Department</label>
-                    <select {...register('department', { required: true })} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white">
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Department</label>
+                    <select {...register('department', { required: true })} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white">
                       <option value="Management">Management</option>
                       <option value="Human Resources">Human Resources</option>
                       <option value="Development">Development & Designing</option>
@@ -312,36 +312,36 @@ const AdminEmployeeView = () => {
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Job Role</label>
-                    <input {...register('role', { required: true })} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Job Role</label>
+                    <input {...register('role', { required: true })} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Joining Date</label>
-                    <input type="date" {...register('dateOfJoining')} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Joining Date</label>
+                    <input type="date" {...register('dateOfJoining')} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Date of Birth</label>
-                    <input type="date" {...register('dateOfBirth')} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Date of Birth</label>
+                    <input type="date" {...register('dateOfBirth')} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Email Address</label>
-                    <input {...register('email', { required: true })} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Email Address</label>
+                    <input {...register('email', { required: true })} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Phone Number</label>
-                    <input {...register('phoneNumber', { required: true })} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Phone Number</label>
+                    <input {...register('phoneNumber', { required: true })} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Emergency Contact</label>
-                    <input {...register('emergencyContact')} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Emergency Contact</label>
+                    <input {...register('emergencyContact')} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Blood Group</label>
-                    <input {...register('bloodGroup')} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Blood Group</label>
+                    <input {...register('bloodGroup')} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Employee Type</label>
-                    <select {...register('employeeType')} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white">
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Employee Type</label>
+                    <select {...register('employeeType')} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white">
                       <option value="Full-time">Full-time</option>
                       <option value="Part-time">Part-time</option>
                       <option value="Contract">Contract</option>
@@ -351,14 +351,14 @@ const AdminEmployeeView = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Current Address</label>
-                  <textarea {...register('currentAddress')} rows="3" className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white resize-none" />
+                  <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Current Address</label>
+                  <textarea {...register('currentAddress')} rows="3" className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white resize-none" />
                 </div>
 
                 <button
                   type="submit"
                   disabled={updating}
-                  className="w-full bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-black py-5 rounded-3xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-violet-500/20 disabled:opacity-50"
+                  className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-black py-5 rounded-3xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-yellow-500/20 disabled:opacity-50"
                 >
                   {updating ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Check className="w-6 h-6" />}
                   {updating ? 'Saving Changes...' : 'Update Record'}
@@ -366,26 +366,26 @@ const AdminEmployeeView = () => {
               </div>
             </form>
           ) : (
-            <div className="bg-[#131726]/80 backdrop-blur-md rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 overflow-hidden">
-              <div className="p-8 md:p-12 flex flex-col md:flex-row gap-10 items-center md:items-start border-b border-[#2D334A]/50">
-                <div className="w-40 h-40 rounded-[2.5rem] bg-[#0B0F19] p-1 border border-[#2D334A]/50 shadow-lg overflow-hidden flex-shrink-0">
+            <div className="bg-[#111111]/80 backdrop-blur-md rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#222222]/50 overflow-hidden">
+              <div className="p-8 md:p-12 flex flex-col md:flex-row gap-10 items-center md:items-start border-b border-[#222222]/50">
+                <div className="w-40 h-40 rounded-[2.5rem] bg-black p-1 border border-[#222222]/50 shadow-lg overflow-hidden flex-shrink-0">
                   {employee.photoUrl ? (
                     <img src={employee.photoUrl} alt={employee.name} className="w-full h-full object-cover rounded-[2rem]" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-violet-500/20 text-violet-400 rounded-[2rem]">
+                    <div className="w-full h-full flex items-center justify-center bg-yellow-500/20 text-yellow-400 rounded-[2rem]">
                       <UserCircle2 className="w-20 h-20" />
                     </div>
                   )}
                 </div>
                 <div className="text-center md:text-left flex-1">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#1E243D] text-slate-300 text-[10px] font-black uppercase tracking-[0.2em] rounded-full mb-4">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#1A1A1A] text-gray-300 text-[10px] font-black uppercase tracking-[0.2em] rounded-full mb-4">
                     ID: {employee.id}
                   </div>
                   <h3 className="text-4xl font-black text-white tracking-tight leading-tight">{employee.name}</h3>
-                  <p className="text-slate-400 text-xl font-medium mt-1">{employee.role || 'No Role'} • {employee.department}</p>
+                  <p className="text-gray-400 text-xl font-medium mt-1">{employee.role || 'No Role'} • {employee.department}</p>
                   
                   <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
-                    <span className="bg-violet-500/20 text-violet-300 px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-widest border border-violet-500/30">
+                    <span className="bg-yellow-500/20 text-yellow-300 px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-widest border border-yellow-500/30">
                       {employee.employeeType || 'Full-time'}
                     </span>
                     <span className="bg-rose-500/20 text-rose-400 px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-widest border border-rose-500/30 flex items-center gap-2">
@@ -396,17 +396,17 @@ const AdminEmployeeView = () => {
                 </div>
               </div>
 
-              <div className="p-8 md:p-12 border-b border-[#2D334A]/50 bg-[#0B0F19]/30">
+              <div className="p-8 md:p-12 border-b border-[#222222]/50 bg-black/30">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                   
                   {/* Email */}
                   <div className="flex items-start gap-4 group min-w-0">
-                    <div className="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 bg-yellow-500/20 text-yellow-400 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                       <Mail className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Email Address</p>
-                      <p className="text-slate-200 font-bold text-base break-all leading-tight">{employee.email}</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Email Address</p>
+                      <p className="text-gray-200 font-bold text-base break-all leading-tight">{employee.email}</p>
                     </div>
                   </div>
 
@@ -416,8 +416,8 @@ const AdminEmployeeView = () => {
                       <MapPin className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Primary Location</p>
-                      <p className="text-slate-200 font-bold text-base leading-tight">{employee.currentAddress || 'N/A'}</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Primary Location</p>
+                      <p className="text-gray-200 font-bold text-base leading-tight">{employee.currentAddress || 'N/A'}</p>
                     </div>
                   </div>
 
@@ -427,8 +427,8 @@ const AdminEmployeeView = () => {
                       <Phone className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Phone Number</p>
-                        <p className="text-slate-200 font-bold text-base">{employee.phoneNumber || employee.personalContact || 'N/A'}</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Phone Number</p>
+                        <p className="text-gray-200 font-bold text-base">{employee.phoneNumber || employee.personalContact || 'N/A'}</p>
                     </div>
                   </div>
 
@@ -438,19 +438,19 @@ const AdminEmployeeView = () => {
                       <HeartPulse className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Emergency Contact</p>
-                      <p className="text-slate-200 font-bold text-base">{employee.emergencyContact || 'N/A'}</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Emergency Contact</p>
+                      <p className="text-gray-200 font-bold text-base">{employee.emergencyContact || 'N/A'}</p>
                     </div>
                   </div>
 
                   {/* Joining Date */}
                   <div className="flex items-start gap-4 group min-w-0">
-                    <div className="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 bg-amber-50 text-yellow-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                       <Calendar className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Joining Date</p>
-                      <p className="text-slate-200 font-bold text-base">{employee.dateOfJoining || 'N/A'}</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Joining Date</p>
+                      <p className="text-gray-200 font-bold text-base">{employee.dateOfJoining || 'N/A'}</p>
                     </div>
                   </div>
 
@@ -460,17 +460,17 @@ const AdminEmployeeView = () => {
                       <Cake className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Date of Birth</p>
-                      <p className="text-slate-200 font-bold text-base">{employee.dateOfBirth || 'N/A'}</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Date of Birth</p>
+                      <p className="text-gray-200 font-bold text-base">{employee.dateOfBirth || 'N/A'}</p>
                     </div>
                   </div>                  {/* Employee Type */}
                   <div className="flex items-start gap-4 group min-w-0">
-                    <div className="w-10 h-10 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 bg-yellow-500/20 text-yellow-400 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                       <Briefcase className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Employment Type</p>
-                      <p className="text-slate-200 font-bold text-base">{employee.employeeType || 'Full-time'}</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Employment Type</p>
+                      <p className="text-gray-200 font-bold text-base">{employee.employeeType || 'Full-time'}</p>
                     </div>
                   </div>
 
@@ -482,9 +482,9 @@ const AdminEmployeeView = () => {
 
         {/* Sidebar QR Col */}
         <div className="space-y-8">
-          <div className="bg-[#131726]/80 backdrop-blur-md rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 p-8 text-center sticky top-8">
+          <div className="bg-[#111111]/80 backdrop-blur-md rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#222222]/50 p-8 text-center sticky top-8">
             <h3 className="text-xl font-bold text-white mb-2">Management QR</h3>
-            <p className="text-xs text-slate-400 font-medium mb-8">This QR stays unique and permanent</p>
+            <p className="text-xs text-gray-400 font-medium mb-8">This QR stays unique and permanent</p>
             
             <div className="bg-white p-8 rounded-[2rem] border border-gray-100 inline-block mb-8 shadow-inner group">
               <QRCode
@@ -498,17 +498,17 @@ const AdminEmployeeView = () => {
             
             <button
               onClick={downloadQR}
-              className="w-full flex items-center justify-center gap-3 bg-[#1E243D] hover:bg-[#252B48] border border-[#2D334A] text-white font-black py-4 px-6 rounded-2xl transition-all shadow-lg"
+              className="w-full flex items-center justify-center gap-3 bg-[#1A1A1A] hover:bg-[#252B48] border border-[#222222] text-white font-black py-4 px-6 rounded-2xl transition-all shadow-lg"
             >
               <Download className="w-5 h-5" />
               Download QR Image
             </button>
             
-            <div className="mt-6 pt-6 border-t border-[#2D334A]/50 flex flex-col gap-4">
+            <div className="mt-6 pt-6 border-t border-[#222222]/50 flex flex-col gap-4">
               <Link 
                 to={`/employee/${employee.id}`} 
                 target="_blank"
-                className="flex items-center justify-center gap-2 text-sm text-violet-400 hover:text-violet-300 font-bold transition-all"
+                className="flex items-center justify-center gap-2 text-sm text-yellow-400 hover:text-yellow-300 font-bold transition-all"
               >
                 Preview Portfolio View
                 <ExternalLink className="w-4 h-4" />

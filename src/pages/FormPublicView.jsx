@@ -539,9 +539,9 @@ const FormPublicView = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-black flex items-center justify-center p-4">
         <div className="flex flex-col items-center gap-3 text-white">
-          <RefreshCw className="w-8 h-8 text-violet-500 animate-spin" />
+          <RefreshCw className="w-8 h-8 text-yellow-500 animate-spin" />
           <span className="font-semibold text-sm">Loading Form...</span>
         </div>
       </div>
@@ -550,14 +550,14 @@ const FormPublicView = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-[#131726]/80 backdrop-blur-md rounded-3xl border border-[#2D334A]/50 p-8 text-center shadow-2xl">
+      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-[#111111]/80 backdrop-blur-md rounded-3xl border border-[#222222]/50 p-8 text-center shadow-2xl">
           <div className="w-16 h-16 bg-red-500/10 text-red-400 rounded-full flex items-center justify-center mx-auto mb-5 border border-red-500/20">
             <AlertTriangle className="w-8 h-8" />
           </div>
           <h2 className="text-xl font-bold text-white mb-2">Form Closed</h2>
-          <p className="text-slate-400 text-sm leading-relaxed mb-6">{error}</p>
-          <div className="text-xs font-bold text-slate-500 flex items-center justify-center gap-1.5 bg-[#0B0F19]/40 py-2 rounded-xl border border-[#2D334A]/30">
+          <p className="text-gray-400 text-sm leading-relaxed mb-6">{error}</p>
+          <div className="text-xs font-bold text-gray-500 flex items-center justify-center gap-1.5 bg-black/40 py-2 rounded-xl border border-[#222222]/30">
             <Lock className="w-3.5 h-3.5" />
             Authorized access only
           </div>
@@ -568,28 +568,28 @@ const FormPublicView = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
         {/* Decorative backdrop glows */}
-        <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-violet-600/5 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-yellow-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-yellow-500/5 blur-[120px] rounded-full pointer-events-none"></div>
 
-        <div className="max-w-md w-full bg-[#131726]/80 backdrop-blur-md rounded-3xl border border-[#2D334A]/50 p-8 md:p-10 text-center shadow-2xl z-10 animate-in fade-in zoom-in duration-300">
-          <div className="w-20 h-20 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/20 shadow-[0_0_50px_rgba(16,185,129,0.1)]">
+        <div className="max-w-md w-full bg-[#111111]/80 backdrop-blur-md rounded-3xl border border-[#222222]/50 p-8 md:p-10 text-center shadow-2xl z-10 animate-in fade-in zoom-in duration-300">
+          <div className="w-20 h-20 bg-yellow-500/10 text-yellow-400 rounded-full flex items-center justify-center mx-auto mb-6 border border-yellow-500/20 shadow-[0_0_50px_rgba(16,185,129,0.1)]">
             <CheckCircle2 className="w-10 h-10 animate-bounce" />
           </div>
           
           <h2 className="text-2xl font-black text-white mb-3">Submission Successful!</h2>
-          <p className="text-slate-300 text-sm leading-relaxed mb-6 font-medium">
+          <p className="text-gray-300 text-sm leading-relaxed mb-6 font-medium">
             {form.settings?.successMessage || 'Thank you! Your response has been submitted.'}
           </p>
 
           {form.settings?.redirectUrl ? (
-            <div className="p-4 bg-[#0B0F19]/60 rounded-2xl border border-[#2D334A]/30 flex flex-col items-center gap-2">
-              <div className="w-5 h-5 border-2 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
-              <p className="text-[11px] text-slate-500 font-bold uppercase tracking-wider">
+            <div className="p-4 bg-black/60 rounded-2xl border border-[#222222]/30 flex flex-col items-center gap-2">
+              <div className="w-5 h-5 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+              <p className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">
                 Redirecting you...
               </p>
-              <span className="text-[10px] text-violet-400 truncate max-w-full font-semibold">
+              <span className="text-[10px] text-yellow-400 truncate max-w-full font-semibold">
                 {form.settings.redirectUrl}
               </span>
             </div>
@@ -615,7 +615,7 @@ const FormPublicView = () => {
                     generateCaptcha();
                   }
                 }}
-                className="w-full py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-violet-500/10 transition-all cursor-pointer"
+                className="w-full py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-bold text-sm rounded-xl shadow-lg shadow-yellow-500/10 transition-all cursor-pointer"
               >
                 Submit Another Response
               </button>
@@ -627,17 +627,17 @@ const FormPublicView = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] py-12 px-4 relative overflow-y-auto selection:bg-violet-500/30 selection:text-violet-200 flex flex-col items-center">
+    <div className="min-h-screen bg-black py-12 px-4 relative overflow-y-auto selection:bg-yellow-500/30 selection:text-violet-200 flex flex-col items-center">
       {/* Decorative backdrop glows */}
-      <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-violet-600/5 blur-[120px] rounded-full pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-yellow-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-yellow-500/5 blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="max-w-xl w-full space-y-8 z-10">
         
         {/* Form branding / Logo */}
         {form.settings?.logoUrl && (
           <div className="flex justify-center">
-            <div className="w-20 h-20 bg-white border border-[#2D334A] rounded-2xl p-2.5 shadow-md flex items-center justify-center overflow-hidden">
+            <div className="w-20 h-20 bg-white border border-[#222222] rounded-2xl p-2.5 shadow-md flex items-center justify-center overflow-hidden">
               <img src={form.settings.logoUrl} alt="Branding" className="w-full h-full object-contain" />
             </div>
           </div>
@@ -647,14 +647,14 @@ const FormPublicView = () => {
         <div className="text-center">
           <h1 className="text-3xl font-black text-white tracking-tight">{form.title}</h1>
           {form.description && (
-            <p className="text-slate-400 font-medium text-sm mt-3.5 leading-relaxed max-w-lg mx-auto whitespace-pre-wrap">
+            <p className="text-gray-400 font-medium text-sm mt-3.5 leading-relaxed max-w-lg mx-auto whitespace-pre-wrap">
               {form.description}
             </p>
           )}
         </div>
 
         {/* Form Form Body */}
-        <div className="bg-[#131726]/80 backdrop-blur-md rounded-3xl border border-[#2D334A]/50 p-6 md:p-10 shadow-2xl">
+        <div className="bg-[#111111]/80 backdrop-blur-md rounded-3xl border border-[#222222]/50 p-6 md:p-10 shadow-2xl">
           <form onSubmit={handleSubmit} className="space-y-8">
             
             {fields.map((field) => {
@@ -662,13 +662,13 @@ const FormPublicView = () => {
 
               // Render Layout Divider
               if (field.type === 'divider') {
-                return <hr key={field.id} className="border-t border-[#2D334A]/80 border-dashed py-1" />;
+                return <hr key={field.id} className="border-t border-[#222222]/80 border-dashed py-1" />;
               }
 
               // Render Layout Heading
               if (field.type === 'heading') {
                 return (
-                  <h3 key={field.id} className="text-lg font-extrabold text-slate-100 pt-2 border-l-3 border-violet-500 pl-3">
+                  <h3 key={field.id} className="text-lg font-extrabold text-gray-100 pt-2 border-l-3 border-yellow-500 pl-3">
                     {field.label}
                   </h3>
                 );
@@ -677,7 +677,7 @@ const FormPublicView = () => {
               // Render Layout Paragraph
               if (field.type === 'paragraph') {
                 return (
-                  <p key={field.id} className="text-xs text-slate-400 font-semibold leading-relaxed whitespace-pre-wrap bg-[#0B0F19]/30 p-4 rounded-xl border border-[#2D334A]/40">
+                  <p key={field.id} className="text-xs text-gray-400 font-semibold leading-relaxed whitespace-pre-wrap bg-black/30 p-4 rounded-xl border border-[#222222]/40">
                     {field.label}
                   </p>
                 );
@@ -686,7 +686,7 @@ const FormPublicView = () => {
               // Render Layout Image block
               if (field.type === 'imageBlock') {
                 return (
-                  <div key={field.id} className="w-full rounded-2xl border border-[#2D334A] overflow-hidden shadow-md">
+                  <div key={field.id} className="w-full rounded-2xl border border-[#222222] overflow-hidden shadow-md">
                     <img src={field.label || '/logo.png'} alt="Block" className="w-full h-auto object-cover max-h-64" />
                   </div>
                 );
@@ -696,7 +696,7 @@ const FormPublicView = () => {
 
               return (
                 <div key={field.id} className="space-y-2">
-                  <label className="text-xs font-bold text-slate-300 flex items-center gap-1">
+                  <label className="text-xs font-bold text-gray-300 flex items-center gap-1">
                     {field.label}
                     {field.required && <span className="text-red-500">*</span>}
                   </label>
@@ -708,8 +708,8 @@ const FormPublicView = () => {
                       placeholder={field.placeholder}
                       value={responses[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 bg-[#0B0F19]/50 transition-all ${
-                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#2D334A]/60 focus:border-violet-500'
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-yellow-500/20 bg-black/50 transition-all ${
+                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#222222]/60 focus:border-yellow-500'
                       }`}
                     />
                   )}
@@ -721,8 +721,8 @@ const FormPublicView = () => {
                       rows="4"
                       value={responses[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 bg-[#0B0F19]/50 transition-all resize-none ${
-                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#2D334A]/60 focus:border-violet-500'
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-yellow-500/20 bg-black/50 transition-all resize-none ${
+                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#222222]/60 focus:border-yellow-500'
                       }`}
                     />
                   )}
@@ -734,8 +734,8 @@ const FormPublicView = () => {
                       placeholder={field.placeholder}
                       value={responses[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 bg-[#0B0F19]/50 transition-all ${
-                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#2D334A]/60 focus:border-violet-500'
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-yellow-500/20 bg-black/50 transition-all ${
+                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#222222]/60 focus:border-yellow-500'
                       }`}
                     />
                   )}
@@ -747,8 +747,8 @@ const FormPublicView = () => {
                       placeholder={field.placeholder}
                       value={responses[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 bg-[#0B0F19]/50 transition-all ${
-                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#2D334A]/60 focus:border-violet-500'
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-yellow-500/20 bg-black/50 transition-all ${
+                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#222222]/60 focus:border-yellow-500'
                       }`}
                     />
                   )}
@@ -760,8 +760,8 @@ const FormPublicView = () => {
                       placeholder={field.placeholder}
                       value={responses[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 bg-[#0B0F19]/50 transition-all ${
-                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#2D334A]/60 focus:border-violet-500'
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-yellow-500/20 bg-black/50 transition-all ${
+                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#222222]/60 focus:border-yellow-500'
                       }`}
                     />
                   )}
@@ -773,8 +773,8 @@ const FormPublicView = () => {
                       placeholder={field.placeholder}
                       value={responses[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 bg-[#0B0F19]/50 transition-all ${
-                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#2D334A]/60 focus:border-violet-500'
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-yellow-500/20 bg-black/50 transition-all ${
+                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#222222]/60 focus:border-yellow-500'
                       }`}
                     />
                   )}
@@ -784,8 +784,8 @@ const FormPublicView = () => {
                     <select
                       value={responses[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full rounded-xl border px-4 py-3 text-sm text-slate-300 focus:outline-none bg-[#0B0F19] cursor-pointer transition-all ${
-                        hasErr ? 'border-red-500' : 'border-[#2D334A]/60 focus:border-violet-500'
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-gray-300 focus:outline-none bg-black cursor-pointer transition-all ${
+                        hasErr ? 'border-red-500' : 'border-[#222222]/60 focus:border-yellow-500'
                       }`}
                     >
                       <option value="">Choose options...</option>
@@ -799,14 +799,14 @@ const FormPublicView = () => {
                   {field.type === 'radio' && (
                     <div className="space-y-2.5 pt-1.5">
                       {field.options?.map((opt, oIdx) => (
-                        <label key={oIdx} className="flex items-center gap-3 text-slate-300 font-bold text-xs cursor-pointer select-none">
+                        <label key={oIdx} className="flex items-center gap-3 text-gray-300 font-bold text-xs cursor-pointer select-none">
                           <input
                             type="radio"
                             name={field.id}
                             value={opt}
                             checked={responses[field.id] === opt}
                             onChange={() => handleInputChange(field.id, opt)}
-                            className="w-4.5 h-4.5 text-violet-600 focus:ring-violet-500 border-[#2D334A] bg-[#0B0F19]"
+                            className="w-4.5 h-4.5 text-yellow-500 focus:ring-yellow-500 border-[#222222] bg-black"
                           />
                           {opt}
                         </label>
@@ -820,12 +820,12 @@ const FormPublicView = () => {
                       {field.options?.map((opt, oIdx) => {
                         const vals = Array.isArray(responses[field.id]) ? responses[field.id] : [];
                         return (
-                          <label key={oIdx} className="flex items-center gap-3 text-slate-300 font-bold text-xs cursor-pointer select-none">
+                          <label key={oIdx} className="flex items-center gap-3 text-gray-300 font-bold text-xs cursor-pointer select-none">
                             <input
                               type="checkbox"
                               checked={vals.includes(opt)}
                               onChange={(e) => handleCheckboxChange(field.id, opt, e.target.checked)}
-                              className="w-4.5 h-4.5 text-violet-600 focus:ring-violet-500 rounded border-[#2D334A] bg-[#0B0F19]"
+                              className="w-4.5 h-4.5 text-yellow-500 focus:ring-yellow-500 rounded border-[#222222] bg-black"
                             />
                             {opt}
                           </label>
@@ -843,8 +843,8 @@ const FormPublicView = () => {
                         const opts = Array.from(e.target.selectedOptions, o => o.value);
                         handleInputChange(field.id, opts);
                       }}
-                      className={`w-full rounded-xl border px-4 py-3 text-sm text-slate-300 focus:outline-none bg-[#0B0F19] cursor-pointer min-h-24 transition-all ${
-                        hasErr ? 'border-red-500' : 'border-[#2D334A]/60 focus:border-violet-500'
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-gray-300 focus:outline-none bg-black cursor-pointer min-h-24 transition-all ${
+                        hasErr ? 'border-red-500' : 'border-[#222222]/60 focus:border-yellow-500'
                       }`}
                     >
                       {field.options?.map((opt, oIdx) => (
@@ -859,8 +859,8 @@ const FormPublicView = () => {
                       type="date"
                       value={responses[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 bg-[#0B0F19]/50 cursor-pointer transition-all ${
-                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#2D334A]/60 focus:border-violet-500'
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-yellow-500/20 bg-black/50 cursor-pointer transition-all ${
+                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#222222]/60 focus:border-yellow-500'
                       }`}
                     />
                   )}
@@ -871,8 +871,8 @@ const FormPublicView = () => {
                       type="time"
                       value={responses[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 bg-[#0B0F19]/50 cursor-pointer transition-all ${
-                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#2D334A]/60 focus:border-violet-500'
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-yellow-500/20 bg-black/50 cursor-pointer transition-all ${
+                        hasErr ? 'border-red-500 focus:border-red-500' : 'border-[#222222]/60 focus:border-yellow-500'
                       }`}
                     />
                   )}
@@ -881,10 +881,10 @@ const FormPublicView = () => {
                   {(field.type === 'fileUpload' || field.type === 'imageUpload') && (
                     <div className="space-y-3">
                       {filesData[field.id]?.url ? (
-                        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-4">
+                        <div className="p-4 rounded-2xl bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-between gap-4">
                           <div className="flex items-center gap-2">
-                            <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                            <span className="text-xs text-slate-200 font-bold truncate max-w-[220px]">{filesData[field.id].name}</span>
+                            <ShieldCheck className="w-5 h-5 text-yellow-400" />
+                            <span className="text-xs text-gray-200 font-bold truncate max-w-[220px]">{filesData[field.id].name}</span>
                           </div>
                           <button
                             type="button"
@@ -895,23 +895,23 @@ const FormPublicView = () => {
                           </button>
                         </div>
                       ) : filesData[field.id]?.scanning ? (
-                        <div className="p-4 rounded-2xl bg-slate-900 border border-[#2D334A]/80 flex flex-col gap-2">
+                        <div className="p-4 rounded-2xl bg-gray-900 border border-[#222222]/80 flex flex-col gap-2">
                           <div className="flex items-center gap-2.5">
-                            <RefreshCw className="w-4 h-4 text-violet-500 animate-spin" />
-                            <span className="text-xs font-bold text-slate-300">{filesData[field.id].status}</span>
+                            <RefreshCw className="w-4 h-4 text-yellow-500 animate-spin" />
+                            <span className="text-xs font-bold text-gray-300">{filesData[field.id].status}</span>
                           </div>
-                          <div className="h-1 bg-slate-800 rounded-full overflow-hidden">
-                            <div className="h-full bg-gradient-to-r from-violet-600 to-blue-600 animate-pulse w-[75%]"></div>
+                          <div className="h-1 bg-gray-800 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-yellow-400 to-yellow-500 animate-pulse w-[75%]"></div>
                           </div>
                         </div>
                       ) : (
                         <div className="relative group">
-                          <label className={`w-full rounded-2xl border-2 border-dashed flex flex-col items-center justify-center p-6 bg-[#0B0F19]/40 hover:border-violet-500 transition-colors cursor-pointer ${
-                            hasErr || filesData[field.id]?.error ? 'border-red-500/60' : 'border-[#2D334A]/80'
+                          <label className={`w-full rounded-2xl border-2 border-dashed flex flex-col items-center justify-center p-6 bg-black/40 hover:border-yellow-500 transition-colors cursor-pointer ${
+                            hasErr || filesData[field.id]?.error ? 'border-red-500/60' : 'border-[#222222]/80'
                           }`}>
-                            {field.type === 'imageUpload' ? <ImageIcon className="w-7 h-7 text-slate-500" /> : <Upload className="w-7 h-7 text-slate-500" />}
-                            <span className="text-xs text-slate-300 font-bold mt-2">Choose file to upload</span>
-                            <span className="text-[10px] text-slate-500 font-medium mt-1">Limit: {field.validation?.maxFileSize || 5}MB</span>
+                            {field.type === 'imageUpload' ? <ImageIcon className="w-7 h-7 text-gray-500" /> : <Upload className="w-7 h-7 text-gray-500" />}
+                            <span className="text-xs text-gray-300 font-bold mt-2">Choose file to upload</span>
+                            <span className="text-[10px] text-gray-500 font-medium mt-1">Limit: {field.validation?.maxFileSize || 5}MB</span>
                             <input 
                               type="file" 
                               accept={field.type === 'imageUpload' ? 'image/*' : '*'} 
@@ -923,7 +923,7 @@ const FormPublicView = () => {
                       )}
                       
                       {filesData[field.id]?.url && (
-                        <div className="flex items-center gap-1.5 text-[9px] font-black text-emerald-400 uppercase tracking-widest bg-emerald-500/5 px-2 py-1 rounded w-fit border border-emerald-500/10">
+                        <div className="flex items-center gap-1.5 text-[9px] font-black text-yellow-400 uppercase tracking-widest bg-yellow-500/5 px-2 py-1 rounded w-fit border border-yellow-500/10">
                           <ShieldCheck className="w-3 h-3" />
                           Secure Virus Scan Checked
                         </div>
@@ -950,11 +950,11 @@ const FormPublicView = () => {
                             onClick={() => handleInputChange(field.id, num)}
                             className={`p-2 rounded-xl transition-all cursor-pointer border ${
                               isActive
-                                ? 'bg-amber-500/15 border-amber-500/40 text-amber-400 scale-105 shadow-md shadow-amber-500/5'
-                                : 'bg-[#0B0F19]/40 border-[#2D334A]/80 text-slate-600 hover:text-slate-400 hover:border-slate-700'
+                                ? 'bg-yellow-500/15 border-yellow-500/40 text-yellow-400 scale-105 shadow-md shadow-yellow-500/5'
+                                : 'bg-black/40 border-[#222222]/80 text-gray-600 hover:text-gray-400 hover:border-gray-700'
                             }`}
                           >
-                            <Star className={`w-5 h-5 ${isActive ? 'fill-amber-500' : ''}`} />
+                            <Star className={`w-5 h-5 ${isActive ? 'fill-yellow-500' : ''}`} />
                             <span className="text-[10px] font-black block mt-0.5">{num}</span>
                           </button>
                         );
@@ -970,8 +970,8 @@ const FormPublicView = () => {
                         onClick={() => handleInputChange(field.id, 'yes')}
                         className={`px-6 py-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                           responses[field.id] === 'yes'
-                            ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400 font-extrabold'
-                            : 'bg-[#0B0F19]/40 border-[#2D334A]/80 text-slate-400'
+                            ? 'bg-yellow-500/15 border-yellow-500/40 text-yellow-400 font-extrabold'
+                            : 'bg-black/40 border-[#222222]/80 text-gray-400'
                         }`}
                       >
                         Yes
@@ -982,7 +982,7 @@ const FormPublicView = () => {
                         className={`px-6 py-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                           responses[field.id] === 'no'
                             ? 'bg-rose-500/15 border-rose-500/40 text-rose-400 font-extrabold'
-                            : 'bg-[#0B0F19]/40 border-[#2D334A]/80 text-slate-400'
+                            : 'bg-black/40 border-[#222222]/80 text-gray-400'
                         }`}
                       >
                         No
@@ -993,7 +993,7 @@ const FormPublicView = () => {
                   {/* 17. Digital Signature Canvas drawing */}
                   {field.type === 'signature' && (
                     <div className="space-y-2">
-                      <div className="relative border border-[#2D334A]/80 bg-[#0B0F19] rounded-2xl overflow-hidden h-36">
+                      <div className="relative border border-[#222222]/80 bg-black rounded-2xl overflow-hidden h-36">
                         <canvas
                           ref={(el) => {
                             if (el) {
@@ -1022,7 +1022,7 @@ const FormPublicView = () => {
                           onTouchEnd={() => stopDrawing(field.id)}
                           className="w-full h-full cursor-crosshair touch-none"
                         />
-                        <div className="absolute top-2 left-3 text-[9px] font-black text-slate-500 uppercase tracking-widest pointer-events-none select-none">
+                        <div className="absolute top-2 left-3 text-[9px] font-black text-gray-500 uppercase tracking-widest pointer-events-none select-none">
                           Draw Signature Below
                         </div>
                       </div>
@@ -1030,14 +1030,14 @@ const FormPublicView = () => {
                       <button
                         type="button"
                         onClick={() => clearSignature(field.id)}
-                        className="text-[10px] font-black text-slate-400 hover:text-white transition-colors flex items-center gap-1.5"
+                        className="text-[10px] font-black text-gray-400 hover:text-white transition-colors flex items-center gap-1.5"
                       >
                         Clear Signature Space
                       </button>
                     </div>
                   )}
 
-                  {field.helpText && <p className="text-[10px] text-slate-500 font-medium italic mt-0.5">{field.helpText}</p>}
+                  {field.helpText && <p className="text-[10px] text-gray-500 font-medium italic mt-0.5">{field.helpText}</p>}
                   {hasErr && <p className="text-red-500 text-xs font-bold mt-1">{errors[field.id]}</p>}
                 </div>
               );
@@ -1045,19 +1045,19 @@ const FormPublicView = () => {
 
             {/* Verification Block / Math Captcha */}
             {form.settings?.enableCaptcha !== false && (
-              <div className="space-y-2 pt-4 border-t border-[#2D334A]/60">
-                <label className="text-xs font-bold text-slate-300 flex items-center gap-1">
+              <div className="space-y-2 pt-4 border-t border-[#222222]/60">
+                <label className="text-xs font-bold text-gray-300 flex items-center gap-1">
                   Human Verification *
                 </label>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 sm:flex-initial px-4 py-3 rounded-xl bg-[#0B0F19] border border-[#2D334A]/80 font-mono text-sm font-bold text-slate-200 text-center select-none whitespace-nowrap">
+                    <div className="flex-1 sm:flex-initial px-4 py-3 rounded-xl bg-black border border-[#222222]/80 font-mono text-sm font-bold text-gray-200 text-center select-none whitespace-nowrap">
                       {captcha.num1} + {captcha.num2} = ?
                     </div>
                     <button 
                       type="button" 
                       onClick={generateCaptcha} 
-                      className="sm:hidden p-3.5 bg-[#0B0F19] hover:bg-slate-900 border border-[#2D334A]/60 rounded-xl transition-colors cursor-pointer text-slate-400 hover:text-white"
+                      className="sm:hidden p-3.5 bg-black hover:bg-gray-900 border border-[#222222]/60 rounded-xl transition-colors cursor-pointer text-gray-400 hover:text-white"
                       title="Refresh Captcha"
                     >
                       <RefreshCw className="w-4 h-4" />
@@ -1070,14 +1070,14 @@ const FormPublicView = () => {
                       value={captchaInput}
                       onChange={(e) => setCaptchaInput(e.target.value)}
                       placeholder="Answer"
-                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 bg-[#0B0F19]/50 transition-all ${
-                        captchaError ? 'border-red-500 focus:border-red-500' : 'border-[#2D334A]/60 focus:border-violet-500'
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-yellow-500/20 bg-black/50 transition-all ${
+                        captchaError ? 'border-red-500 focus:border-red-500' : 'border-[#222222]/60 focus:border-yellow-500'
                       }`}
                     />
                     <button 
                       type="button" 
                       onClick={generateCaptcha} 
-                      className="hidden sm:block p-3.5 bg-[#0B0F19] hover:bg-slate-900 border border-[#2D334A]/60 rounded-xl transition-colors cursor-pointer text-slate-400 hover:text-white"
+                      className="hidden sm:block p-3.5 bg-black hover:bg-gray-900 border border-[#222222]/60 rounded-xl transition-colors cursor-pointer text-gray-400 hover:text-white"
                       title="Refresh Captcha"
                     >
                       <RefreshCw className="w-4 h-4" />
@@ -1092,7 +1092,7 @@ const FormPublicView = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full mt-6 py-4 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-extrabold text-base rounded-2xl shadow-xl shadow-violet-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full mt-6 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-extrabold text-base rounded-2xl shadow-xl shadow-yellow-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {submitting ? (
                 <>
@@ -1107,8 +1107,8 @@ const FormPublicView = () => {
               )}
             </button>
 
-            <div className="text-[10px] text-center text-slate-500 font-bold flex items-center justify-center gap-1 pt-4 select-none">
-              <Lock className="w-3.5 h-3.5 text-slate-600" />
+            <div className="text-[10px] text-center text-gray-500 font-bold flex items-center justify-center gap-1 pt-4 select-none">
+              <Lock className="w-3.5 h-3.5 text-gray-600" />
               Secure submission encrypted with SSL and virus-checked.
             </div>
 

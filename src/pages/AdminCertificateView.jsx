@@ -116,7 +116,7 @@ const AdminCertificateView = () => {
       <div className="max-w-2xl mx-auto mt-12 bg-rose-500/10 p-12 rounded-[2.5rem] text-center border border-rose-500/20">
         <X className="w-16 h-16 text-rose-400 mx-auto mb-4" />
         <h3 className="text-xl font-bold text-white">{error}</h3>
-        <Link to="/certificates" className="mt-6 inline-block text-violet-400 font-bold hover:underline">Back to Certificates</Link>
+        <Link to="/certificates" className="mt-6 inline-block text-yellow-400 font-bold hover:underline">Back to Certificates</Link>
       </div>
     );
   }
@@ -143,12 +143,12 @@ const AdminCertificateView = () => {
       {/* Header Actions */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
         <div className="flex items-center gap-4">
-          <Link to="/certificates" className="p-3 bg-[#131726] hover:bg-[#1E243D] rounded-2xl border border-[#2D334A]/50 transition-all shadow-sm">
-            <ArrowLeft className="w-6 h-6 text-slate-300" />
+          <Link to="/certificates" className="p-3 bg-[#111111] hover:bg-[#1A1A1A] rounded-2xl border border-[#222222]/50 transition-all shadow-sm">
+            <ArrowLeft className="w-6 h-6 text-gray-300" />
           </Link>
           <div>
             <h2 className="text-3xl font-black text-white tracking-tight">Certificate Details</h2>
-            <p className="text-slate-400 font-medium text-sm">Manage or modify credentials for {cert.candidateName}</p>
+            <p className="text-gray-400 font-medium text-sm">Manage or modify credentials for {cert.candidateName}</p>
           </div>
         </div>
 
@@ -160,8 +160,8 @@ const AdminCertificateView = () => {
             }}
             className={`flex-1 md:flex-none flex items-center justify-center gap-2 font-bold py-3 px-6 rounded-2xl border transition-all ${
               isEditing 
-              ? 'bg-[#1E243D] text-slate-300 border-[#2D334A]/50 hover:bg-[#252B48]' 
-              : 'bg-[#131726] text-violet-400 border-[#2D334A]/50 hover:bg-[#1E243D]'
+              ? 'bg-[#1A1A1A] text-gray-300 border-[#222222]/50 hover:bg-[#252B48]' 
+              : 'bg-[#111111] text-yellow-400 border-[#222222]/50 hover:bg-[#1A1A1A]'
             }`}
           >
             {isEditing ? <X className="w-5 h-5" /> : <Edit2 className="w-5 h-5" />}
@@ -184,10 +184,10 @@ const AdminCertificateView = () => {
         {/* Main Info Form/Detail Col */}
         <div className="lg:col-span-6">
           {isEditing ? (
-            <form onSubmit={handleSubmit(onUpdate)} className="bg-[#131726]/80 backdrop-blur-md rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 overflow-hidden">
+            <form onSubmit={handleSubmit(onUpdate)} className="bg-[#111111]/80 backdrop-blur-md rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#222222]/50 overflow-hidden">
               <div className="p-8 md:p-10 space-y-6">
                 <h3 className="text-xl font-bold text-white flex items-center gap-3">
-                  <div className="w-8 h-8 bg-violet-500/20 text-violet-400 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-yellow-500/20 text-yellow-400 rounded-lg flex items-center justify-center">
                     <Edit2 className="w-4 h-4" />
                   </div>
                   Edit Information
@@ -195,28 +195,28 @@ const AdminCertificateView = () => {
                 
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Certificate Code / ID</label>
-                    <input {...register('id', { required: true })} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Certificate Code / ID</label>
+                    <input {...register('id', { required: true })} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Candidate Name</label>
-                    <input {...register('candidateName', { required: true })} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Candidate Name</label>
+                    <input {...register('candidateName', { required: true })} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Domain</label>
-                    <input {...register('domain', { required: true })} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Domain</label>
+                    <input {...register('domain', { required: true })} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Duration</label>
-                    <input {...register('duration', { required: true })} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white" />
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Duration</label>
+                    <input {...register('duration', { required: true })} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Certificate Type</label>
-                    <select {...register('type', { required: true })} className="w-full bg-[#0B0F19]/50 border border-[#2D334A]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all font-bold text-white">
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">Certificate Type</label>
+                    <select {...register('type', { required: true })} className="w-full bg-black/50 border border-[#222222]/50 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all font-bold text-white">
                       <option value="Internship">Internship</option>
                       <option value="Training">Training</option>
                     </select>
@@ -226,7 +226,7 @@ const AdminCertificateView = () => {
                 <button
                   type="submit"
                   disabled={updating}
-                  className="w-full bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-black py-5 rounded-3xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-violet-500/20 disabled:opacity-50"
+                  className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-black py-5 rounded-3xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-yellow-500/20 disabled:opacity-50"
                 >
                   {updating ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Check className="w-6 h-6" />}
                   {updating ? 'Saving Changes...' : 'Update Certificate'}
@@ -234,34 +234,34 @@ const AdminCertificateView = () => {
               </div>
             </form>
           ) : (
-            <div className="bg-[#131726]/80 backdrop-blur-md rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 overflow-hidden h-full flex flex-col justify-between">
+            <div className="bg-[#111111]/80 backdrop-blur-md rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#222222]/50 overflow-hidden h-full flex flex-col justify-between">
               <div className="p-8 md:p-10 space-y-8">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold border border-blue-500/30">
+                  <div className="w-12 h-12 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold border border-yellow-500/30">
                     <Award className="w-6 h-6" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Certificate Code: {cert.id}</span>
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Certificate Code: {cert.id}</span>
                     <h3 className="text-2xl font-black text-white leading-tight">{cert.candidateName}</h3>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[#2D334A]/50">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[#222222]/50">
                   <div>
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Program Type</span>
-                    <p className="text-slate-200 font-bold mt-1 text-base">{cert.type}</p>
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Program Type</span>
+                    <p className="text-gray-200 font-bold mt-1 text-base">{cert.type}</p>
                   </div>
                   <div>
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Domain</span>
-                    <p className="text-slate-200 font-bold mt-1 text-base">{cert.domain}</p>
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Domain</span>
+                    <p className="text-gray-200 font-bold mt-1 text-base">{cert.domain}</p>
                   </div>
                   <div>
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Duration</span>
-                    <p className="text-slate-200 font-bold mt-1 text-base">{cert.duration}</p>
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Duration</span>
+                    <p className="text-gray-200 font-bold mt-1 text-base">{cert.duration}</p>
                   </div>
                   <div>
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Verification Status</span>
-                    <p className="text-emerald-400 font-black mt-1 text-base flex items-center gap-1.5">
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Verification Status</span>
+                    <p className="text-yellow-400 font-black mt-1 text-base flex items-center gap-1.5">
                       <ShieldCheck className="w-4 h-4" />
                       Active & Verified
                     </p>
@@ -269,10 +269,10 @@ const AdminCertificateView = () => {
                 </div>
               </div>
 
-              <div className="p-8 bg-[#0B0F19]/30 border-t border-[#2D334A]/50 flex flex-col gap-3">
+              <div className="p-8 bg-black/30 border-t border-[#222222]/50 flex flex-col gap-3">
                 <button
                   onClick={copyPortfolioLink}
-                  className="w-full flex items-center justify-center gap-3 bg-[#1E243D] hover:bg-[#252B48] text-white font-black py-4 px-6 rounded-2xl border border-[#2D334A]/50 transition-all shadow-sm"
+                  className="w-full flex items-center justify-center gap-3 bg-[#1A1A1A] hover:bg-[#252B48] text-white font-black py-4 px-6 rounded-2xl border border-[#222222]/50 transition-all shadow-sm"
                 >
                   <Copy className="w-5 h-5" />
                   Copy Student Portfolio Link
@@ -281,7 +281,7 @@ const AdminCertificateView = () => {
                   href={portfolioUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-black py-4 px-6 rounded-2xl transition-all shadow-lg shadow-violet-500/20"
+                  className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-black py-4 px-6 rounded-2xl transition-all shadow-lg shadow-yellow-500/20"
                 >
                   <ExternalLink className="w-5 h-5" />
                   View Public Portfolio
@@ -295,10 +295,10 @@ const AdminCertificateView = () => {
         <div className="lg:col-span-6 space-y-6">
           <div className="text-center lg:text-left">
             <h3 className="text-lg font-black text-white">Verified Certificate Image</h3>
-            <p className="text-sm text-slate-400">Live preview generated for this credential.</p>
+            <p className="text-sm text-gray-400">Live preview generated for this credential.</p>
           </div>
           
-          <div className="border border-[#2D334A]/50 rounded-3xl overflow-hidden bg-[#0B0F19] shadow-[0_8px_30px_rgb(0,0,0,0.3)] p-4">
+          <div className="border border-[#222222]/50 rounded-3xl overflow-hidden bg-black shadow-[0_8px_30px_rgb(0,0,0,0.3)] p-4">
             <CertificateSVG
               candidateName={cert.candidateName}
               domain={cert.domain}

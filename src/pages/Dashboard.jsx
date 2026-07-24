@@ -94,21 +94,21 @@ const Dashboard = () => {
   return (
     <div className="space-y-8 bg-transparent">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-[0_8px_30px_rgb(0,0,0,0.3)] flex items-center justify-between">
+        <div className="premium-card p-6 flex items-center justify-between">
           <div>
             <p className="text-white font-bold uppercase tracking-wider text-xs mb-1">Total ID Cards</p>
             <h3 className="text-4xl font-black text-white">{totalIdCards}</h3>
           </div>
-          <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/20">
+          <div className="w-16 h-16 bg-yellow-500/10 rounded-2xl flex items-center justify-center border border-yellow-500/20">
             <User className="w-8 h-8 text-white" />
           </div>
         </div>
-        <div className="bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-[0_8px_30px_rgb(0,0,0,0.3)] flex items-center justify-between">
+        <div className="premium-card p-6 flex items-center justify-between">
           <div>
             <p className="text-white font-bold uppercase tracking-wider text-xs mb-1">Total Certificates</p>
             <h3 className="text-4xl font-black text-white">{totalCertificates}</h3>
           </div>
-          <div className="w-16 h-16 bg-violet-500/10 rounded-2xl flex items-center justify-center border border-violet-500/20">
+          <div className="w-16 h-16 bg-yellow-500/10 rounded-2xl flex items-center justify-center border border-yellow-500/20">
             <QrCodeIcon className="w-8 h-8 text-white" />
           </div>
         </div>
@@ -122,22 +122,22 @@ const Dashboard = () => {
         
         <div className="relative w-full lg:w-96">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-slate-500" />
+            <Search className="h-5 w-5 text-gray-500" />
           </div>
           <input
             type="text"
             placeholder="Search by name, ID or department..."
-            className="pl-12 w-full rounded-2xl border border-[#2D334A]/50 bg-[#131726]/50 px-5 py-3.5 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all placeholder:text-slate-500 text-white"
+            className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="bg-[#131726]/80 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 overflow-hidden">
+      <div className="glass-panel rounded-3xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="bg-[#0B0F19]/60 text-white font-bold border-b border-[#2D334A]/50">
+            <thead className="bg-black/60 text-white font-bold border-b border-[#222222]/50">
               <tr>
                 <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Employee</th>
                 <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Employee ID</th>
@@ -146,12 +146,12 @@ const Dashboard = () => {
                 <th className="px-8 py-5 uppercase tracking-wider text-[10px] text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#2D334A]/30">
+            <tbody className="divide-y divide-[#222222]/30">
               {loading ? (
                 <tr>
                   <td colSpan="5" className="px-8 py-16 text-center text-white">
                     <div className="flex flex-col justify-center items-center gap-4">
-                      <div className="w-8 h-8 border-3 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-8 h-8 border-3 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
                       <span className="font-medium">Loading employee records...</span>
                     </div>
                   </td>
@@ -167,21 +167,21 @@ const Dashboard = () => {
                 </tr>
               ) : (
                 currentItems.map((emp) => (
-                  <tr key={emp.id} className="hover:bg-[#1E243D]/50 transition-colors group">
+                  <tr key={emp.id} className="hover:bg-[#1A1A1A]/50 transition-colors group">
                     <td className="px-8 py-5">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-violet-500/20 text-violet-400 flex items-center justify-center font-bold flex-shrink-0 overflow-hidden shadow-sm border border-violet-500/30">
+                        <div className="w-12 h-12 rounded-2xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold flex-shrink-0 overflow-hidden shadow-sm border border-yellow-500/30">
                           {emp.photoUrl ? (
                             <img src={emp.photoUrl} alt={emp.name} className="w-full h-full object-cover" />
                           ) : (
                             <User className="w-6 h-6" />
                           )}
                         </div>
-                        <span className="font-bold text-slate-100 text-base">{emp.name}</span>
+                        <span className="font-bold text-gray-100 text-base">{emp.name}</span>
                       </div>
                     </td>
                     <td className="px-8 py-5">
-                      <span className="inline-flex items-center px-3 py-1 rounded-xl text-xs font-bold bg-[#0B0F19] text-white border border-[#2D334A]/50">
+                      <span className="inline-flex items-center px-3 py-1 rounded-xl text-xs font-bold bg-black text-white border border-[#222222]/50">
                         {emp.id}
                       </span>
                     </td>
@@ -194,14 +194,14 @@ const Dashboard = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button 
                           onClick={() => setSelectedEmployee(emp)}
-                          className="p-2 text-slate-500 hover:text-violet-400 hover:bg-violet-500/10 rounded-lg transition-all"
+                          className="p-2 text-gray-500 hover:text-yellow-400 hover:bg-yellow-500/10 rounded-lg transition-all"
                           title="View QR"
                         >
                           <QrCodeIcon className="w-5 h-5" />
                         </button>
                         <Link 
                           to={`/admin/employee/${emp.id}`}
-                          className="p-2 text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-all"
+                          className="p-2 text-gray-500 hover:text-yellow-400 hover:bg-yellow-500/10 rounded-lg transition-all"
                           title="Manage"
                         >
                           <Eye className="w-5 h-5" />
@@ -217,8 +217,8 @@ const Dashboard = () => {
 
         {/* Pagination Footer */}
         {totalPages > 1 && (
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 border-t border-[#2D334A]/30 bg-[#0B0F19]/20">
-            <div className="text-sm text-slate-400">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 border-t border-[#222222]/30 bg-black/20">
+            <div className="text-sm text-gray-400">
               Showing <span className="font-semibold text-white">{indexOfFirstItem + 1}</span> to{" "}
               <span className="font-semibold text-white">{Math.min(indexOfLastItem, filteredEmployees.length)}</span> of{" "}
               <span className="font-semibold text-white">{filteredEmployees.length}</span> employees
@@ -227,7 +227,7 @@ const Dashboard = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-4 py-2 text-sm font-semibold rounded-xl border border-[#2D334A]/50 text-slate-300 hover:bg-[#1E243D] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
+                className="px-4 py-2 text-sm font-semibold rounded-xl border border-[#222222]/50 text-gray-300 hover:bg-[#1A1A1A] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
               >
                 Previous
               </button>
@@ -237,8 +237,8 @@ const Dashboard = () => {
                   onClick={() => setCurrentPage(page)}
                   className={`w-10 h-10 text-sm font-bold rounded-xl transition-all cursor-pointer ${
                     currentPage === page
-                      ? "bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-lg shadow-violet-500/20"
-                      : "border border-[#2D334A]/50 text-slate-300 hover:bg-[#1E243D]"
+                      ? "bg-gradient-to-r from-yellow-400 to-yellow-500 text-white shadow-lg shadow-yellow-500/20"
+                      : "border border-[#222222]/50 text-gray-300 hover:bg-[#1A1A1A]"
                   }`}
                 >
                   {page}
@@ -247,7 +247,7 @@ const Dashboard = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 text-sm font-semibold rounded-xl border border-[#2D334A]/50 text-slate-300 hover:bg-[#1E243D] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
+                className="px-4 py-2 text-sm font-semibold rounded-xl border border-[#222222]/50 text-gray-300 hover:bg-[#1A1A1A] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
               >
                 Next
               </button>
@@ -258,15 +258,15 @@ const Dashboard = () => {
 
       {/* QR Viewer Modal */}
       {selectedEmployee && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="bg-[#131726] rounded-[2.5rem] shadow-2xl border border-[#2D334A] w-full max-w-sm overflow-hidden">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-sm">
+          <div className="glass-panel rounded-[2.5rem] w-full max-w-sm overflow-hidden">
             <div className="p-8 pb-4 flex justify-between items-center">
               <h3 className="text-xl font-bold text-white">Employee QR</h3>
               <button 
                 onClick={() => setSelectedEmployee(null)}
-                className="p-2 hover:bg-[#1E243D] rounded-full transition-colors"
+                className="p-2 hover:bg-[#1A1A1A] rounded-full transition-colors"
               >
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-gray-400" />
               </button>
             </div>
             
@@ -282,13 +282,13 @@ const Dashboard = () => {
               
               <div className="mb-6">
                 <p className="text-lg font-bold text-white mb-0">{selectedEmployee.name}</p>
-                <p className="text-sm font-semibold bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent uppercase tracking-wider">{selectedEmployee.role} • {selectedEmployee.department}</p>
-                <p className="text-xs font-bold text-slate-500 mt-1">ID: {selectedEmployee.id}</p>
+                <p className="text-sm font-semibold bg-gradient-to-r from-yellow-300 to-yellow-400 bg-clip-text text-transparent uppercase tracking-wider">{selectedEmployee.role} • {selectedEmployee.department}</p>
+                <p className="text-xs font-bold text-gray-500 mt-1">ID: {selectedEmployee.id}</p>
               </div>
               
               <button
                 onClick={() => downloadQR(selectedEmployee)}
-                className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-violet-500/20 transition-all"
+                className="premium-button-primary w-full py-4 rounded-2xl"
               >
                 <Download className="w-5 h-5" />
                 Download PNG

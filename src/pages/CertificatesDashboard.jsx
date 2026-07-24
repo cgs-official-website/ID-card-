@@ -121,26 +121,26 @@ const CertificatesDashboard = () => {
         {/* Total Certificates Card */}
         <div 
           onClick={() => setSelectedTypeFilter('All')}
-          className={`bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border transition-all cursor-pointer flex items-center justify-between group ${
+          className={`premium-card cursor-pointer p-6 flex items-center justify-between group ${
             selectedTypeFilter === 'All'
-              ? 'border-violet-500 shadow-[0_8px_30px_rgba(139,92,246,0.25)] bg-[#1A1F36]'
-              : 'border-[#2D334A]/50 hover:border-[#3E4566] hover:bg-[#161B2E]'
+              ? 'border-yellow-500 shadow-lg shadow-yellow-500/20 bg-[#1A1A1A]'
+              : 'border-[#222222]/50 hover:border-[#3E4566] hover:bg-[#161616]'
           }`}
         >
           <div>
             <div className="flex items-center gap-2 mb-1">
               <p className="text-white font-bold uppercase tracking-wider text-xs">Total Certificates</p>
               {selectedTypeFilter === 'All' && (
-                <span className="text-[10px] bg-violet-500/20 text-violet-300 font-bold px-2 py-0.5 rounded-full border border-violet-500/30">Active</span>
+                <span className="text-[10px] bg-yellow-500/20 text-yellow-300 font-bold px-2 py-0.5 rounded-full border border-yellow-500/30">Active</span>
               )}
             </div>
             <h3 className="text-4xl font-black text-white">{totalCount}</h3>
-            <p className="text-xs text-slate-400 mt-1 font-medium">All issued credentials</p>
+            <p className="text-xs text-gray-400 mt-1 font-medium">All issued credentials</p>
           </div>
           <div className={`w-16 h-16 rounded-2xl flex items-center justify-center border transition-all ${
             selectedTypeFilter === 'All'
-              ? 'bg-violet-500/20 text-violet-300 border-violet-500/40'
-              : 'bg-violet-500/10 text-white border-violet-500/20 group-hover:bg-violet-500/20'
+              ? 'bg-yellow-500/20 text-yellow-300 border-yellow-500/40'
+              : 'bg-yellow-500/10 text-white border-yellow-500/20 group-hover:bg-yellow-500/20'
           }`}>
             <Award className="w-8 h-8 text-white" />
           </div>
@@ -149,56 +149,56 @@ const CertificatesDashboard = () => {
         {/* Internship Certificates Card */}
         <div 
           onClick={() => setSelectedTypeFilter('Internship')}
-          className={`bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border transition-all cursor-pointer flex items-center justify-between group ${
+          className={`premium-card cursor-pointer p-6 flex items-center justify-between group ${
             selectedTypeFilter === 'Internship'
-              ? 'border-blue-500 shadow-[0_8px_30px_rgba(59,130,246,0.25)] bg-[#1A1F36]'
-              : 'border-[#2D334A]/50 hover:border-[#3E4566] hover:bg-[#161B2E]'
+              ? 'border-yellow-500 shadow-lg shadow-yellow-500/20 bg-[#1A1A1A]'
+              : 'border-[#222222]/50 hover:border-[#3E4566] hover:bg-[#161616]'
           }`}
         >
           <div>
             <div className="flex items-center gap-2 mb-1">
               <p className="text-white font-bold uppercase tracking-wider text-xs">Internship Certificates</p>
               {selectedTypeFilter === 'Internship' && (
-                <span className="text-[10px] bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded-full border border-blue-500/30">Active</span>
+                <span className="text-[10px] bg-yellow-500/20 text-yellow-300 font-bold px-2 py-0.5 rounded-full border border-yellow-500/30">Active</span>
               )}
             </div>
             <h3 className="text-4xl font-black text-white">{internshipCount}</h3>
-            <p className="text-xs text-slate-400 mt-1 font-medium">Internship track credentials</p>
+            <p className="text-xs text-gray-400 mt-1 font-medium">Internship track credentials</p>
           </div>
           <div className={`w-16 h-16 rounded-2xl flex items-center justify-center border transition-all ${
             selectedTypeFilter === 'Internship'
-              ? 'bg-blue-500/20 text-blue-300 border-blue-500/40'
-              : 'bg-blue-500/10 text-blue-400 border-blue-500/20 group-hover:bg-blue-500/20'
+              ? 'bg-yellow-500/20 text-yellow-300 border-yellow-500/40'
+              : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20 group-hover:bg-yellow-500/20'
           }`}>
-            <Briefcase className="w-8 h-8 text-blue-400" />
+            <Briefcase className="w-8 h-8 text-yellow-400" />
           </div>
         </div>
 
         {/* Training Certificates Card */}
         <div 
           onClick={() => setSelectedTypeFilter('Training')}
-          className={`bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border transition-all cursor-pointer flex items-center justify-between group ${
+          className={`premium-card cursor-pointer p-6 flex items-center justify-between group ${
             selectedTypeFilter === 'Training'
-              ? 'border-emerald-500 shadow-[0_8px_30px_rgba(16,185,129,0.25)] bg-[#1A1F36]'
-              : 'border-[#2D334A]/50 hover:border-[#3E4566] hover:bg-[#161B2E]'
+              ? 'border-yellow-500 shadow-lg shadow-yellow-500/20 bg-[#1A1A1A]'
+              : 'border-[#222222]/50 hover:border-[#3E4566] hover:bg-[#161616]'
           }`}
         >
           <div>
             <div className="flex items-center gap-2 mb-1">
               <p className="text-white font-bold uppercase tracking-wider text-xs">Training Certificates</p>
               {selectedTypeFilter === 'Training' && (
-                <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full border border-emerald-500/30">Active</span>
+                <span className="text-[10px] bg-yellow-500/20 text-yellow-300 font-bold px-2 py-0.5 rounded-full border border-yellow-500/30">Active</span>
               )}
             </div>
             <h3 className="text-4xl font-black text-white">{trainingCount}</h3>
-            <p className="text-xs text-slate-400 mt-1 font-medium">Training program credentials</p>
+            <p className="text-xs text-gray-400 mt-1 font-medium">Training program credentials</p>
           </div>
           <div className={`w-16 h-16 rounded-2xl flex items-center justify-center border transition-all ${
             selectedTypeFilter === 'Training'
-              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-              : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 group-hover:bg-emerald-500/20'
+              ? 'bg-yellow-500/20 text-yellow-300 border-yellow-500/40'
+              : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20 group-hover:bg-yellow-500/20'
           }`}>
-            <GraduationCap className="w-8 h-8 text-emerald-400" />
+            <GraduationCap className="w-8 h-8 text-yellow-400" />
           </div>
         </div>
       </div>
@@ -212,13 +212,13 @@ const CertificatesDashboard = () => {
         
         <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
           {/* Type Filter Pills */}
-          <div className="flex items-center gap-1 bg-[#131726]/80 p-1.5 rounded-2xl border border-[#2D334A]/50">
+          <div className="flex items-center gap-1 bg-[#111111]/80 p-1.5 rounded-2xl border border-[#222222]/50">
             <button
               onClick={() => setSelectedTypeFilter('All')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 selectedTypeFilter === 'All'
-                  ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-[#1E243D]/50'
+                  ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-white shadow-md'
+                  : 'text-gray-400 hover:text-white hover:bg-[#1A1A1A]/50'
               }`}
             >
               All ({totalCount})
@@ -227,8 +227,8 @@ const CertificatesDashboard = () => {
               onClick={() => setSelectedTypeFilter('Internship')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 selectedTypeFilter === 'Internship'
-                  ? 'bg-blue-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-[#1E243D]/50'
+                  ? 'bg-yellow-500 text-white shadow-md'
+                  : 'text-gray-400 hover:text-white hover:bg-[#1A1A1A]/50'
               }`}
             >
               Internship ({internshipCount})
@@ -237,8 +237,8 @@ const CertificatesDashboard = () => {
               onClick={() => setSelectedTypeFilter('Training')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 selectedTypeFilter === 'Training'
-                  ? 'bg-emerald-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-[#1E243D]/50'
+                  ? 'bg-yellow-500 text-white shadow-md'
+                  : 'text-gray-400 hover:text-white hover:bg-[#1A1A1A]/50'
               }`}
             >
               Training ({trainingCount})
@@ -248,12 +248,12 @@ const CertificatesDashboard = () => {
           {/* Search Input */}
           <div className="relative flex-1 lg:flex-none lg:w-72">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-slate-500" />
+              <Search className="h-5 w-5 text-gray-500" />
             </div>
             <input
               type="text"
               placeholder="Search certificates..."
-              className="pl-12 w-full rounded-2xl border border-[#2D334A]/50 bg-[#131726]/50 px-5 py-3 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all placeholder:text-slate-500 text-white"
+              className="search-input"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -262,7 +262,7 @@ const CertificatesDashboard = () => {
           {/* Action Buttons */}
           <button
             onClick={copyRegisterLink}
-            className="flex items-center justify-center gap-2 bg-[#1E243D] hover:bg-[#252B48] text-white border border-[#2D334A]/50 px-5 py-3 rounded-2xl text-sm font-bold shadow-sm transition-all cursor-pointer"
+            className="premium-button-secondary py-3 text-sm"
           >
             <Copy className="w-4 h-4" />
             Copy Reg Link
@@ -270,7 +270,7 @@ const CertificatesDashboard = () => {
 
           <Link
             to="/register-certificate"
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white px-5 py-3 rounded-2xl text-sm font-bold shadow-lg shadow-violet-500/20 transition-all"
+            className="premium-button-primary py-3 text-sm"
           >
             <Plus className="w-4 h-4" />
             New Certificate
@@ -279,10 +279,10 @@ const CertificatesDashboard = () => {
       </div>
 
       {/* Table view */}
-      <div className="bg-[#131726]/80 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 overflow-hidden">
+      <div className="glass-panel rounded-3xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="bg-[#0B0F19]/60 text-white font-bold border-b border-[#2D334A]/50">
+            <thead className="bg-black/60 text-white font-bold border-b border-[#222222]/50">
               <tr>
                 <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Candidate</th>
                 <th className="px-8 py-5 uppercase tracking-wider text-[10px]">Certificate Code</th>
@@ -291,12 +291,12 @@ const CertificatesDashboard = () => {
                 <th className="px-8 py-5 uppercase tracking-wider text-[10px] text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#2D334A]/30">
+            <tbody className="divide-y divide-[#222222]/30">
               {loading ? (
                 <tr>
                   <td colSpan="5" className="px-8 py-16 text-center text-white">
                     <div className="flex flex-col justify-center items-center gap-4">
-                      <div className="w-8 h-8 border-3 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-8 h-8 border-3 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
                       <span className="font-medium">Loading certificate records...</span>
                     </div>
                   </td>
@@ -312,10 +312,10 @@ const CertificatesDashboard = () => {
                 </tr>
               ) : (
                 currentItems.map((cert) => (
-                  <tr key={cert.id} className="hover:bg-[#1E243D]/50 transition-colors group">
+                  <tr key={cert.id} className="hover:bg-[#1A1A1A]/50 transition-colors group">
                     <td className="px-8 py-5">
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold flex-shrink-0 border border-blue-500/30">
+                        <div className="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold flex-shrink-0 border border-yellow-500/30">
                           <Award className="w-5 h-5" />
                         </div>
                         <div>
@@ -325,7 +325,7 @@ const CertificatesDashboard = () => {
                       </div>
                     </td>
                     <td className="px-8 py-5">
-                      <span className="inline-flex items-center px-3 py-1 rounded-xl text-xs font-bold bg-[#0B0F19] text-white border border-[#2D334A]/50">
+                      <span className="inline-flex items-center px-3 py-1 rounded-xl text-xs font-bold bg-black text-white border border-[#222222]/50">
                         {cert.id}
                       </span>
                     </td>
@@ -338,28 +338,28 @@ const CertificatesDashboard = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button 
                           onClick={() => setSelectedCertificate(cert)}
-                          className="p-2 text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-all"
+                          className="p-2 text-gray-500 hover:text-yellow-400 hover:bg-yellow-500/10 rounded-lg transition-all"
                           title="View Certificate"
                         >
                           <Eye className="w-5 h-5" />
                         </button>
                         <button 
                           onClick={() => copyPortfolioLink(cert)}
-                          className="p-2 text-slate-500 hover:text-violet-400 hover:bg-violet-500/10 rounded-lg transition-all"
+                          className="p-2 text-gray-500 hover:text-yellow-400 hover:bg-yellow-500/10 rounded-lg transition-all"
                           title="Copy Portfolio Link"
                         >
                           <Copy className="w-5 h-5" />
                         </button>
                         <Link 
                           to={`/admin/certificate/${cert.id}`}
-                          className="p-2 text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-all"
+                          className="p-2 text-gray-500 hover:text-yellow-400 hover:bg-yellow-500/10 rounded-lg transition-all"
                           title="Manage / Edit"
                         >
                           <ExternalLink className="w-5 h-5" />
                         </Link>
                         <button 
                           onClick={() => handleDelete(cert)}
-                          className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+                          className="p-2 text-gray-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
                           title="Delete Certificate"
                         >
                           <Trash2 className="w-5 h-5" />
@@ -375,8 +375,8 @@ const CertificatesDashboard = () => {
 
         {/* Pagination Footer */}
         {totalPages > 1 && (
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 border-t border-[#2D334A]/30 bg-[#0B0F19]/20">
-            <div className="text-sm text-slate-400">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 border-t border-[#222222]/30 bg-black/20">
+            <div className="text-sm text-gray-400">
               Showing <span className="font-semibold text-white">{indexOfFirstItem + 1}</span> to{" "}
               <span className="font-semibold text-white">{Math.min(indexOfLastItem, filteredCertificates.length)}</span> of{" "}
               <span className="font-semibold text-white">{filteredCertificates.length}</span> certificates
@@ -385,7 +385,7 @@ const CertificatesDashboard = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-4 py-2 text-sm font-semibold rounded-xl border border-[#2D334A]/50 text-slate-300 hover:bg-[#1E243D] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
+                className="px-4 py-2 text-sm font-semibold rounded-xl border border-[#222222]/50 text-gray-300 hover:bg-[#1A1A1A] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
               >
                 Previous
               </button>
@@ -395,8 +395,8 @@ const CertificatesDashboard = () => {
                   onClick={() => setCurrentPage(page)}
                   className={`w-10 h-10 text-sm font-bold rounded-xl transition-all cursor-pointer ${
                     currentPage === page
-                      ? "bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-lg shadow-violet-500/20"
-                      : "border border-[#2D334A]/50 text-slate-300 hover:bg-[#1E243D]"
+                      ? "bg-gradient-to-r from-yellow-400 to-yellow-500 text-white shadow-lg shadow-yellow-500/20"
+                      : "border border-[#222222]/50 text-gray-300 hover:bg-[#1A1A1A]"
                   }`}
                 >
                   {page}
@@ -405,7 +405,7 @@ const CertificatesDashboard = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 text-sm font-semibold rounded-xl border border-[#2D334A]/50 text-slate-300 hover:bg-[#1E243D] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
+                className="px-4 py-2 text-sm font-semibold rounded-xl border border-[#222222]/50 text-gray-300 hover:bg-[#1A1A1A] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
               >
                 Next
               </button>
@@ -416,22 +416,22 @@ const CertificatesDashboard = () => {
 
       {/* Certificate Viewer Modal */}
       {selectedCertificate && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="bg-[#131726] rounded-[2.5rem] shadow-2xl w-full max-w-4xl overflow-hidden relative flex flex-col border border-[#2D334A]/50">
-            <div className="p-6 pb-4 flex justify-between items-center border-b border-[#2D334A]/50">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-sm">
+          <div className="glass-panel rounded-[2.5rem] w-full max-w-4xl overflow-hidden relative flex flex-col">
+            <div className="p-6 pb-4 flex justify-between items-center border-b border-[#222222]/50">
               <div>
                 <h3 className="text-xl font-bold text-white">Certificate Preview</h3>
-                <p className="text-xs text-slate-400">ID: {selectedCertificate.id} • Recipient: {selectedCertificate.candidateName}</p>
+                <p className="text-xs text-gray-400">ID: {selectedCertificate.id} • Recipient: {selectedCertificate.candidateName}</p>
               </div>
               <button 
                 onClick={() => setSelectedCertificate(null)}
-                className="p-2 hover:bg-[#1E243D] rounded-full transition-colors"
+                className="p-2 hover:bg-[#1A1A1A] rounded-full transition-colors"
               >
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-gray-400" />
               </button>
             </div>
             
-            <div className="p-8 bg-[#0B0F19] overflow-y-auto max-h-[70vh] flex items-center justify-center">
+            <div className="p-8 bg-black overflow-y-auto max-h-[70vh] flex items-center justify-center">
               <div className="w-full max-w-3xl">
                 <CertificateSVG
                   candidateName={selectedCertificate.candidateName}
@@ -444,13 +444,13 @@ const CertificatesDashboard = () => {
               </div>
             </div>
             
-            <div className="p-6 border-t border-[#2D334A]/50 bg-[#131726] flex justify-end gap-3">
+            <div className="p-6 border-t border-[#222222]/50 bg-[#111111] flex justify-end gap-3">
               <button
                 onClick={() => {
                   setSelectedCertificate(null);
                   navigate(`/admin/certificate/${selectedCertificate.id}`);
                 }}
-                className="px-6 py-3 border border-[#2D334A] hover:bg-[#1E243D] text-white font-bold rounded-xl text-sm transition-all"
+                className="premium-button-secondary py-3 text-sm"
               >
                 Manage Credentials
               </button>
@@ -458,7 +458,7 @@ const CertificatesDashboard = () => {
                 href={`${window.location.origin}/certificate/${selectedCertificate.id}`}
                 target="_blank"
                 rel="noreferrer"
-                className="px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-bold rounded-xl text-sm transition-all flex items-center gap-2 shadow-lg shadow-violet-500/20"
+                className="premium-button-primary py-3 text-sm"
               >
                 <ExternalLink className="w-4 h-4" />
                 View Student Portfolio

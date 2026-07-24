@@ -710,8 +710,8 @@ const AttendanceTracker = () => {
       
       {/* Absolute Loading Spinner overlay */}
       {loading && (
-        <div className="fixed inset-0 bg-[#0B0F19]/60 backdrop-blur-sm z-[200] flex flex-col justify-center items-center gap-4">
-          <div className="w-12 h-12 border-4 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] flex flex-col justify-center items-center gap-4">
+          <div className="w-12 h-12 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
           <p className="font-extrabold text-white text-sm tracking-wide">Processing Attendance Sheets...</p>
         </div>
       )}
@@ -720,13 +720,13 @@ const AttendanceTracker = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
           <div className="flex items-center gap-2.5 mb-1.5">
-            <div className="p-1.5 bg-violet-500/10 border border-violet-500/20 rounded-lg text-violet-400">
+            <div className="p-1.5 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-yellow-400">
               <ClipboardCheck className="w-5 h-5" />
             </div>
-            <span className="text-xs font-bold text-violet-400 uppercase tracking-widest">Attendance Module</span>
+            <span className="text-xs font-bold text-yellow-400 uppercase tracking-widest">Attendance Module</span>
           </div>
           <h1 className="text-3xl font-black text-white tracking-tight">Attendance Tracker</h1>
-          <p className="text-slate-400 text-sm font-medium mt-1">Upload daily logs (individual or ZIP) and separate employee sheets instantly.</p>
+          <p className="text-gray-400 text-sm font-medium mt-1">Upload daily logs (individual or ZIP) and separate employee sheets instantly.</p>
         </div>
         
         {fileData && parsedRows.length > 0 && (
@@ -734,7 +734,7 @@ const AttendanceTracker = () => {
             {isZip && (
               <button
                 onClick={downloadSeparatedZip}
-                className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-bold py-3 px-4.5 rounded-2xl shadow-lg shadow-violet-500/20 transition-all cursor-pointer text-xs"
+                className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-bold py-3 px-4.5 rounded-2xl shadow-lg shadow-yellow-500/20 transition-all cursor-pointer text-xs"
               >
                 <Archive className="w-4 h-4" />
                 Download Separated ZIP
@@ -742,14 +742,14 @@ const AttendanceTracker = () => {
             )}
             <button
               onClick={downloadBulkSeparatedWorkbook}
-              className="flex-1 md:flex-none flex items-center justify-center gap-2 border border-violet-500/30 bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 font-bold py-3 px-4.5 rounded-2xl transition-all cursor-pointer text-xs"
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 border border-yellow-500/30 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-400 font-bold py-3 px-4.5 rounded-2xl transition-all cursor-pointer text-xs"
             >
               <FileSpreadsheet className="w-4 h-4" />
               Download Multi-Sheet Excel
             </button>
             <button
               onClick={handleClear}
-              className="flex-1 md:flex-none flex items-center justify-center gap-2 border border-[#2D334A]/50 bg-[#131726]/30 hover:bg-[#1E243D]/50 text-slate-300 hover:text-white font-bold py-3 px-4.5 rounded-2xl transition-all cursor-pointer text-xs"
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 border border-[#222222]/50 bg-[#111111]/30 hover:bg-[#1A1A1A]/50 text-gray-300 hover:text-white font-bold py-3 px-4.5 rounded-2xl transition-all cursor-pointer text-xs"
             >
               <RefreshCw className="w-4 h-4" />
               Clear
@@ -765,10 +765,10 @@ const AttendanceTracker = () => {
             onDragOver={onDragOver}
             onDragLeave={onDragLeave}
             onDrop={onDrop}
-            className={`w-full min-h-[350px] bg-[#131726]/40 backdrop-blur-md rounded-[2.5rem] border-2 border-dashed flex flex-col items-center justify-center p-8 text-center transition-all duration-300 cursor-pointer ${
+            className={`w-full min-h-[350px] bg-[#111111]/40 backdrop-blur-md rounded-[2.5rem] border-2 border-dashed flex flex-col items-center justify-center p-8 text-center transition-all duration-300 cursor-pointer ${
               isDragging 
-                ? 'border-violet-500 bg-violet-500/5 shadow-2xl shadow-violet-500/10' 
-                : 'border-[#2D334A]/60 hover:border-violet-500/50 hover:bg-[#131726]/60 shadow-[0_8px_30px_rgb(0,0,0,0.2)]'
+                ? 'border-yellow-500 bg-yellow-500/5 shadow-2xl shadow-yellow-500/10' 
+                : 'border-[#222222]/60 hover:border-yellow-500/50 hover:bg-[#111111]/60 shadow-[0_8px_30px_rgb(0,0,0,0.2)]'
             }`}
             onClick={triggerFileInput}
           >
@@ -780,29 +780,29 @@ const AttendanceTracker = () => {
               className="hidden" 
             />
             
-            <div className="w-20 h-20 bg-gradient-to-tr from-violet-500/10 to-blue-500/10 border border-violet-500/20 rounded-3xl flex items-center justify-center mb-6 shadow-inner group">
-              <Upload className="w-10 h-10 text-violet-400 group-hover:translate-y-[-4px] transition-transform duration-300" />
+            <div className="w-20 h-20 bg-gradient-to-tr from-yellow-500/10 to-yellow-500/10 border border-yellow-500/20 rounded-3xl flex items-center justify-center mb-6 shadow-inner group">
+              <Upload className="w-10 h-10 text-yellow-400 group-hover:trangray-y-[-4px] transition-transform duration-300" />
             </div>
 
             <h3 className="text-xl font-bold text-white mb-2 tracking-tight">Upload Attendance Files</h3>
-            <p className="text-slate-400 text-sm max-w-md mx-auto mb-6 leading-relaxed">
+            <p className="text-gray-400 text-sm max-w-md mx-auto mb-6 leading-relaxed">
               Drag and drop a single Excel sheet or a **ZIP file containing daily attendance sheets** (e.g., May month files) here. We'll automatically unpack and merge them.
             </p>
 
-            <div className="inline-flex items-center gap-3.5 px-4 py-2.5 bg-[#0B0F19]/60 border border-[#2D334A]/40 rounded-2xl text-xs text-slate-400 font-semibold">
+            <div className="inline-flex items-center gap-3.5 px-4 py-2.5 bg-black/60 border border-[#222222]/40 rounded-2xl text-xs text-gray-400 font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-yellow-500" />
               <span>Auto-extracts dates from filenames (e.g., "01-May.xlsx")</span>
             </div>
           </div>
           
           {/* Instructions Card */}
-          <div className="bg-[#131726]/60 backdrop-blur-md border border-[#2D334A]/50 rounded-3xl p-6.5 shadow-md flex items-start gap-4">
-            <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-2xl text-blue-400 flex-shrink-0">
+          <div className="bg-[#111111]/60 backdrop-blur-md border border-[#222222]/50 rounded-3xl p-6.5 shadow-md flex items-start gap-4">
+            <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-2xl text-yellow-400 flex-shrink-0">
               <Info className="w-5 h-5" />
             </div>
             <div className="space-y-1.5">
               <h4 className="text-sm font-bold text-white">How daily-to-employee division works</h4>
-              <p className="text-xs text-slate-400 leading-relaxed max-w-3xl">
+              <p className="text-xs text-gray-400 leading-relaxed max-w-3xl">
                 Upload a ZIP archive containing individual daily spreadsheets. The tracker extracts each sheet, maps column headers once (or automatically), matches employee entries across all days, and computes aggregated metrics. You can then download consolidated monthly logs for any individual employee, or download a freshly packaged ZIP of separated user files.
               </p>
             </div>
@@ -812,27 +812,27 @@ const AttendanceTracker = () => {
 
       {/* Column Mapping Wizard */}
       {!parsedRows.length && fileData && mappingStep && (
-        <div className="max-w-xl mx-auto bg-[#131726]/80 backdrop-blur-md rounded-3xl border border-[#2D334A] shadow-2xl p-8 space-y-6 animate-in zoom-in duration-200">
+        <div className="max-w-xl mx-auto bg-[#111111]/80 backdrop-blur-md rounded-3xl border border-[#222222] shadow-2xl p-8 space-y-6 animate-in zoom-in duration-200">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-yellow-500/10 border border-yellow-500/20 rounded-xl text-yellow-400">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-white">Match Spreadsheet Columns</h2>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-gray-500">
                 Confirm which headers represent core attendance attributes in <b>{fileName}</b>:
               </p>
             </div>
           </div>
 
           <form onSubmit={handleConfirmMappings} className="space-y-5">
-            <div className="space-y-4 bg-[#0B0F19]/40 border border-[#2D334A]/30 p-5 rounded-2xl">
+            <div className="space-y-4 bg-black/40 border border-[#222222]/30 p-5 rounded-2xl">
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Employee Name Column *</label>
+                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Employee Name Column *</label>
                 <select 
                   value={mappings.name} 
                   onChange={(e) => setMappings({ ...mappings, name: e.target.value })}
-                  className="w-full bg-[#131726]/85 border border-[#2D334A]/50 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-violet-500"
+                  className="w-full bg-[#111111]/85 border border-[#222222]/50 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-yellow-500"
                   required
                 >
                   <option value="">-- Select Column --</option>
@@ -842,22 +842,22 @@ const AttendanceTracker = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Employee ID (Optional)</label>
+                  <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Employee ID (Optional)</label>
                   <select 
                     value={mappings.id} 
                     onChange={(e) => setMappings({ ...mappings, id: e.target.value })}
-                    className="w-full bg-[#131726]/85 border border-[#2D334A]/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"
+                    className="w-full bg-[#111111]/85 border border-[#222222]/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"
                   >
                     <option value="">None / Auto Detect</option>
                     {headers.map(h => <option key={h} value={h}>{h}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Date (Opt - Else File Date)</label>
+                  <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Date (Opt - Else File Date)</label>
                   <select 
                     value={mappings.date} 
                     onChange={(e) => setMappings({ ...mappings, date: e.target.value })}
-                    className="w-full bg-[#131726]/85 border border-[#2D334A]/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"
+                    className="w-full bg-[#111111]/85 border border-[#222222]/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"
                   >
                     <option value="">Extract Date from Filename</option>
                     {headers.map(h => <option key={h} value={h}>{h}</option>)}
@@ -867,22 +867,22 @@ const AttendanceTracker = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Status (Optional)</label>
+                  <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Status (Optional)</label>
                   <select 
                     value={mappings.status} 
                     onChange={(e) => setMappings({ ...mappings, status: e.target.value })}
-                    className="w-full bg-[#131726]/85 border border-[#2D334A]/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"
+                    className="w-full bg-[#111111]/85 border border-[#222222]/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"
                   >
                     <option value="">None (Default: Present)</option>
                     {headers.map(h => <option key={h} value={h}>{h}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Hours Worked (Optional)</label>
+                  <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Hours Worked (Optional)</label>
                   <select 
                     value={mappings.workingHours} 
                     onChange={(e) => setMappings({ ...mappings, workingHours: e.target.value })}
-                    className="w-full bg-[#131726]/85 border border-[#2D334A]/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"
+                    className="w-full bg-[#111111]/85 border border-[#222222]/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"
                   >
                     <option value="">None</option>
                     {headers.map(h => <option key={h} value={h}>{h}</option>)}
@@ -890,24 +890,24 @@ const AttendanceTracker = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-[#2D334A]/30 pt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-[#222222]/30 pt-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Check-In Column</label>
+                  <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Check-In Column</label>
                   <select 
                     value={mappings.checkIn} 
                     onChange={(e) => setMappings({ ...mappings, checkIn: e.target.value })}
-                    className="w-full bg-[#131726]/85 border border-[#2D334A]/50 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
+                    className="w-full bg-[#111111]/85 border border-[#222222]/50 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
                   >
                     <option value="">None</option>
                     {headers.map(h => <option key={h} value={h}>{h}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Check-Out Column</label>
+                  <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Check-Out Column</label>
                   <select 
                     value={mappings.checkOut} 
                     onChange={(e) => setMappings({ ...mappings, checkOut: e.target.value })}
-                    className="w-full bg-[#131726]/85 border border-[#2D334A]/50 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
+                    className="w-full bg-[#111111]/85 border border-[#222222]/50 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
                   >
                     <option value="">None</option>
                     {headers.map(h => <option key={h} value={h}>{h}</option>)}
@@ -919,7 +919,7 @@ const AttendanceTracker = () => {
             <div className="flex gap-4">
               <button
                 type="submit"
-                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg transition-all cursor-pointer"
+                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg transition-all cursor-pointer"
               >
                 <span>Extract {isZip ? `${zipFilesList.length} Files` : 'File'}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -927,7 +927,7 @@ const AttendanceTracker = () => {
               <button
                 type="button"
                 onClick={handleClear}
-                className="border border-[#2D334A]/50 bg-[#131726]/30 hover:bg-[#1E243D]/50 text-slate-300 font-bold py-3.5 px-6 rounded-2xl transition-all cursor-pointer"
+                className="border border-[#222222]/50 bg-[#111111]/30 hover:bg-[#1A1A1A]/50 text-gray-300 font-bold py-3.5 px-6 rounded-2xl transition-all cursor-pointer"
               >
                 Cancel
               </button>
@@ -942,62 +942,62 @@ const AttendanceTracker = () => {
           {/* Stats Cards grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {/* Total Records */}
-            <div className="bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-md flex items-center justify-between">
+            <div className="bg-[#111111]/80 backdrop-blur-md p-6 rounded-3xl border border-[#222222]/50 shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 font-bold uppercase tracking-wider text-[10px] mb-1.5">Total Records</p>
+                <p className="text-gray-400 font-bold uppercase tracking-wider text-[10px] mb-1.5">Total Records</p>
                 <h3 className="text-3xl font-black text-white">{totalRecordsCount}</h3>
               </div>
-              <div className="w-12 h-12 bg-violet-500/10 rounded-xl flex items-center justify-center border border-violet-500/20 text-violet-400">
+              <div className="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center border border-yellow-500/20 text-yellow-400">
                 <FileSpreadsheet className="w-6 h-6" />
               </div>
             </div>
 
             {/* Total Employees */}
-            <div className="bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-md flex items-center justify-between">
+            <div className="bg-[#111111]/80 backdrop-blur-md p-6 rounded-3xl border border-[#222222]/50 shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 font-bold uppercase tracking-wider text-[10px] mb-1.5">Total Employees</p>
+                <p className="text-gray-400 font-bold uppercase tracking-wider text-[10px] mb-1.5">Total Employees</p>
                 <h3 className="text-3xl font-black text-white">{uniqueEmployeesCount}</h3>
               </div>
-              <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20 text-blue-400">
+              <div className="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center border border-yellow-500/20 text-yellow-400">
                 <Users className="w-6 h-6" />
               </div>
             </div>
 
             {/* Present Rate */}
-            <div className="bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-md flex items-center justify-between">
+            <div className="bg-[#111111]/80 backdrop-blur-md p-6 rounded-3xl border border-[#222222]/50 shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 font-bold uppercase tracking-wider text-[10px] mb-1.5">Attendance Rate</p>
+                <p className="text-gray-400 font-bold uppercase tracking-wider text-[10px] mb-1.5">Attendance Rate</p>
                 <h3 className="text-3xl font-black text-white">{averageAttendanceRate}%</h3>
               </div>
-              <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center border border-emerald-500/20 text-emerald-400">
+              <div className="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center border border-yellow-500/20 text-yellow-400">
                 <CheckCircle className="w-6 h-6" />
               </div>
             </div>
 
             {/* Date Period or Zip Source count */}
-            <div className="bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-md flex items-center justify-between">
+            <div className="bg-[#111111]/80 backdrop-blur-md p-6 rounded-3xl border border-[#222222]/50 shadow-md flex items-center justify-between">
               <div>
-                <p className="text-slate-400 font-bold uppercase tracking-wider text-[10px] mb-1.5">
+                <p className="text-gray-400 font-bold uppercase tracking-wider text-[10px] mb-1.5">
                   {isZip ? 'ZIP Files Extracted' : 'Date Period'}
                 </p>
                 <h3 className={`font-black text-white ${isZip ? 'text-3xl' : 'text-sm mt-2 truncate w-40'}`}>
                   {isZip ? `${parsedFiles.length} Days` : getDateRange()}
                 </h3>
               </div>
-              <div className="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center border border-amber-500/20 text-amber-400">
+              <div className="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center border border-yellow-500/20 text-yellow-400">
                 {isZip ? <FolderOpen className="w-6 h-6" /> : <Calendar className="w-6 h-6" />}
               </div>
             </div>
           </div>
 
           {/* Navigation Tabs */}
-          <div className="flex border-b border-[#2D334A]/40 pb-px overflow-x-auto gap-2">
+          <div className="flex border-b border-[#222222]/40 pb-px overflow-x-auto gap-2">
             <button
               onClick={() => setActiveTab('dashboard')}
               className={`pb-4 px-5 font-bold text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === 'dashboard' 
-                  ? 'border-violet-500 text-white' 
-                  : 'border-transparent text-slate-400 hover:text-white'
+                  ? 'border-yellow-500 text-white' 
+                  : 'border-transparent text-gray-400 hover:text-white'
               }`}
             >
               Employee Summaries ({uniqueEmployeesCount})
@@ -1007,8 +1007,8 @@ const AttendanceTracker = () => {
                 onClick={() => setActiveTab('days')}
                 className={`pb-4 px-5 font-bold text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap ${
                   activeTab === 'days' 
-                    ? 'border-violet-500 text-white' 
-                    : 'border-transparent text-slate-400 hover:text-white'
+                    ? 'border-yellow-500 text-white' 
+                    : 'border-transparent text-gray-400 hover:text-white'
                 }`}
               >
                 Daily Breakdowns ({daysSummaryList.length})
@@ -1018,8 +1018,8 @@ const AttendanceTracker = () => {
               onClick={() => setActiveTab('records')}
               className={`pb-4 px-5 font-bold text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === 'records' 
-                  ? 'border-violet-500 text-white' 
-                  : 'border-transparent text-slate-400 hover:text-white'
+                  ? 'border-yellow-500 text-white' 
+                  : 'border-transparent text-gray-400 hover:text-white'
               }`}
             >
               All Raw Logs ({filteredRecords.length})
@@ -1034,12 +1034,12 @@ const AttendanceTracker = () => {
                 <h3 className="text-lg font-bold text-white">Aggregated Employee Records</h3>
                 <div className="relative w-full sm:w-80">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                    <Search className="h-4.5 w-4.5 text-slate-500" />
+                    <Search className="h-4.5 w-4.5 text-gray-500" />
                   </div>
                   <input
                     type="text"
                     placeholder="Search by name or ID..."
-                    className="pl-10.5 pr-4 w-full rounded-xl border border-[#2D334A]/50 bg-[#131726]/50 py-2.5 text-sm font-medium shadow-sm focus:outline-none focus:border-violet-500 placeholder:text-slate-500 text-white"
+                    className="search-input"
                     value={employeeSearch}
                     onChange={(e) => setEmployeeSearch(e.target.value)}
                   />
@@ -1048,8 +1048,8 @@ const AttendanceTracker = () => {
 
               {/* Roster Cards Grid */}
               {filteredEmployeesList.length === 0 ? (
-                <div className="bg-[#131726]/40 backdrop-blur-md rounded-3xl p-12 text-center border border-[#2D334A]/50">
-                  <Search className="w-10 h-10 text-slate-500 mx-auto mb-3" />
+                <div className="bg-[#111111]/40 backdrop-blur-md rounded-3xl p-12 text-center border border-[#222222]/50">
+                  <Search className="w-10 h-10 text-gray-500 mx-auto mb-3" />
                   <p className="font-semibold text-white">No employees matched your search query</p>
                 </div>
               ) : (
@@ -1059,56 +1059,56 @@ const AttendanceTracker = () => {
                     return (
                       <div 
                         key={emp.name + emp.employeeId} 
-                        className="bg-[#131726]/80 backdrop-blur-md border border-[#2D334A]/50 rounded-3xl p-6 shadow-md hover:border-violet-500/50 hover:shadow-violet-500/5 transition-all flex flex-col justify-between"
+                        className="bg-[#111111]/80 backdrop-blur-md border border-[#222222]/50 rounded-3xl p-6 shadow-md hover:border-yellow-500/50 hover:shadow-yellow-500/5 transition-all flex flex-col justify-between"
                       >
                         <div className="space-y-4">
                           <div className="flex justify-between items-start">
                             <div className="flex items-center gap-3">
-                              <div className="w-11 h-11 bg-gradient-to-tr from-violet-600/20 to-blue-600/20 rounded-xl flex items-center justify-center font-bold text-violet-400 border border-violet-500/20">
+                              <div className="w-11 h-11 bg-gradient-to-tr from-yellow-400/20 to-yellow-500/20 rounded-xl flex items-center justify-center font-bold text-yellow-400 border border-yellow-500/20">
                                 <User className="w-5.5 h-5.5" />
                               </div>
                               <div className="truncate max-w-[150px]">
                                 <h4 className="font-extrabold text-white text-base truncate" title={emp.name}>{emp.name}</h4>
-                                <span className="inline-block text-[10px] font-bold text-slate-500 bg-[#0B0F19] border border-[#2D334A]/40 px-2 py-0.5 rounded-md mt-0.5">
+                                <span className="inline-block text-[10px] font-bold text-gray-500 bg-black border border-[#222222]/40 px-2 py-0.5 rounded-md mt-0.5">
                                   ID: {emp.employeeId}
                                 </span>
                               </div>
                             </div>
                             
                             <div className="text-right">
-                              <div className="text-lg font-black text-emerald-400">{presencePercent}%</div>
-                              <span className="text-[9px] font-black text-slate-500 uppercase tracking-tight">Attendance</span>
+                              <div className="text-lg font-black text-yellow-400">{presencePercent}%</div>
+                              <span className="text-[9px] font-black text-gray-500 uppercase tracking-tight">Attendance</span>
                             </div>
                           </div>
 
                           {/* Stats details */}
-                          <div className="grid grid-cols-3 gap-2 bg-[#0B0F19]/40 border border-[#2D334A]/30 p-3 rounded-2xl text-center text-xs">
+                          <div className="grid grid-cols-3 gap-2 bg-black/40 border border-[#222222]/30 p-3 rounded-2xl text-center text-xs">
                             <div>
-                              <div className="font-extrabold text-slate-400">{emp.records.length}</div>
-                              <div className="text-[9px] font-bold text-slate-500">Days</div>
+                              <div className="font-extrabold text-gray-400">{emp.records.length}</div>
+                              <div className="text-[9px] font-bold text-gray-500">Days</div>
                             </div>
-                            <div className="border-x border-[#2D334A]/30">
-                              <div className="font-extrabold text-emerald-400">{emp.presentCount}</div>
-                              <div className="text-[9px] font-bold text-slate-500">Present</div>
+                            <div className="border-x border-[#222222]/30">
+                              <div className="font-extrabold text-yellow-400">{emp.presentCount}</div>
+                              <div className="text-[9px] font-bold text-gray-500">Present</div>
                             </div>
                             <div>
                               <div className="font-extrabold text-red-400">{emp.absentCount}</div>
-                              <div className="text-[9px] font-bold text-slate-500">Absent</div>
+                              <div className="text-[9px] font-bold text-gray-500">Absent</div>
                             </div>
                           </div>
 
                           {emp.hoursRecordCount > 0 && (
-                            <div className="flex items-center justify-between text-xs text-slate-400 px-1">
-                              <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-slate-500" /> Avg Work Hours:</span>
+                            <div className="flex items-center justify-between text-xs text-gray-400 px-1">
+                              <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-gray-500" /> Avg Work Hours:</span>
                               <span className="font-bold text-white">{(emp.totalWorkingHours / emp.hoursRecordCount).toFixed(1)} hrs/day</span>
                             </div>
                           )}
                         </div>
 
-                        <div className="flex gap-2.5 mt-6 pt-4 border-t border-[#2D334A]/30">
+                        <div className="flex gap-2.5 mt-6 pt-4 border-t border-[#222222]/30">
                           <button
                             onClick={() => setSelectedEmployee(emp)}
-                            className="flex-1 flex items-center justify-center gap-1.5 border border-[#2D334A]/60 bg-[#131726]/30 hover:bg-[#1E243D]/50 text-white font-bold py-2 rounded-xl transition-all cursor-pointer text-xs"
+                            className="flex-1 flex items-center justify-center gap-1.5 border border-[#222222]/60 bg-[#111111]/30 hover:bg-[#1A1A1A]/50 text-white font-bold py-2 rounded-xl transition-all cursor-pointer text-xs"
                           >
                             <Eye className="w-3.5 h-3.5" />
                             Monthly Logs
@@ -1116,7 +1116,7 @@ const AttendanceTracker = () => {
                           
                           <button
                             onClick={() => downloadIndividualData(emp, 'xlsx')}
-                            className="flex items-center justify-center p-2 rounded-xl border border-violet-500/20 bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 transition-all cursor-pointer"
+                            className="flex items-center justify-center p-2 rounded-xl border border-yellow-500/20 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-400 transition-all cursor-pointer"
                             title="Export Employee Excel"
                           >
                             <FileDown className="w-4 h-4" />
@@ -1137,12 +1137,12 @@ const AttendanceTracker = () => {
                 <h3 className="text-lg font-bold text-white">Daily Attendance Files</h3>
                 <div className="relative w-full sm:w-80">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                    <Search className="h-4.5 w-4.5 text-slate-500" />
+                    <Search className="h-4.5 w-4.5 text-gray-500" />
                   </div>
                   <input
                     type="text"
                     placeholder="Search by date or file name..."
-                    className="pl-10.5 pr-4 w-full rounded-xl border border-[#2D334A]/50 bg-[#131726]/50 py-2.5 text-sm font-medium shadow-sm focus:outline-none focus:border-violet-500 placeholder:text-slate-500 text-white"
+                    className="search-input"
                     value={daySearch}
                     onChange={(e) => setDaySearch(e.target.value)}
                   />
@@ -1150,8 +1150,8 @@ const AttendanceTracker = () => {
               </div>
 
               {filteredDaysList.length === 0 ? (
-                <div className="bg-[#131726]/40 backdrop-blur-md rounded-3xl p-12 text-center border border-[#2D334A]/50">
-                  <Calendar className="w-10 h-10 text-slate-500 mx-auto mb-3" />
+                <div className="bg-[#111111]/40 backdrop-blur-md rounded-3xl p-12 text-center border border-[#222222]/50">
+                  <Calendar className="w-10 h-10 text-gray-500 mx-auto mb-3" />
                   <p className="font-semibold text-white">No dates found matching search</p>
                 </div>
               ) : (
@@ -1162,54 +1162,54 @@ const AttendanceTracker = () => {
                     return (
                       <div 
                         key={day.date}
-                        className="bg-[#131726]/80 backdrop-blur-md border border-[#2D334A]/50 rounded-3xl p-6 shadow-md hover:border-violet-500/50 hover:shadow-violet-500/5 transition-all flex flex-col justify-between"
+                        className="bg-[#111111]/80 backdrop-blur-md border border-[#222222]/50 rounded-3xl p-6 shadow-md hover:border-yellow-500/50 hover:shadow-yellow-500/5 transition-all flex flex-col justify-between"
                       >
                         <div className="space-y-4">
                           <div className="flex justify-between items-start">
                             <div className="flex items-center gap-3">
-                              <div className="w-11 h-11 bg-gradient-to-tr from-amber-600/20 to-amber-600/10 rounded-xl flex items-center justify-center font-bold text-amber-400 border border-amber-500/20">
+                              <div className="w-11 h-11 bg-gradient-to-tr from-yellow-500/20 to-yellow-500/10 rounded-xl flex items-center justify-center font-bold text-yellow-400 border border-yellow-500/20">
                                 <Calendar className="w-5.5 h-5.5" />
                               </div>
                               <div className="truncate max-w-[150px]">
                                 <h4 className="font-extrabold text-white text-base truncate" title={day.date}>{day.date}</h4>
-                                <span className="inline-block text-[9px] font-bold text-slate-500 truncate max-w-[130px]" title={day.filename}>
+                                <span className="inline-block text-[9px] font-bold text-gray-500 truncate max-w-[130px]" title={day.filename}>
                                   File: {day.filename}
                                 </span>
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-lg font-black text-amber-400">{presentRate}%</div>
-                              <span className="text-[9px] font-black text-slate-500 uppercase tracking-tight">Presence</span>
+                              <div className="text-lg font-black text-yellow-400">{presentRate}%</div>
+                              <span className="text-[9px] font-black text-gray-500 uppercase tracking-tight">Presence</span>
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-3 gap-1.5 bg-[#0B0F19]/40 border border-[#2D334A]/30 p-3 rounded-2xl text-center text-xs">
+                          <div className="grid grid-cols-3 gap-1.5 bg-black/40 border border-[#222222]/30 p-3 rounded-2xl text-center text-xs">
                             <div>
-                              <div className="font-extrabold text-slate-300">{totalEntries}</div>
-                              <div className="text-[9px] font-bold text-slate-500">Tracked</div>
+                              <div className="font-extrabold text-gray-300">{totalEntries}</div>
+                              <div className="text-[9px] font-bold text-gray-500">Tracked</div>
                             </div>
                             <div>
-                              <div className="font-extrabold text-emerald-400">{day.presentCount}</div>
-                              <div className="text-[9px] font-bold text-slate-500">Present</div>
+                              <div className="font-extrabold text-yellow-400">{day.presentCount}</div>
+                              <div className="text-[9px] font-bold text-gray-500">Present</div>
                             </div>
                             <div>
                               <div className="font-extrabold text-red-400">{day.absentCount}</div>
-                              <div className="text-[9px] font-bold text-slate-500">Absent</div>
+                              <div className="text-[9px] font-bold text-gray-500">Absent</div>
                             </div>
                           </div>
                         </div>
 
-                        <div className="flex gap-2.5 mt-6 pt-4 border-t border-[#2D334A]/30">
+                        <div className="flex gap-2.5 mt-6 pt-4 border-t border-[#222222]/30">
                           <button
                             onClick={() => setSelectedDay(day)}
-                            className="flex-1 flex items-center justify-center gap-1.5 border border-[#2D334A]/60 bg-[#131726]/30 hover:bg-[#1E243D]/50 text-white font-bold py-2 rounded-xl transition-all cursor-pointer text-xs"
+                            className="flex-1 flex items-center justify-center gap-1.5 border border-[#222222]/60 bg-[#111111]/30 hover:bg-[#1A1A1A]/50 text-white font-bold py-2 rounded-xl transition-all cursor-pointer text-xs"
                           >
                             <Eye className="w-3.5 h-3.5" />
                             View Records
                           </button>
                           <button
                             onClick={() => downloadDailyData(day)}
-                            className="p-2 border border-amber-500/20 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-xl transition-all cursor-pointer"
+                            className="p-2 border border-yellow-500/20 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-400 rounded-xl transition-all cursor-pointer"
                             title="Export Day Sheets"
                           >
                             <FileDown className="w-4 h-4" />
@@ -1227,15 +1227,15 @@ const AttendanceTracker = () => {
           {activeTab === 'records' && (
             <div className="space-y-6">
               {/* Filter Row */}
-              <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 bg-[#131726]/40 p-4.5 border border-[#2D334A]/50 rounded-3xl">
+              <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 bg-[#111111]/40 p-4.5 border border-[#222222]/50 rounded-3xl">
                 <div className="relative flex-1">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                    <Search className="h-4.5 w-4.5 text-slate-500" />
+                    <Search className="h-4.5 w-4.5 text-gray-500" />
                   </div>
                   <input
                     type="text"
                     placeholder="Search logs by Employee, ID, file name or status..."
-                    className="pl-10.5 pr-4 w-full rounded-2xl border border-[#2D334A]/40 bg-[#0B0F19]/50 py-2.5 text-sm font-medium shadow-sm focus:outline-none focus:border-violet-500 placeholder:text-slate-500 text-white"
+                    className="search-input"
                     value={searchTerm}
                     onChange={(e) => {
                       setSearchTerm(e.target.value);
@@ -1245,8 +1245,8 @@ const AttendanceTracker = () => {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
-                  <div className="flex items-center gap-1.5 px-3 py-2 border border-[#2D334A]/40 bg-[#0B0F19]/30 rounded-2xl text-xs text-slate-400">
-                    <Filter className="w-3.5 h-3.5 text-slate-500" />
+                  <div className="flex items-center gap-1.5 px-3 py-2 border border-[#222222]/40 bg-black/30 rounded-2xl text-xs text-gray-400">
+                    <Filter className="w-3.5 h-3.5 text-gray-500" />
                     <span>Filter:</span>
                   </div>
                   {['All', 'Present', 'Absent', 'Late'].map(status => (
@@ -1258,8 +1258,8 @@ const AttendanceTracker = () => {
                       }}
                       className={`px-3 py-1.5 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
                         selectedStatus === status 
-                          ? 'bg-violet-500 border-transparent text-white' 
-                          : 'border-[#2D334A]/50 text-slate-400 hover:text-white bg-transparent'
+                          ? 'bg-yellow-500 border-transparent text-white' 
+                          : 'border-[#222222]/50 text-gray-400 hover:text-white bg-transparent'
                       }`}
                     >
                       {status}
@@ -1269,10 +1269,10 @@ const AttendanceTracker = () => {
               </div>
 
               {/* Grid Logs Table */}
-              <div className="bg-[#131726]/80 backdrop-blur-md rounded-3xl shadow-md border border-[#2D334A]/50 overflow-hidden">
+              <div className="bg-[#111111]/80 backdrop-blur-md rounded-3xl shadow-md border border-[#222222]/50 overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left">
-                    <thead className="bg-[#0B0F19]/60 text-white font-bold border-b border-[#2D334A]/50">
+                    <thead className="bg-black/60 text-white font-bold border-b border-[#222222]/50">
                       <tr>
                         <th className="px-6 py-4 uppercase tracking-wider text-[10px]">Employee</th>
                         <th className="px-6 py-4 uppercase tracking-wider text-[10px]">Employee ID</th>
@@ -1283,10 +1283,10 @@ const AttendanceTracker = () => {
                         <th className="px-6 py-4 uppercase tracking-wider text-[10px]">Status</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#2D334A]/30">
+                    <tbody className="divide-y divide-[#222222]/30">
                       {currentRows.length === 0 ? (
                         <tr>
-                          <td colSpan="7" className="px-6 py-12 text-center text-slate-400">
+                          <td colSpan="7" className="px-6 py-12 text-center text-gray-400">
                             No attendance records matched criteria.
                           </td>
                         </tr>
@@ -1297,27 +1297,27 @@ const AttendanceTracker = () => {
                           const isLate = statusLower.includes('late') || statusLower === 'l';
                           
                           return (
-                            <tr key={row.key} className="hover:bg-[#1E243D]/40 transition-colors">
+                            <tr key={row.key} className="hover:bg-[#1A1A1A]/40 transition-colors">
                               <td className="px-6 py-4">
                                 <span className="font-extrabold text-white">{row.name}</span>
                               </td>
                               <td className="px-6 py-4">
-                                <span className="px-2 py-0.5 bg-[#0B0F19] text-[11px] font-bold border border-[#2D334A]/50 rounded-md text-slate-300">
+                                <span className="px-2 py-0.5 bg-black text-[11px] font-bold border border-[#222222]/50 rounded-md text-gray-300">
                                   {row.employeeId}
                                 </span>
                               </td>
-                              <td className="px-6 py-4 text-slate-300 font-semibold">
+                              <td className="px-6 py-4 text-gray-300 font-semibold">
                                 {row.date}
                               </td>
-                              <td className="px-6 py-4 text-xs font-semibold text-slate-400">
+                              <td className="px-6 py-4 text-xs font-semibold text-gray-400">
                                 <span className="text-white">{row.checkIn}</span>
-                                {row.checkOut !== 'N/A' && <span className="mx-1 text-slate-600">→</span>}
+                                {row.checkOut !== 'N/A' && <span className="mx-1 text-gray-600">→</span>}
                                 {row.checkOut !== 'N/A' && <span className="text-white">{row.checkOut}</span>}
                               </td>
                               <td className="px-6 py-4 text-xs font-bold text-white">
                                 {row.workingHours !== 'N/A' ? `${row.workingHours} hrs` : '—'}
                               </td>
-                              <td className="px-6 py-4 text-xs text-slate-500 font-medium hidden lg:table-cell truncate max-w-[120px]" title={row.sourceFile}>
+                              <td className="px-6 py-4 text-xs text-gray-500 font-medium hidden lg:table-cell truncate max-w-[120px]" title={row.sourceFile}>
                                 {row.sourceFile}
                               </td>
                               <td className="px-6 py-4">
@@ -1325,8 +1325,8 @@ const AttendanceTracker = () => {
                                   isAbsent 
                                     ? 'bg-red-500/10 border-red-500/20 text-red-400' 
                                     : isLate 
-                                      ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' 
-                                      : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                                      ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400' 
+                                      : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
                                 }`}>
                                   {isAbsent ? <XCircle className="w-3 h-3" /> : isLate ? <Clock className="w-3 h-3" /> : <CheckCircle className="w-3 h-3" />}
                                   {row.status}
@@ -1342,8 +1342,8 @@ const AttendanceTracker = () => {
 
                 {/* Pagination footer */}
                 {totalPages > 1 && (
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 border-t border-[#2D334A]/30 bg-[#0B0F19]/20">
-                    <div className="text-xs text-slate-400">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 border-t border-[#222222]/30 bg-black/20">
+                    <div className="text-xs text-gray-400">
                       Showing <span className="font-semibold text-white">{indexOfFirstRow + 1}</span> to{" "}
                       <span className="font-semibold text-white">{Math.min(indexOfLastRow, filteredRecords.length)}</span> of{" "}
                       <span className="font-semibold text-white">{filteredRecords.length}</span> entries
@@ -1352,15 +1352,15 @@ const AttendanceTracker = () => {
                       <button
                         onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                         disabled={currentPage === 1}
-                        className="px-3 py-1.5 text-xs font-semibold rounded-xl border border-[#2D334A]/50 text-slate-300 hover:bg-[#1E243D] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
+                        className="px-3 py-1.5 text-xs font-semibold rounded-xl border border-[#222222]/50 text-gray-300 hover:bg-[#1A1A1A] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
                       >
                         Prev
                       </button>
-                      <span className="text-xs text-slate-400 font-bold px-2">Page {currentPage} of {totalPages}</span>
+                      <span className="text-xs text-gray-400 font-bold px-2">Page {currentPage} of {totalPages}</span>
                       <button
                         onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                         disabled={currentPage === totalPages}
-                        className="px-3 py-1.5 text-xs font-semibold rounded-xl border border-[#2D334A]/50 text-slate-300 hover:bg-[#1E243D] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
+                        className="px-3 py-1.5 text-xs font-semibold rounded-xl border border-[#222222]/50 text-gray-300 hover:bg-[#1A1A1A] disabled:opacity-50 disabled:hover:bg-transparent transition-all cursor-pointer"
                       >
                         Next
                       </button>
@@ -1375,47 +1375,47 @@ const AttendanceTracker = () => {
 
       {/* Employee Modal: Monthly aggregated list */}
       {selectedEmployee && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="bg-[#131726] rounded-[2.5rem] shadow-2xl border border-[#2D334A] w-full max-w-2xl overflow-hidden max-h-[85vh] flex flex-col animate-in scale-in duration-300">
-            <div className="p-6 pb-4 border-b border-[#2D334A]/50 flex justify-between items-center bg-[#0B0F19]/40">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="bg-[#111111] rounded-[2.5rem] shadow-2xl border border-[#222222] w-full max-w-2xl overflow-hidden max-h-[85vh] flex flex-col animate-in scale-in duration-300">
+            <div className="p-6 pb-4 border-b border-[#222222]/50 flex justify-between items-center bg-black/40">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-tr from-violet-600 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold">
+                <div className="w-12 h-12 bg-gradient-to-tr from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center text-white font-bold">
                   <User className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white">{selectedEmployee.name}</h3>
-                  <span className="text-xs font-bold text-slate-500">Employee ID: {selectedEmployee.employeeId}</span>
+                  <span className="text-xs font-bold text-gray-500">Employee ID: {selectedEmployee.employeeId}</span>
                 </div>
               </div>
               <button 
                 onClick={() => setSelectedEmployee(null)}
-                className="p-2 hover:bg-[#1E243D] rounded-full text-slate-400 hover:text-white transition-colors cursor-pointer"
+                className="p-2 hover:bg-[#1A1A1A] rounded-full text-gray-400 hover:text-white transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-6 flex-1 bg-[#131726]">
+            <div className="p-6 overflow-y-auto space-y-6 flex-1 bg-[#111111]">
               <div className="grid grid-cols-3 gap-3 text-center">
-                <div className="bg-[#0B0F19]/60 border border-[#2D334A]/40 p-4.5 rounded-2xl">
+                <div className="bg-black/60 border border-[#222222]/40 p-4.5 rounded-2xl">
                   <div className="text-2xl font-black text-white">{selectedEmployee.records.length}</div>
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-tight mt-1">Total Days</div>
+                  <div className="text-[10px] font-bold text-gray-500 uppercase tracking-tight mt-1">Total Days</div>
                 </div>
-                <div className="bg-emerald-500/5 border border-emerald-500/10 p-4.5 rounded-2xl">
-                  <div className="text-2xl font-black text-emerald-400">{selectedEmployee.presentCount}</div>
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-tight mt-1">Days Present</div>
+                <div className="bg-yellow-500/5 border border-yellow-500/10 p-4.5 rounded-2xl">
+                  <div className="text-2xl font-black text-yellow-400">{selectedEmployee.presentCount}</div>
+                  <div className="text-[10px] font-bold text-gray-500 uppercase tracking-tight mt-1">Days Present</div>
                 </div>
                 <div className="bg-red-500/5 border border-red-500/10 p-4.5 rounded-2xl">
                   <div className="text-2xl font-black text-red-400">{selectedEmployee.absentCount}</div>
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-tight mt-1">Days Absent</div>
+                  <div className="text-[10px] font-bold text-gray-500 uppercase tracking-tight mt-1">Days Absent</div>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">Aggregated Attendance Logs</h4>
-                <div className="bg-[#0B0F19]/40 border border-[#2D334A]/30 rounded-2xl overflow-hidden max-h-[300px] overflow-y-auto">
+                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">Aggregated Attendance Logs</h4>
+                <div className="bg-black/40 border border-[#222222]/30 rounded-2xl overflow-hidden max-h-[300px] overflow-y-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-[#0B0F19]/80 text-slate-400 font-bold sticky top-0 border-b border-[#2D334A]/50">
+                    <thead className="bg-black/80 text-gray-400 font-bold sticky top-0 border-b border-[#222222]/50">
                       <tr>
                         <th className="px-4.5 py-3">Date</th>
                         <th className="px-4.5 py-3">Check-In/Out</th>
@@ -1424,21 +1424,21 @@ const AttendanceTracker = () => {
                         <th className="px-4.5 py-3 text-right">Status</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#2D334A]/30 text-slate-300">
+                    <tbody className="divide-y divide-[#222222]/30 text-gray-300">
                       {selectedEmployee.records.map((rec, i) => {
                         const statusLower = rec.status.toLowerCase();
                         const isAbsent = statusLower.includes('absent') || statusLower === 'a';
                         const isLate = statusLower.includes('late') || statusLower === 'l';
                         return (
-                          <tr key={i} className="hover:bg-[#1E243D]/25 transition-colors">
+                          <tr key={i} className="hover:bg-[#1A1A1A]/25 transition-colors">
                             <td className="px-4.5 py-3 font-semibold text-white">{rec.date}</td>
-                            <td className="px-4.5 py-3 text-slate-400 font-medium">
+                            <td className="px-4.5 py-3 text-gray-400 font-medium">
                               {rec.checkIn !== 'N/A' ? `${rec.checkIn} - ${rec.checkOut}` : '—'}
                             </td>
                             <td className="px-4.5 py-3 text-center text-white font-bold">
                               {rec.workingHours !== 'N/A' ? `${rec.workingHours} hrs` : '—'}
                             </td>
-                            <td className="px-4.5 py-3 text-slate-500 font-medium hidden md:table-cell truncate max-w-[100px]" title={rec.sourceFile}>
+                            <td className="px-4.5 py-3 text-gray-500 font-medium hidden md:table-cell truncate max-w-[100px]" title={rec.sourceFile}>
                               {rec.sourceFile}
                             </td>
                             <td className="px-4.5 py-3 text-right">
@@ -1446,8 +1446,8 @@ const AttendanceTracker = () => {
                                 isAbsent 
                                   ? 'bg-red-500/10 border-red-500/20 text-red-400' 
                                   : isLate 
-                                    ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' 
-                                    : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                                    ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400' 
+                                    : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
                               }`}>
                                 {rec.status}
                               </span>
@@ -1461,17 +1461,17 @@ const AttendanceTracker = () => {
               </div>
             </div>
 
-            <div className="p-6 border-t border-[#2D334A]/50 flex flex-wrap gap-3.5 bg-[#0B0F19]/40">
+            <div className="p-6 border-t border-[#222222]/50 flex flex-wrap gap-3.5 bg-black/40">
               <button
                 onClick={() => downloadIndividualData(selectedEmployee, 'xlsx')}
-                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-bold py-3.5 px-5 rounded-2xl shadow-lg transition-all cursor-pointer text-xs"
+                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-bold py-3.5 px-5 rounded-2xl shadow-lg transition-all cursor-pointer text-xs"
               >
                 <FileSpreadsheet className="w-4 h-4" />
                 Download Monthly Excel (XLSX)
               </button>
               <button
                 onClick={() => downloadIndividualData(selectedEmployee, 'csv')}
-                className="flex-1 flex items-center justify-center gap-2 border border-[#2D334A]/50 bg-[#131726]/30 hover:bg-[#1E243D]/50 text-slate-300 hover:text-white font-bold py-3.5 px-5 rounded-2xl transition-all cursor-pointer text-xs"
+                className="flex-1 flex items-center justify-center gap-2 border border-[#222222]/50 bg-[#111111]/30 hover:bg-[#1A1A1A]/50 text-gray-300 hover:text-white font-bold py-3.5 px-5 rounded-2xl transition-all cursor-pointer text-xs"
               >
                 <FileDown className="w-4 h-4" />
                 Download CSV
@@ -1483,47 +1483,47 @@ const AttendanceTracker = () => {
 
       {/* Day Modal: Drilldown details for a specific day */}
       {selectedDay && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="bg-[#131726] rounded-[2.5rem] shadow-2xl border border-[#2D334A] w-full max-w-2xl overflow-hidden max-h-[85vh] flex flex-col animate-in scale-in duration-300">
-            <div className="p-6 pb-4 border-b border-[#2D334A]/50 flex justify-between items-center bg-[#0B0F19]/40">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="bg-[#111111] rounded-[2.5rem] shadow-2xl border border-[#222222] w-full max-w-2xl overflow-hidden max-h-[85vh] flex flex-col animate-in scale-in duration-300">
+            <div className="p-6 pb-4 border-b border-[#222222]/50 flex justify-between items-center bg-black/40">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-tr from-amber-600 to-amber-500 rounded-xl flex items-center justify-center text-white font-bold">
+                <div className="w-12 h-12 bg-gradient-to-tr from-yellow-500 to-yellow-500 rounded-xl flex items-center justify-center text-white font-bold">
                   <Calendar className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white">{selectedDay.date}</h3>
-                  <span className="text-xs font-bold text-slate-500">Daily Logs • File: {selectedDay.filename}</span>
+                  <span className="text-xs font-bold text-gray-500">Daily Logs • File: {selectedDay.filename}</span>
                 </div>
               </div>
               <button 
                 onClick={() => setSelectedDay(null)}
-                className="p-2 hover:bg-[#1E243D] rounded-full text-slate-400 hover:text-white transition-colors cursor-pointer"
+                className="p-2 hover:bg-[#1A1A1A] rounded-full text-gray-400 hover:text-white transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-6 flex-1 bg-[#131726]">
+            <div className="p-6 overflow-y-auto space-y-6 flex-1 bg-[#111111]">
               <div className="grid grid-cols-3 gap-3 text-center">
-                <div className="bg-[#0B0F19]/60 border border-[#2D334A]/40 p-4.5 rounded-2xl">
+                <div className="bg-black/60 border border-[#222222]/40 p-4.5 rounded-2xl">
                   <div className="text-2xl font-black text-white">{selectedDay.records.length}</div>
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-tight mt-1">Total Logs</div>
+                  <div className="text-[10px] font-bold text-gray-500 uppercase tracking-tight mt-1">Total Logs</div>
                 </div>
-                <div className="bg-emerald-500/5 border border-emerald-500/10 p-4.5 rounded-2xl">
-                  <div className="text-2xl font-black text-emerald-400">{selectedDay.presentCount}</div>
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-tight mt-1">Present</div>
+                <div className="bg-yellow-500/5 border border-yellow-500/10 p-4.5 rounded-2xl">
+                  <div className="text-2xl font-black text-yellow-400">{selectedDay.presentCount}</div>
+                  <div className="text-[10px] font-bold text-gray-500 uppercase tracking-tight mt-1">Present</div>
                 </div>
                 <div className="bg-red-500/5 border border-red-500/10 p-4.5 rounded-2xl">
                   <div className="text-2xl font-black text-red-400">{selectedDay.absentCount}</div>
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-tight mt-1">Absent</div>
+                  <div className="text-[10px] font-bold text-gray-500 uppercase tracking-tight mt-1">Absent</div>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">User Attendance List</h4>
-                <div className="bg-[#0B0F19]/40 border border-[#2D334A]/30 rounded-2xl overflow-hidden max-h-[300px] overflow-y-auto">
+                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">User Attendance List</h4>
+                <div className="bg-black/40 border border-[#222222]/30 rounded-2xl overflow-hidden max-h-[300px] overflow-y-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-[#0B0F19]/80 text-slate-400 font-bold sticky top-0 border-b border-[#2D334A]/50">
+                    <thead className="bg-black/80 text-gray-400 font-bold sticky top-0 border-b border-[#222222]/50">
                       <tr>
                         <th className="px-4.5 py-3">Employee Name</th>
                         <th className="px-4.5 py-3">Employee ID</th>
@@ -1532,20 +1532,20 @@ const AttendanceTracker = () => {
                         <th className="px-4.5 py-3 text-right">Status</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#2D334A]/30 text-slate-300">
+                    <tbody className="divide-y divide-[#222222]/30 text-gray-300">
                       {selectedDay.records.map((rec, i) => {
                         const statusLower = rec.status.toLowerCase();
                         const isAbsent = statusLower.includes('absent') || statusLower === 'a';
                         const isLate = statusLower.includes('late') || statusLower === 'l';
                         return (
-                          <tr key={i} className="hover:bg-[#1E243D]/25 transition-colors">
+                          <tr key={i} className="hover:bg-[#1A1A1A]/25 transition-colors">
                             <td className="px-4.5 py-3 font-semibold text-white">{rec.name}</td>
                             <td className="px-4.5 py-3">
-                              <span className="px-1.5 py-0.5 bg-[#0B0F19] text-[9px] font-bold border border-[#2D334A]/50 rounded-md text-slate-300">
+                              <span className="px-1.5 py-0.5 bg-black text-[9px] font-bold border border-[#222222]/50 rounded-md text-gray-300">
                                 {rec.employeeId}
                               </span>
                             </td>
-                            <td className="px-4.5 py-3 text-slate-400 font-medium">
+                            <td className="px-4.5 py-3 text-gray-400 font-medium">
                               {rec.checkIn !== 'N/A' ? `${rec.checkIn} - ${rec.checkOut}` : '—'}
                             </td>
                             <td className="px-4.5 py-3 text-center text-white font-bold">
@@ -1556,8 +1556,8 @@ const AttendanceTracker = () => {
                                 isAbsent 
                                   ? 'bg-red-500/10 border-red-500/20 text-red-400' 
                                   : isLate 
-                                    ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' 
-                                    : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                                    ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400' 
+                                    : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
                               }`}>
                                 {rec.status}
                               </span>
@@ -1571,10 +1571,10 @@ const AttendanceTracker = () => {
               </div>
             </div>
 
-            <div className="p-6 border-t border-[#2D334A]/50 bg-[#0B0F19]/40">
+            <div className="p-6 border-t border-[#222222]/50 bg-black/40">
               <button
                 onClick={() => downloadDailyData(selectedDay)}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-bold py-3.5 px-5 rounded-2xl shadow-lg transition-all cursor-pointer text-xs"
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-yellow-500 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-white font-bold py-3.5 px-5 rounded-2xl shadow-lg transition-all cursor-pointer text-xs"
               >
                 <FileSpreadsheet className="w-4 h-4" />
                 Export Daily Sheet (XLSX)

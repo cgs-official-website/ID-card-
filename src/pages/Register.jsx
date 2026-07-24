@@ -99,15 +99,15 @@ const Register = () => {
   if (success) {
     return (
       <div className="min-h-screen bg-transparent flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-[#131726]/80 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 p-12 text-center">
-          <div className="w-20 h-20 bg-violet-500/20 text-violet-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_15px_rgba(139,92,246,0.3)]">
+        <div className="max-w-md w-full bg-[#111111]/80 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#222222]/50 p-12 text-center">
+          <div className="w-20 h-20 bg-yellow-500/20 text-yellow-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_15px_rgba(139,92,246,0.3)]">
             <CheckCircle2 className="w-10 h-10" />
           </div>
           <h2 className="text-2xl font-bold text-white mb-2">Registration Success!</h2>
-          <p className="text-slate-400 mb-8">Your employee record has been successfully registered in the system.</p>
+          <p className="text-gray-400 mb-8">Your employee record has been successfully registered in the system.</p>
           <button
             onClick={() => window.location.reload()}
-            className="w-full py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-violet-500/20"
+            className="w-full py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-bold rounded-xl transition-all shadow-lg shadow-yellow-500/20"
           >
             Register Another
           </button>
@@ -140,10 +140,10 @@ const Register = () => {
             <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain bg-white p-1.5 rounded-xl shadow-sm" />
             <h1 className="text-2xl font-bold text-white tracking-tight">ID Card Registration</h1>
           </div>
-          <p className="text-slate-400 font-medium">Complete the form below to enroll in the system</p>
+          <p className="text-gray-400 font-medium">Complete the form below to enroll in the system</p>
         </div>
 
-        <div className="bg-[#131726]/80 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 overflow-hidden">
+        <div className="bg-[#111111]/80 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#222222]/50 overflow-hidden">
           <form onSubmit={handleSubmit(onSubmit)} className="p-8 md:p-12 space-y-10">
 
             {/* Photo Upload */}
@@ -154,7 +154,7 @@ const Register = () => {
                     <img
                       src={previewImage}
                       alt="Preview"
-                      className="w-32 h-32 rounded-full object-cover border-4 border-violet-500/40 shadow-lg shadow-violet-500/20"
+                      className="w-32 h-32 rounded-full object-cover border-4 border-yellow-500/40 shadow-lg shadow-yellow-500/20"
                     />
                     <button
                       type="button"
@@ -165,8 +165,8 @@ const Register = () => {
                     </button>
                   </div>
                 ) : (
-                  <div className="relative w-32 h-32 rounded-full border-2 border-dashed border-[#2D334A]/50 flex items-center justify-center bg-[#0B0F19]/50 overflow-hidden group hover:border-violet-500 transition-colors cursor-pointer">
-                    <Upload className="w-8 h-8 text-slate-500 group-hover:text-violet-400 transition-colors" />
+                  <div className="relative w-32 h-32 rounded-full border-2 border-dashed border-[#222222]/50 flex items-center justify-center bg-black/50 overflow-hidden group hover:border-yellow-500 transition-colors cursor-pointer">
+                    <Upload className="w-8 h-8 text-gray-500 group-hover:text-yellow-400 transition-colors" />
                     <input
                       type="file"
                       accept="image/*"
@@ -186,18 +186,18 @@ const Register = () => {
                   {...register('photo', { required: 'Photo is required' })}
                 />
               )}
-              <p className="text-sm font-bold text-slate-300">Profile Photo *</p>
+              <p className="text-sm font-bold text-gray-300">Profile Photo *</p>
               {!previewImage && (
                 <label
                   htmlFor="photo-upload-hidden"
-                  className="mt-2 text-xs text-violet-400 cursor-pointer hover:text-violet-300 transition-colors underline underline-offset-2"
+                  className="mt-2 text-xs text-yellow-400 cursor-pointer hover:text-yellow-300 transition-colors underline underline-offset-2"
                 >
                   Click to upload & crop
                 </label>
               )}
               {previewImage && (
                 <label
-                  className="mt-2 text-xs text-violet-400 cursor-pointer hover:text-violet-300 transition-colors underline underline-offset-2 flex items-center gap-1"
+                  className="mt-2 text-xs text-yellow-400 cursor-pointer hover:text-yellow-300 transition-colors underline underline-offset-2 flex items-center gap-1"
                 >
                   <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
                   Change Photo
@@ -209,20 +209,20 @@ const Register = () => {
             {/* Form Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Full Name *</label>
-                <input {...register('name', { required: 'Name is required' })} className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50" placeholder="John Doe" />
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Full Name *</label>
+                <input {...register('name', { required: 'Name is required' })} className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50" placeholder="John Doe" />
                 {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Employee ID *</label>
-                <input {...register('employeeId', { required: 'Employee ID is required' })} className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50" placeholder="CGS-001" />
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Employee ID *</label>
+                <input {...register('employeeId', { required: 'Employee ID is required' })} className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50" placeholder="CGS-001" />
                 {errors.employeeId && <p className="text-red-500 text-xs mt-1">{errors.employeeId.message}</p>}
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Department *</label>
-                <select {...register('department', { required: 'Department is required' })} className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Department *</label>
+                <select {...register('department', { required: 'Department is required' })} className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50">
                   <option value="">Select Department</option>
                   <option value="Management">Management</option>
                   <option value="Human Resources">Human Resources</option>
@@ -234,14 +234,14 @@ const Register = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Job Role *</label>
-                <input {...register('role', { required: 'Role is required' })} className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50" placeholder="e.g. Senior Developer" />
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Job Role *</label>
+                <input {...register('role', { required: 'Role is required' })} className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50" placeholder="e.g. Senior Developer" />
                 {errors.role && <p className="text-red-500 text-xs mt-1">{errors.role.message}</p>}
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Blood Group *</label>
-                <select {...register('bloodGroup', { required: 'Required' })} className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Blood Group *</label>
+                <select {...register('bloodGroup', { required: 'Required' })} className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50">
                   <option value="">Select</option>
                   <option value="A+">A+</option>
                   <option value="A-">A-</option>
@@ -256,36 +256,36 @@ const Register = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Phone Number *</label>
-                <input {...register('phoneNumber', { required: 'Required' })} className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50" placeholder="+91 1234567890" />
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Phone Number *</label>
+                <input {...register('phoneNumber', { required: 'Required' })} className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50" placeholder="+91 1234567890" />
                 {errors.phoneNumber && <p className="text-red-500 text-xs mt-1">{errors.phoneNumber.message}</p>}
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Emergency Contact *</label>
-                <input {...register('emergencyContact', { required: 'Required' })} className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50" placeholder="+91 1234567890" />
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Emergency Contact *</label>
+                <input {...register('emergencyContact', { required: 'Required' })} className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50" placeholder="+91 1234567890" />
                 {errors.emergencyContact && <p className="text-red-500 text-xs mt-1">{errors.emergencyContact.message}</p>}
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Email Address *</label>
-                <input type="email" {...register('email', { required: 'Required' })} className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50" placeholder="john@company.com" />
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Email Address *</label>
+                <input type="email" {...register('email', { required: 'Required' })} className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50" placeholder="john@company.com" />
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Joining Date *</label>
-                <input type="date" {...register('dateOfJoining', { required: 'Required' })} className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50" />
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Joining Date *</label>
+                <input type="date" {...register('dateOfJoining', { required: 'Required' })} className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50" />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Date of Birth *</label>
-                <input type="date" {...register('dateOfBirth', { required: 'Required' })} className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50" />
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Date of Birth *</label>
+                <input type="date" {...register('dateOfBirth', { required: 'Required' })} className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50" />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Employment Type *</label>
-                <select {...register('employeeType', { required: 'Required' })} className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Employment Type *</label>
+                <select {...register('employeeType', { required: 'Required' })} className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50">
                   <option value="Full-time">Full-time</option>
                   <option value="Part-time">Part-time</option>
                   <option value="Contract">Contract</option>
@@ -294,15 +294,15 @@ const Register = () => {
               </div>
 
               <div className="md:col-span-2 space-y-1">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Current Address *</label>
-                <textarea {...register('currentAddress', { required: 'Required' })} rows="2" className="w-full rounded-xl border border-[#2D334A]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500 transition-all text-white bg-[#0B0F19]/50 resize-none" placeholder="Enter your full address"></textarea>
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Current Address *</label>
+                <textarea {...register('currentAddress', { required: 'Required' })} rows="2" className="w-full rounded-xl border border-[#222222]/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 transition-all text-white bg-black/50 resize-none" placeholder="Enter your full address"></textarea>
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-violet-500/20 disabled:opacity-50 flex justify-center items-center gap-2 text-lg"
+              className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-yellow-500/20 disabled:opacity-50 flex justify-center items-center gap-2 text-lg"
             >
               {loading ? (
                 <>

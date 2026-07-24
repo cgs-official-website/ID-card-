@@ -44,7 +44,7 @@ const ScannerPage = () => {
     <div className="max-w-xl mx-auto space-y-6">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-white">Scan Employee ID</h2>
-        <p className="text-slate-400 text-sm mt-1">Position the QR code within the frame to verify.</p>
+        <p className="text-gray-400 text-sm mt-1">Position the QR code within the frame to verify.</p>
       </div>
 
       {error ? (
@@ -62,14 +62,14 @@ const ScannerPage = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-[#131726]/80 backdrop-blur-md p-4 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 overflow-hidden relative">
+        <div className="bg-[#111111]/80 backdrop-blur-md p-4 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#222222]/50 overflow-hidden relative">
           <div className="absolute top-8 left-8 right-8 z-10 flex justify-between">
-            <div className="w-8 h-8 border-t-4 border-l-4 border-violet-500 rounded-tl-lg"></div>
-            <div className="w-8 h-8 border-t-4 border-r-4 border-violet-500 rounded-tr-lg"></div>
+            <div className="w-8 h-8 border-t-4 border-l-4 border-yellow-500 rounded-tl-lg"></div>
+            <div className="w-8 h-8 border-t-4 border-r-4 border-yellow-500 rounded-tr-lg"></div>
           </div>
           <div className="absolute bottom-8 left-8 right-8 z-10 flex justify-between">
-            <div className="w-8 h-8 border-b-4 border-l-4 border-violet-500 rounded-bl-lg"></div>
-            <div className="w-8 h-8 border-b-4 border-r-4 border-violet-500 rounded-br-lg"></div>
+            <div className="w-8 h-8 border-b-4 border-l-4 border-yellow-500 rounded-bl-lg"></div>
+            <div className="w-8 h-8 border-b-4 border-r-4 border-yellow-500 rounded-br-lg"></div>
           </div>
           
           <div className="rounded-xl overflow-hidden aspect-square bg-black">
@@ -86,8 +86,8 @@ const ScannerPage = () => {
             />
           </div>
           
-          <div className="mt-6 flex items-center justify-center gap-2 text-slate-400">
-            <QrCode className="w-5 h-5 animate-pulse text-violet-500" />
+          <div className="mt-6 flex items-center justify-center gap-2 text-gray-400">
+            <QrCode className="w-5 h-5 animate-pulse text-yellow-500" />
             <span className="font-medium text-sm">Scanning for QR code...</span>
           </div>
         </div>

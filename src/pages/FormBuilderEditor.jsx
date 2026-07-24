@@ -355,14 +355,14 @@ const FormBuilderEditor = () => {
   return (
     <div className="space-y-6 bg-transparent pb-16">
       {/* Header bar */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#131726]/60 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-xl animate-in fade-in slide-in-from-top-4 duration-300">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#111111]/60 backdrop-blur-md p-6 rounded-3xl border border-[#222222]/50 shadow-xl animate-in fade-in slide-in-from-top-4 duration-300">
         <div className="flex items-center gap-3">
-          <Link to="/form-builder" className="p-2.5 bg-[#0B0F19]/40 border border-[#2D334A]/40 hover:border-violet-500/40 hover:bg-[#1E243D]/65 text-slate-400 hover:text-white rounded-xl transition-all cursor-pointer hover:scale-[1.05] active:scale-95 duration-200">
+          <Link to="/form-builder" className="p-2.5 bg-black/40 border border-[#222222]/40 hover:border-yellow-500/40 hover:bg-[#1A1A1A]/65 text-gray-400 hover:text-white rounded-xl transition-all cursor-pointer hover:scale-[1.05] active:scale-95 duration-200">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
             <h2 className="text-xl font-extrabold text-white tracking-tight">{isEditMode ? 'Edit Custom Form' : 'Create Custom Form'}</h2>
-            <p className="text-[11px] font-bold text-slate-400 mt-0.5">Interactive WYSIWYG form designer and options config</p>
+            <p className="text-[11px] font-bold text-gray-400 mt-0.5">Interactive WYSIWYG form designer and options config</p>
           </div>
         </div>
 
@@ -370,23 +370,23 @@ const FormBuilderEditor = () => {
           <select 
             value={formStatus} 
             onChange={(e) => setFormStatus(e.target.value)}
-            className={`rounded-xl border bg-[#0B0F19]/60 px-4 py-2.5 text-xs font-bold transition-all duration-300 cursor-pointer focus:outline-none focus:ring-1 focus:ring-violet-500/50 ${
+            className={`rounded-xl border bg-black/60 px-4 py-2.5 text-xs font-bold transition-all duration-300 cursor-pointer focus:outline-none focus:ring-1 focus:ring-yellow-500/50 ${
               formStatus === 'published' 
-                ? 'border-emerald-500/30 text-emerald-400' 
+                ? 'border-yellow-500/30 text-yellow-400' 
                 : formStatus === 'archived' 
-                  ? 'border-slate-500/30 text-slate-400' 
-                  : 'border-amber-500/30 text-amber-400'
+                  ? 'border-gray-500/30 text-gray-400' 
+                  : 'border-yellow-500/30 text-yellow-400'
             }`}
           >
-            <option value="draft" className="bg-[#0B0F19] text-amber-400 font-bold">Draft</option>
-            <option value="published" className="bg-[#0B0F19] text-emerald-400 font-bold">Published</option>
-            <option value="archived" className="bg-[#0B0F19] text-slate-400 font-bold">Archived</option>
+            <option value="draft" className="bg-black text-yellow-400 font-bold">Draft</option>
+            <option value="published" className="bg-black text-yellow-400 font-bold">Published</option>
+            <option value="archived" className="bg-black text-gray-400 font-bold">Archived</option>
           </select>
 
           <button
             onClick={handleSaveForm}
             disabled={saving}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white text-xs font-black shadow-lg shadow-violet-500/20 hover:shadow-violet-500/30 hover:scale-[1.02] active:scale-95 transition-all duration-200 flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-yellow-400 to-indigo-600 hover:from-yellow-300 hover:to-indigo-500 text-white text-xs font-black shadow-lg shadow-yellow-500/20 hover:shadow-yellow-500/30 hover:scale-[1.02] active:scale-95 transition-all duration-200 flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             {saving ? 'Saving...' : 'Save Form'}
@@ -396,21 +396,21 @@ const FormBuilderEditor = () => {
 
       {/* Editor Main Content */}
       {loading ? (
-        <div className="bg-[#131726]/60 backdrop-blur-md border border-[#2D334A]/50 rounded-3xl p-24 text-center text-white shadow-xl">
-          <div className="w-10 h-10 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <span className="font-bold text-sm tracking-wide text-slate-300">Loading custom form workspace...</span>
+        <div className="bg-[#111111]/60 backdrop-blur-md border border-[#222222]/50 rounded-3xl p-24 text-center text-white shadow-xl">
+          <div className="w-10 h-10 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <span className="font-bold text-sm tracking-wide text-gray-300">Loading custom form workspace...</span>
         </div>
       ) : (
         <div className="space-y-4">
           {/* Mobile Editor Tab Selector (only visible on mobile/tablet) */}
-          <div className="flex lg:hidden bg-[#131726]/40 backdrop-blur-md border border-[#2D334A]/40 p-1.5 rounded-2xl shadow-inner">
+          <div className="flex lg:hidden bg-[#111111]/40 backdrop-blur-md border border-[#222222]/40 p-1.5 rounded-2xl shadow-inner">
             <button
               type="button"
               onClick={() => setEditorMobileTab('toolbox')}
               className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 ${
                 editorMobileTab === 'toolbox' 
-                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md' 
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-gradient-to-r from-yellow-400 to-indigo-600 text-white shadow-md' 
+                  : 'text-gray-400 hover:text-gray-200'
               }`}
             >
               🛠️ Toolbox
@@ -420,8 +420,8 @@ const FormBuilderEditor = () => {
               onClick={() => setEditorMobileTab('canvas')}
               className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 ${
                 editorMobileTab === 'canvas' 
-                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md' 
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-gradient-to-r from-yellow-400 to-indigo-600 text-white shadow-md' 
+                  : 'text-gray-400 hover:text-gray-200'
               }`}
             >
               📱 Canvas
@@ -431,8 +431,8 @@ const FormBuilderEditor = () => {
               onClick={() => setEditorMobileTab('properties')}
               className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 ${
                 editorMobileTab === 'properties' 
-                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md' 
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-gradient-to-r from-yellow-400 to-indigo-600 text-white shadow-md' 
+                  : 'text-gray-400 hover:text-gray-200'
               }`}
             >
               ⚙️ Properties
@@ -442,23 +442,23 @@ const FormBuilderEditor = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
             {/* LEFT PANEL: Field Toolbox (3 cols) */}
-            <div className={`lg:col-span-3 space-y-6 bg-[#131726]/60 backdrop-blur-md p-5 rounded-3xl border border-[#2D334A]/50 shadow-xl animate-in fade-in duration-350 ${editorMobileTab === 'toolbox' ? 'block' : 'hidden lg:block'}`}>
+            <div className={`lg:col-span-3 space-y-6 bg-[#111111]/60 backdrop-blur-md p-5 rounded-3xl border border-[#222222]/50 shadow-xl animate-in fade-in duration-350 ${editorMobileTab === 'toolbox' ? 'block' : 'hidden lg:block'}`}>
               <div>
                 <h3 className="text-sm font-extrabold text-white tracking-wide">Field Toolbox</h3>
-                <p className="text-[10px] font-bold text-slate-400 mt-0.5">Click a component to append it to the form canvas</p>
+                <p className="text-[10px] font-bold text-gray-400 mt-0.5">Click a component to append it to the form canvas</p>
               </div>
               
               <div className="space-y-5 max-h-[600px] overflow-y-auto pr-1">
                 {[
                   { name: 'Basic Fields', list: FIELD_TYPES.basic, iconColor: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/25' },
-                  { name: 'Selection Fields', list: FIELD_TYPES.selection, iconColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/25' },
+                  { name: 'Selection Fields', list: FIELD_TYPES.selection, iconColor: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/25' },
                   { name: 'Advanced Fields', list: FIELD_TYPES.advanced, iconColor: 'text-pink-400 bg-pink-500/10 border-pink-500/25' },
                   { name: 'Layout Elements', list: FIELD_TYPES.layout, iconColor: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/25' }
                 ].map((grp, idx) => (
                   <div key={idx} className="space-y-2.5 animate-in slide-in-from-left-2 duration-300">
                     <div className="flex items-center gap-2 px-1">
-                      <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">{grp.name}</span>
-                      <div className="h-[1px] flex-1 bg-[#2D334A]/40"></div>
+                      <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest">{grp.name}</span>
+                      <div className="h-[1px] flex-1 bg-[#222222]/40"></div>
                     </div>
                     <div className="grid grid-cols-2 lg:grid-cols-1 gap-2">
                       {grp.list.map((preset) => {
@@ -467,7 +467,7 @@ const FormBuilderEditor = () => {
                           <button
                             key={preset.type}
                             onClick={() => addField(preset)}
-                            className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-slate-300 hover:text-white bg-[#0B0F19]/40 border border-[#2D334A]/40 hover:border-violet-500/40 hover:bg-[#1E243D]/50 hover:scale-[1.02] active:scale-95 transition-all duration-200 cursor-pointer group"
+                            className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-gray-300 hover:text-white bg-black/40 border border-[#222222]/40 hover:border-yellow-500/40 hover:bg-[#1A1A1A]/50 hover:scale-[1.02] active:scale-95 transition-all duration-200 cursor-pointer group"
                           >
                             <div className={`w-7 h-7 rounded-lg flex items-center justify-center border transition-all ${grp.iconColor} group-hover:scale-105 duration-200`}>
                               <Icon className="w-3.5 h-3.5" />
@@ -486,14 +486,14 @@ const FormBuilderEditor = () => {
             <div className={`lg:col-span-5 space-y-4 ${editorMobileTab === 'canvas' ? 'block' : 'hidden lg:block'}`}>
               
               {/* Tab Selector */}
-              <div className="flex bg-[#131726]/40 backdrop-blur-md border border-[#2D334A]/50 p-1.5 rounded-2xl shadow-inner">
+              <div className="flex bg-[#111111]/40 backdrop-blur-md border border-[#222222]/50 p-1.5 rounded-2xl shadow-inner">
                 <button
                   type="button"
                   onClick={() => setActiveTab('builder')}
                   className={`flex-1 py-2 text-xs font-black rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${
                     activeTab === 'builder' 
-                      ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-500/10' 
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-gradient-to-r from-yellow-400 to-indigo-600 text-white shadow-md shadow-yellow-500/10' 
+                      : 'text-gray-400 hover:text-gray-200'
                   }`}
                 >
                   <Sparkles className="w-3.5 h-3.5" />
@@ -504,8 +504,8 @@ const FormBuilderEditor = () => {
                   onClick={() => setActiveTab('settings')}
                   className={`flex-1 py-2 text-xs font-black rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${
                     activeTab === 'settings' 
-                      ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-500/10' 
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-gradient-to-r from-yellow-400 to-indigo-600 text-white shadow-md shadow-yellow-500/10' 
+                      : 'text-gray-400 hover:text-gray-200'
                   }`}
                 >
                   <Settings className="w-3.5 h-3.5" />
@@ -516,46 +516,46 @@ const FormBuilderEditor = () => {
               {activeTab === 'builder' ? (
                 <div className="flex flex-col shadow-2xl animate-in fade-in duration-300">
                   {/* Mock Browser Header */}
-                  <div className="bg-[#131726]/90 border border-[#2D334A]/60 border-b-0 rounded-t-3xl p-4 flex items-center justify-between shadow-inner">
+                  <div className="bg-[#111111]/90 border border-[#222222]/60 border-b-0 rounded-t-3xl p-4 flex items-center justify-between shadow-inner">
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-rose-500/80 shadow-md"></span>
-                      <span className="w-3 h-3 rounded-full bg-amber-500/80 shadow-md"></span>
-                      <span className="w-3 h-3 rounded-full bg-emerald-500/80 shadow-md"></span>
+                      <span className="w-3 h-3 rounded-full bg-yellow-500/80 shadow-md"></span>
+                      <span className="w-3 h-3 rounded-full bg-yellow-500/80 shadow-md"></span>
                     </div>
-                    <div className="flex-1 max-w-xs md:max-w-md mx-auto bg-[#0B0F19]/80 border border-[#2D334A]/40 rounded-xl py-1 px-3 text-[10px] text-slate-400 font-mono tracking-tight flex items-center justify-center gap-1.5 shadow-inner select-none truncate">
-                      <span className="text-slate-500">https://</span>
+                    <div className="flex-1 max-w-xs md:max-w-md mx-auto bg-black/80 border border-[#222222]/40 rounded-xl py-1 px-3 text-[10px] text-gray-400 font-mono tracking-tight flex items-center justify-center gap-1.5 shadow-inner select-none truncate">
+                      <span className="text-gray-500">https://</span>
                       <span>cgs-admin.org/forms/{formTitle.toLowerCase().replace(/[^a-z0-9]/g, '-') || 'new-form'}</span>
                     </div>
                     <div className="flex items-center gap-1.5 opacity-40">
-                      <span className="w-1 h-1 rounded-full bg-slate-500"></span>
-                      <span className="w-1 h-1 rounded-full bg-slate-500"></span>
-                      <span className="w-1 h-1 rounded-full bg-slate-500"></span>
+                      <span className="w-1 h-1 rounded-full bg-gray-500"></span>
+                      <span className="w-1 h-1 rounded-full bg-gray-500"></span>
+                      <span className="w-1 h-1 rounded-full bg-gray-500"></span>
                     </div>
                   </div>
 
                   {/* Canvas Container */}
-                  <div className="bg-[#131726]/60 backdrop-blur-md rounded-b-3xl border border-[#2D334A]/60 p-6 md:p-8 space-y-6 min-h-[500px] relative shadow-2xl">
+                  <div className="bg-[#111111]/60 backdrop-blur-md rounded-b-3xl border border-[#222222]/60 p-6 md:p-8 space-y-6 min-h-[500px] relative shadow-2xl">
                     
                     {/* Logo indicator if uploaded */}
                     {logoUrl && (
-                      <div className="w-16 h-16 rounded-2xl border border-[#2D334A]/80 overflow-hidden bg-white flex items-center justify-center p-1.5 mb-2 shadow-lg animate-in zoom-in duration-200">
+                      <div className="w-16 h-16 rounded-2xl border border-[#222222]/80 overflow-hidden bg-white flex items-center justify-center p-1.5 mb-2 shadow-lg animate-in zoom-in duration-200">
                         <img src={logoUrl} alt="Form Logo" className="w-full h-full object-contain" />
                       </div>
                     )}
 
                     {/* Form Title details */}
-                    <div className="border-l-2 border-violet-500 pl-4 space-y-1 mb-6">
+                    <div className="border-l-2 border-yellow-500 pl-4 space-y-1 mb-6">
                       <input
                         type="text"
                         value={formTitle}
                         onChange={(e) => setFormTitle(e.target.value)}
-                        className="w-full text-xl md:text-2xl font-black text-white bg-transparent border-b border-transparent hover:border-slate-800/80 focus:border-violet-500 focus:outline-none transition-all py-1"
+                        className="w-full text-xl md:text-2xl font-black text-white bg-transparent border-b border-transparent hover:border-gray-800/80 focus:border-yellow-500 focus:outline-none transition-all py-1"
                         placeholder="Untitled Custom Form"
                       />
                       <textarea
                         value={formDescription}
                         onChange={(e) => setFormDescription(e.target.value)}
-                        className="w-full text-slate-400 text-xs md:text-sm bg-transparent border-b border-transparent hover:border-slate-800/80 focus:border-violet-500 focus:outline-none transition-all py-1 resize-none mt-1 leading-relaxed"
+                        className="w-full text-gray-400 text-xs md:text-sm bg-transparent border-b border-transparent hover:border-gray-800/80 focus:border-yellow-500 focus:outline-none transition-all py-1 resize-none mt-1 leading-relaxed"
                         rows="2"
                         placeholder="Describe your form so submitters understand instructions..."
                       />
@@ -564,15 +564,15 @@ const FormBuilderEditor = () => {
                     {/* Dynamic Fields List */}
                     <div className="space-y-4">
                       {fields.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center py-20 px-6 text-slate-400 border border-dashed border-violet-500/20 rounded-2xl bg-[#0B0F19]/20 relative overflow-hidden group select-none">
-                          <div className="absolute -top-12 -left-12 w-32 h-32 bg-violet-600/5 rounded-full blur-2xl pointer-events-none"></div>
-                          <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-blue-600/5 rounded-full blur-2xl pointer-events-none"></div>
-                          <div className="w-16 h-16 rounded-2xl bg-[#1E243D]/50 border border-slate-700/50 flex items-center justify-center mb-4 text-violet-400 group-hover:scale-110 group-hover:border-violet-500/40 group-hover:shadow-lg transition-all duration-300">
-                            <PlusCircle className="w-8 h-8 animate-pulse text-violet-500" />
+                        <div className="flex flex-col items-center justify-center py-20 px-6 text-gray-400 border border-dashed border-yellow-500/20 rounded-2xl bg-black/20 relative overflow-hidden group select-none">
+                          <div className="absolute -top-12 -left-12 w-32 h-32 bg-yellow-500/5 rounded-full blur-2xl pointer-events-none"></div>
+                          <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-yellow-500/5 rounded-full blur-2xl pointer-events-none"></div>
+                          <div className="w-16 h-16 rounded-2xl bg-[#1A1A1A]/50 border border-gray-700/50 flex items-center justify-center mb-4 text-yellow-400 group-hover:scale-110 group-hover:border-yellow-500/40 group-hover:shadow-lg transition-all duration-300">
+                            <PlusCircle className="w-8 h-8 animate-pulse text-yellow-500" />
                           </div>
                           <h4 className="text-sm font-bold text-white tracking-wide">Your form canvas is empty</h4>
-                          <p className="text-xs text-slate-500 text-center max-w-[240px] mt-1.5 leading-relaxed font-semibold">
-                            Click blocks in the <strong className="text-violet-400">Toolbox</strong> on the left to start building your custom form.
+                          <p className="text-xs text-gray-500 text-center max-w-[240px] mt-1.5 leading-relaxed font-semibold">
+                            Click blocks in the <strong className="text-yellow-400">Toolbox</strong> on the left to start building your custom form.
                           </p>
                         </div>
                       ) : (
@@ -585,20 +585,20 @@ const FormBuilderEditor = () => {
                               onClick={() => { setSelectedFieldId(field.id); setEditorMobileTab('properties'); }}
                               className={`relative p-5 rounded-2xl border transition-all cursor-pointer group/field ${
                                 isSelected 
-                                  ? 'bg-[#1E243D]/65 border-violet-500 shadow-xl shadow-violet-500/5 ring-1 ring-violet-500/20' 
-                                  : 'bg-[#0B0F19]/40 border-[#2D334A]/50 hover:border-slate-600'
+                                  ? 'bg-[#1A1A1A]/65 border-yellow-500 shadow-xl shadow-yellow-500/5 ring-1 ring-yellow-500/20' 
+                                  : 'bg-black/40 border-[#222222]/50 hover:border-gray-600'
                               }`}
                             >
                               {/* Field actions */}
                               <div className={`absolute -top-3.5 right-4 z-10 flex items-center gap-1.5 scale-95 opacity-0 group-hover/field:scale-100 group-hover/field:opacity-100 focus-within:opacity-100 focus-within:scale-100 transition-all duration-200 ${isSelected ? 'opacity-100 scale-100' : ''}`}>
-                                <span className="text-[8px] font-black text-violet-400 bg-slate-900 border border-violet-500/30 px-2 py-0.5 rounded-md uppercase tracking-wider shadow-md select-none">
+                                <span className="text-[8px] font-black text-yellow-400 bg-gray-900 border border-yellow-500/30 px-2 py-0.5 rounded-md uppercase tracking-wider shadow-md select-none">
                                   {field.type}
                                 </span>
-                                <div className="flex items-center gap-1 bg-[#131726] border border-[#2D334A] p-0.5 rounded-lg shadow-lg">
+                                <div className="flex items-center gap-1 bg-[#111111] border border-[#222222] p-0.5 rounded-lg shadow-lg">
                                   <button
                                     onClick={(e) => { e.stopPropagation(); moveField(index, 'up'); }}
                                     disabled={index === 0}
-                                    className="p-1 hover:bg-[#2D334A] rounded text-slate-400 disabled:opacity-20 cursor-pointer transition-colors"
+                                    className="p-1 hover:bg-[#222222] rounded text-gray-400 disabled:opacity-20 cursor-pointer transition-colors"
                                     title="Move Up"
                                   >
                                     <ChevronUp className="w-3.5 h-3.5" />
@@ -606,7 +606,7 @@ const FormBuilderEditor = () => {
                                   <button
                                     onClick={(e) => { e.stopPropagation(); moveField(index, 'down'); }}
                                     disabled={index === fields.length - 1}
-                                    className="p-1 hover:bg-[#2D334A] rounded text-slate-400 disabled:opacity-20 cursor-pointer transition-colors"
+                                    className="p-1 hover:bg-[#222222] rounded text-gray-400 disabled:opacity-20 cursor-pointer transition-colors"
                                     title="Move Down"
                                   >
                                     <ChevronDown className="w-3.5 h-3.5" />
@@ -625,26 +625,26 @@ const FormBuilderEditor = () => {
                               <div className="space-y-2">
                                 {field.type === 'divider' ? (
                                   <div className="py-3 flex items-center gap-3 select-none">
-                                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#2D334A]/80"></div>
-                                    <span className="text-[8px] font-black tracking-widest text-slate-500 uppercase">Divider</span>
-                                    <div className="h-[1px] flex-1 bg-gradient-to-r from-[#2D334A]/80 to-transparent"></div>
+                                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#222222]/80"></div>
+                                    <span className="text-[8px] font-black tracking-widest text-gray-500 uppercase">Divider</span>
+                                    <div className="h-[1px] flex-1 bg-gradient-to-r from-[#222222]/80 to-transparent"></div>
                                   </div>
                                 ) : field.type === 'heading' ? (
-                                  <div className="py-1 border-l-2 border-violet-500 pl-3">
-                                    <h4 className="text-base md:text-lg font-black text-slate-100 tracking-tight leading-snug">{field.label || 'Heading Title'}</h4>
+                                  <div className="py-1 border-l-2 border-yellow-500 pl-3">
+                                    <h4 className="text-base md:text-lg font-black text-gray-100 tracking-tight leading-snug">{field.label || 'Heading Title'}</h4>
                                   </div>
                                 ) : field.type === 'paragraph' ? (
-                                  <p className="text-xs text-slate-400 whitespace-pre-wrap leading-relaxed font-semibold bg-[#0B0F19]/25 p-3.5 border border-[#2D334A]/40 rounded-xl">{field.label || 'Paragraph context description...'}</p>
+                                  <p className="text-xs text-gray-400 whitespace-pre-wrap leading-relaxed font-semibold bg-black/25 p-3.5 border border-[#222222]/40 rounded-xl">{field.label || 'Paragraph context description...'}</p>
                                 ) : field.type === 'imageBlock' ? (
-                                  <div className="w-full h-36 bg-[#0B0F19]/40 border border-[#2D334A]/60 rounded-xl flex flex-col items-center justify-center text-slate-400 text-xs font-bold gap-2 p-4 select-none shadow-inner group/imgblock">
-                                    <div className="w-10 h-10 rounded-xl bg-[#1E243D]/50 border border-[#2D334A] flex items-center justify-center text-slate-400 group-hover/imgblock:text-violet-400 transition-colors">
+                                  <div className="w-full h-36 bg-black/40 border border-[#222222]/60 rounded-xl flex flex-col items-center justify-center text-gray-400 text-xs font-bold gap-2 p-4 select-none shadow-inner group/imgblock">
+                                    <div className="w-10 h-10 rounded-xl bg-[#1A1A1A]/50 border border-[#222222] flex items-center justify-center text-gray-400 group-hover/imgblock:text-yellow-400 transition-colors">
                                       <Image className="w-5 h-5 animate-pulse" />
                                     </div>
-                                    <span className="text-[9px] font-black uppercase tracking-wider text-slate-500">Image Block Preview</span>
+                                    <span className="text-[9px] font-black uppercase tracking-wider text-gray-500">Image Block Preview</span>
                                   </div>
                                 ) : (
                                   <div className="space-y-1.5">
-                                    <label className="text-xs font-bold text-slate-300 flex items-center gap-1">
+                                    <label className="text-xs font-bold text-gray-300 flex items-center gap-1">
                                       {field.label || 'Untitled Field'}
                                       {field.required && <span className="text-red-500">*</span>}
                                     </label>
@@ -652,31 +652,31 @@ const FormBuilderEditor = () => {
                                     {/* Inputs WYSIWYG representations */}
                                     {['shortText', 'longText', 'email', 'phone', 'number', 'url'].includes(field.type) && (
                                       <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
                                           <InputIcon className="w-4 h-4" />
                                         </div>
-                                        <div className="text-[11px] font-semibold text-slate-400 bg-[#0B0F19]/40 border border-[#2D334A]/50 pl-10 pr-3.5 py-3 rounded-xl cursor-default flex items-center justify-between transition-colors shadow-inner">
+                                        <div className="text-[11px] font-semibold text-gray-400 bg-black/40 border border-[#222222]/50 pl-10 pr-3.5 py-3 rounded-xl cursor-default flex items-center justify-between transition-colors shadow-inner">
                                           <span>{field.placeholder || `Enter ${field.label || 'value'}...`}</span>
-                                          {field.helpText && <HelpCircle className="w-3.5 h-3.5 text-slate-600" />}
+                                          {field.helpText && <HelpCircle className="w-3.5 h-3.5 text-gray-600" />}
                                         </div>
                                       </div>
                                     )}
 
                                     {field.type === 'dropdown' && (
-                                      <div className="text-[11px] font-semibold text-slate-400 bg-[#0B0F19]/40 border border-[#2D334A]/50 px-3.5 py-3 rounded-xl cursor-default flex items-center justify-between shadow-inner">
+                                      <div className="text-[11px] font-semibold text-gray-400 bg-black/40 border border-[#222222]/50 px-3.5 py-3 rounded-xl cursor-default flex items-center justify-between shadow-inner">
                                         <span>{field.placeholder || 'Select option...'}</span>
-                                        <ChevronDown className="w-4 h-4 text-slate-500" />
+                                        <ChevronDown className="w-4 h-4 text-gray-500" />
                                       </div>
                                     )}
 
                                     {field.type === 'multiSelect' && (
-                                      <div className="min-h-[42px] font-semibold bg-[#0B0F19]/40 border border-[#2D334A]/50 px-3 py-2 rounded-xl cursor-default flex flex-wrap items-center gap-1.5 shadow-inner">
+                                      <div className="min-h-[42px] font-semibold bg-black/40 border border-[#222222]/50 px-3 py-2 rounded-xl cursor-default flex flex-wrap items-center gap-1.5 shadow-inner">
                                         {(field.options && field.options.length > 0 ? field.options.slice(0, 2) : ['Option A', 'Option B']).map((opt, oIdx) => (
-                                          <span key={oIdx} className="text-[10px] font-bold text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-lg">
+                                          <span key={oIdx} className="text-[10px] font-bold text-yellow-400 bg-yellow-500/10 border border-yellow-500/20 px-2 py-0.5 rounded-lg">
                                             {opt}
                                           </span>
                                         ))}
-                                        <span className="text-[10px] text-slate-500 ml-auto select-none">+ Select Multiple</span>
+                                        <span className="text-[10px] text-gray-500 ml-auto select-none">+ Select Multiple</span>
                                       </div>
                                     )}
 
@@ -684,10 +684,10 @@ const FormBuilderEditor = () => {
                                       <div className="space-y-2.5 mt-1 px-1">
                                         {(field.options && field.options.length > 0 ? field.options : ['Option 1', 'Option 2']).map((opt, oIdx) => (
                                           <div key={oIdx} className="flex items-center gap-2.5">
-                                            <div className="w-4 h-4 rounded-full border border-[#2D334A] flex items-center justify-center bg-[#0B0F19]/50 shadow-inner">
-                                              {oIdx === 0 && <div className="w-2 h-2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-500"></div>}
+                                            <div className="w-4 h-4 rounded-full border border-[#222222] flex items-center justify-center bg-black/50 shadow-inner">
+                                              {oIdx === 0 && <div className="w-2 h-2 rounded-full bg-gradient-to-r from-yellow-500 to-indigo-500"></div>}
                                             </div>
-                                            <span className="text-xs text-slate-300 font-semibold">{opt}</span>
+                                            <span className="text-xs text-gray-300 font-semibold">{opt}</span>
                                           </div>
                                         ))}
                                       </div>
@@ -697,66 +697,66 @@ const FormBuilderEditor = () => {
                                       <div className="space-y-2.5 mt-1 px-1">
                                         {(field.options && field.options.length > 0 ? field.options : ['Option A', 'Option B']).map((opt, oIdx) => (
                                           <div key={oIdx} className="flex items-center gap-2.5">
-                                            <div className="w-4 h-4 rounded-md border border-[#2D334A] flex items-center justify-center bg-[#0B0F19]/50 shadow-inner">
-                                              {oIdx === 0 && <Check className="w-3 h-3 text-violet-400" />}
+                                            <div className="w-4 h-4 rounded-md border border-[#222222] flex items-center justify-center bg-black/50 shadow-inner">
+                                              {oIdx === 0 && <Check className="w-3 h-3 text-yellow-400" />}
                                             </div>
-                                            <span className="text-xs text-slate-300 font-semibold">{opt}</span>
+                                            <span className="text-xs text-gray-300 font-semibold">{opt}</span>
                                           </div>
                                         ))}
                                       </div>
                                     )}
 
                                     {['date', 'time'].includes(field.type) && (
-                                      <div className="text-[11px] font-semibold text-slate-400 bg-[#0B0F19]/40 border border-[#2D334A]/50 px-3.5 py-3 rounded-xl cursor-default flex items-center justify-between shadow-inner">
+                                      <div className="text-[11px] font-semibold text-gray-400 bg-black/40 border border-[#222222]/50 px-3.5 py-3 rounded-xl cursor-default flex items-center justify-between shadow-inner">
                                         <span>{field.placeholder || (field.type === 'date' ? 'YYYY-MM-DD' : 'HH:MM')}</span>
-                                        {field.type === 'date' ? <Calendar className="w-4 h-4 text-slate-500" /> : <Clock className="w-4 h-4 text-slate-500" />}
+                                        {field.type === 'date' ? <Calendar className="w-4 h-4 text-gray-500" /> : <Clock className="w-4 h-4 text-gray-500" />}
                                       </div>
                                     )}
 
                                     {['fileUpload', 'imageUpload'].includes(field.type) && (
-                                      <div className="w-full border-2 border-dashed border-[#2D334A] hover:border-violet-500/50 bg-[#0B0F19]/25 hover:bg-[#1E243D]/20 rounded-2xl p-6 transition-all flex flex-col items-center justify-center text-center cursor-default group/upload shadow-inner">
-                                        <div className="w-10 h-10 rounded-xl bg-[#1E243D]/50 border border-[#2D334A] flex items-center justify-center text-slate-400 group-hover/upload:text-violet-400 group-hover/upload:border-violet-500/30 transition-all mb-2">
+                                      <div className="w-full border-2 border-dashed border-[#222222] hover:border-yellow-500/50 bg-black/25 hover:bg-[#1A1A1A]/20 rounded-2xl p-6 transition-all flex flex-col items-center justify-center text-center cursor-default group/upload shadow-inner">
+                                        <div className="w-10 h-10 rounded-xl bg-[#1A1A1A]/50 border border-[#222222] flex items-center justify-center text-gray-400 group-hover/upload:text-yellow-400 group-hover/upload:border-yellow-500/30 transition-all mb-2">
                                           {field.type === 'imageUpload' ? <Image className="w-5 h-5" /> : <Upload className="w-5 h-5" />}
                                         </div>
-                                        <p className="text-[11px] font-bold text-slate-300">Drag & drop or <span className="text-violet-400 hover:underline">browse</span> files</p>
-                                        <p className="text-[9px] text-slate-500 mt-1 font-semibold">Max file limit: {field.validation?.maxFileSize || 5}MB</p>
+                                        <p className="text-[11px] font-bold text-gray-300">Drag & drop or <span className="text-yellow-400 hover:underline">browse</span> files</p>
+                                        <p className="text-[9px] text-gray-500 mt-1 font-semibold">Max file limit: {field.validation?.maxFileSize || 5}MB</p>
                                       </div>
                                     )}
 
                                     {field.type === 'rating' && (
                                       <div className="flex items-center gap-1.5 mt-2 select-none">
                                         {Array.from({ length: field.validation?.ratingMax || 5 }).map((_, rIdx) => (
-                                          <Star key={rIdx} className="w-6 h-6 text-amber-500 fill-amber-500/10 hover:fill-amber-500 hover:scale-110 transition-all cursor-pointer" />
+                                          <Star key={rIdx} className="w-6 h-6 text-yellow-500 fill-yellow-500/10 hover:fill-yellow-500 hover:scale-110 transition-all cursor-pointer" />
                                         ))}
-                                        <span className="text-[9px] text-slate-500 ml-2 font-bold uppercase tracking-widest">({field.validation?.ratingMax || 5} stars)</span>
+                                        <span className="text-[9px] text-gray-500 ml-2 font-bold uppercase tracking-widest">({field.validation?.ratingMax || 5} stars)</span>
                                       </div>
                                     )}
 
                                     {field.type === 'toggle' && (
                                       <div className="flex items-center gap-3 mt-1.5">
-                                        <div className="w-10 h-5.5 rounded-full bg-violet-600 border border-violet-500/30 p-0.5 flex items-center cursor-pointer transition-colors">
-                                          <div className="w-4.5 h-4.5 rounded-full bg-white shadow translate-x-4.5 transition-transform"></div>
+                                        <div className="w-10 h-5.5 rounded-full bg-yellow-500 border border-yellow-500/30 p-0.5 flex items-center cursor-pointer transition-colors">
+                                          <div className="w-4.5 h-4.5 rounded-full bg-white shadow trangray-x-4.5 transition-transform"></div>
                                         </div>
-                                        <span className="text-xs font-bold text-slate-300 capitalize">{field.defaultValue || 'Yes'}</span>
+                                        <span className="text-xs font-bold text-gray-300 capitalize">{field.defaultValue || 'Yes'}</span>
                                       </div>
                                     )}
 
                                     {field.type === 'signature' && (
-                                      <div className="w-full h-24 bg-[#0B0F19]/40 border border-[#2D334A]/50 rounded-xl relative flex flex-col justify-end p-3 overflow-hidden shadow-inner group/sig">
-                                        <svg className="absolute inset-0 w-full h-full opacity-20 text-slate-500 p-4" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                      <div className="w-full h-24 bg-black/40 border border-[#222222]/50 rounded-xl relative flex flex-col justify-end p-3 overflow-hidden shadow-inner group/sig">
+                                        <svg className="absolute inset-0 w-full h-full opacity-20 text-gray-500 p-4" viewBox="0 0 100 100" preserveAspectRatio="none">
                                           <path d="M10 80 Q 20 20, 40 50 T 70 30 T 90 60" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
                                         </svg>
-                                        <div className="w-full border-t border-dashed border-[#2D334A]/80 flex items-center justify-between text-[8px] font-black text-slate-500 uppercase tracking-widest pt-1.5 select-none">
+                                        <div className="w-full border-t border-dashed border-[#222222]/80 flex items-center justify-between text-[8px] font-black text-gray-500 uppercase tracking-widest pt-1.5 select-none">
                                           <span>Digital Signature Pad</span>
                                           <span>✗ Clear</span>
                                         </div>
                                       </div>
                                     )}
 
-                                    {field.helpText && <p className="text-[10px] text-slate-500 font-bold italic mt-1 pl-1">{field.helpText}</p>}
+                                    {field.helpText && <p className="text-[10px] text-gray-500 font-bold italic mt-1 pl-1">{field.helpText}</p>}
                                     
                                     {field.visibleIf?.fieldId && (
-                                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 mt-2.5 rounded-lg bg-violet-900/20 text-violet-400 border border-violet-500/20 text-[9px] font-black uppercase tracking-wide shadow-sm select-none">
+                                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 mt-2.5 rounded-lg bg-violet-900/20 text-yellow-400 border border-yellow-500/20 text-[9px] font-black uppercase tracking-wide shadow-sm select-none">
                                         <Sliders className="w-2.5 h-2.5" />
                                         Conditional Visibility Trigger Active
                                       </div>
@@ -773,24 +773,24 @@ const FormBuilderEditor = () => {
                 </div>
               ) : (
                 /* FORM SETTINGS CARD */
-                <div className="bg-[#131726]/60 backdrop-blur-md rounded-3xl border border-[#2D334A]/60 p-6 md:p-8 space-y-6 shadow-2xl animate-in fade-in duration-300">
+                <div className="bg-[#111111]/60 backdrop-blur-md rounded-3xl border border-[#222222]/60 p-6 md:p-8 space-y-6 shadow-2xl animate-in fade-in duration-300">
                   <div>
                     <h3 className="text-base font-extrabold text-white tracking-wide">General Form Settings</h3>
-                    <p className="text-xs font-bold text-slate-400 mt-0.5">Control form details, submission rules, and accessibility logs</p>
+                    <p className="text-xs font-bold text-gray-400 mt-0.5">Control form details, submission rules, and accessibility logs</p>
                   </div>
                   
                   <div className="space-y-5">
                     {/* Logo block */}
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Logo / Header Image</label>
-                      <div className="flex items-center gap-4 bg-[#0B0F19]/25 p-4 border border-[#2D334A]/40 rounded-2xl shadow-inner">
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Logo / Header Image</label>
+                      <div className="flex items-center gap-4 bg-black/25 p-4 border border-[#222222]/40 rounded-2xl shadow-inner">
                         {logoUrl && (
-                          <div className="w-14 h-14 rounded-xl bg-white border border-[#2D334A]/85 overflow-hidden flex items-center justify-center p-1 shadow-md">
+                          <div className="w-14 h-14 rounded-xl bg-white border border-[#222222]/85 overflow-hidden flex items-center justify-center p-1 shadow-md">
                             <img src={logoUrl} alt="Logo preview" className="w-full h-full object-contain" />
                           </div>
                         )}
                         <div className="flex-1">
-                          <label className="inline-flex items-center justify-center gap-2 border border-[#2D334A] hover:border-violet-500/40 hover:bg-[#1E243D]/65 text-slate-300 hover:text-white font-bold text-xs px-4 py-3 rounded-xl cursor-pointer transition-all w-full select-none shadow-sm active:scale-98">
+                          <label className="inline-flex items-center justify-center gap-2 border border-[#222222] hover:border-yellow-500/40 hover:bg-[#1A1A1A]/65 text-gray-300 hover:text-white font-bold text-xs px-4 py-3 rounded-xl cursor-pointer transition-all w-full select-none shadow-sm active:scale-98">
                             <Upload className="w-3.5 h-3.5" />
                             {logoUploading ? 'Uploading Logo...' : logoUrl ? 'Change Logo Image' : 'Upload Form Logo'}
                             <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
@@ -809,24 +809,24 @@ const FormBuilderEditor = () => {
 
                     {/* Success message */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Confirmation Message</label>
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Confirmation Message</label>
                       <input
                         type="text"
                         value={settings.successMessage}
                         onChange={(e) => setSettings({ ...settings, successMessage: e.target.value })}
-                        className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-4 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                        className="w-full rounded-xl border border-[#222222]/60 bg-black/40 px-4 py-3 text-xs text-white focus:outline-none focus:border-yellow-500 transition-all font-semibold shadow-inner"
                         placeholder="e.g. Thank you! Your response has been submitted."
                       />
                     </div>
 
                     {/* Redirect URL */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Redirect URL after submission</label>
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Redirect URL after submission</label>
                       <input
                         type="text"
                         value={settings.redirectUrl}
                         onChange={(e) => setSettings({ ...settings, redirectUrl: e.target.value })}
-                        className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-4 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                        className="w-full rounded-xl border border-[#222222]/60 bg-black/40 px-4 py-3 text-xs text-white focus:outline-none focus:border-yellow-500 transition-all font-semibold shadow-inner"
                         placeholder="https://company.com/thank-you (Optional)"
                       />
                     </div>
@@ -834,19 +834,19 @@ const FormBuilderEditor = () => {
                     {/* Submission limits */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Submission Limit</label>
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Submission Limit</label>
                         <input
                           type="number"
                           value={settings.submissionLimit}
                           onChange={(e) => setSettings({ ...settings, submissionLimit: e.target.value })}
-                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-4 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                          className="w-full rounded-xl border border-[#222222]/60 bg-black/40 px-4 py-3 text-xs text-white focus:outline-none focus:border-yellow-500 transition-all font-semibold shadow-inner"
                           placeholder="Unlimited"
                         />
                       </div>
                       
                       <div className="flex flex-col justify-end">
-                        <label className="flex items-center justify-between p-3.5 bg-[#0B0F19]/25 border border-[#2D334A]/50 rounded-xl cursor-pointer hover:bg-[#1E243D]/20 transition-colors select-none">
-                          <span className="text-xs font-bold text-slate-300">Allow Multi-Submission</span>
+                        <label className="flex items-center justify-between p-3.5 bg-black/25 border border-[#222222]/50 rounded-xl cursor-pointer hover:bg-[#1A1A1A]/20 transition-colors select-none">
+                          <span className="text-xs font-bold text-gray-300">Allow Multi-Submission</span>
                           <div className="relative">
                             <input
                               type="checkbox"
@@ -854,7 +854,7 @@ const FormBuilderEditor = () => {
                               onChange={(e) => setSettings({ ...settings, allowMultiple: e.target.checked })}
                               className="sr-only peer"
                             />
-                            <div className="w-9 h-5 bg-[#0B0F19] border border-[#2D334A] rounded-full peer peer-checked:bg-violet-600 peer-checked:border-violet-500/30 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-slate-400 peer-checked:after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:after:translate-x-4"></div>
+                            <div className="w-9 h-5 bg-black border border-[#222222] rounded-full peer peer-checked:bg-yellow-500 peer-checked:border-yellow-500/30 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-gray-400 peer-checked:after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:after:trangray-x-4"></div>
                           </div>
                         </label>
                       </div>
@@ -863,39 +863,39 @@ const FormBuilderEditor = () => {
                     {/* Start/End dates */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Start Date</label>
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Start Date</label>
                         <input
                           type="datetime-local"
                           value={settings.startDate}
                           onChange={(e) => setSettings({ ...settings, startDate: e.target.value })}
-                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-4 py-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 transition-all cursor-pointer font-semibold shadow-inner"
+                          className="w-full rounded-xl border border-[#222222]/60 bg-black/40 px-4 py-3 text-xs text-gray-300 focus:outline-none focus:border-yellow-500 transition-all cursor-pointer font-semibold shadow-inner"
                         />
                       </div>
                       
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">End Date</label>
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">End Date</label>
                         <input
                           type="datetime-local"
                           value={settings.endDate}
                           onChange={(e) => setSettings({ ...settings, endDate: e.target.value })}
-                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-4 py-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 transition-all cursor-pointer font-semibold shadow-inner"
+                          className="w-full rounded-xl border border-[#222222]/60 bg-black/40 px-4 py-3 text-xs text-gray-300 focus:outline-none focus:border-yellow-500 transition-all cursor-pointer font-semibold shadow-inner"
                         />
                       </div>
                     </div>
 
                     {/* Security options switch layout */}
-                    <div className="space-y-3 pt-4 border-t border-[#2D334A]/60">
-                      <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1.5">Security & Data Collection</div>
+                    <div className="space-y-3 pt-4 border-t border-[#222222]/60">
+                      <div className="text-[9px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Security & Data Collection</div>
                       
                       {[
                         { key: 'enableCaptcha', label: 'Bot Verification (CAPTCHA)', desc: 'Spam protection using bot verification' },
                         { key: 'collectIp', label: 'Collect Submitter IP Address', desc: 'Secure track submitter geolocation logs' },
                         { key: 'collectTimestamp', label: 'Collect Time Details', desc: 'Record milliseconds precision timestamps' }
                       ].map((item) => (
-                        <label key={item.key} className="flex items-center justify-between p-3.5 bg-[#0B0F19]/25 border border-[#2D334A]/55 rounded-2xl cursor-pointer hover:bg-[#1E243D]/20 transition-colors select-none">
+                        <label key={item.key} className="flex items-center justify-between p-3.5 bg-black/25 border border-[#222222]/55 rounded-2xl cursor-pointer hover:bg-[#1A1A1A]/20 transition-colors select-none">
                           <div className="flex flex-col">
-                            <span className="text-xs font-bold text-slate-200">{item.label}</span>
-                            <span className="text-[9px] text-slate-500 font-semibold mt-0.5">{item.desc}</span>
+                            <span className="text-xs font-bold text-gray-200">{item.label}</span>
+                            <span className="text-[9px] text-gray-500 font-semibold mt-0.5">{item.desc}</span>
                           </div>
                           <div className="relative">
                             <input
@@ -904,7 +904,7 @@ const FormBuilderEditor = () => {
                               onChange={(e) => setSettings({ ...settings, [item.key]: e.target.checked })}
                               className="sr-only peer"
                             />
-                            <div className="w-9 h-5 bg-[#0B0F19] border border-[#2D334A] rounded-full peer peer-checked:bg-violet-600 peer-checked:border-violet-500/30 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-slate-400 peer-checked:after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:after:translate-x-4"></div>
+                            <div className="w-9 h-5 bg-black border border-[#222222] rounded-full peer peer-checked:bg-yellow-500 peer-checked:border-yellow-500/30 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-gray-400 peer-checked:after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:after:trangray-x-4"></div>
                           </div>
                         </label>
                       ))}
@@ -915,17 +915,17 @@ const FormBuilderEditor = () => {
             </div>
 
             {/* RIGHT PANEL: Field Configurations (4 cols) */}
-            <div className={`lg:col-span-4 bg-[#131726]/60 backdrop-blur-md p-5 rounded-3xl border border-[#2D334A]/50 shadow-xl min-h-[500px] animate-in fade-in duration-350 ${editorMobileTab === 'properties' ? 'block' : 'hidden lg:block'}`}>
+            <div className={`lg:col-span-4 bg-[#111111]/60 backdrop-blur-md p-5 rounded-3xl border border-[#222222]/50 shadow-xl min-h-[500px] animate-in fade-in duration-350 ${editorMobileTab === 'properties' ? 'block' : 'hidden lg:block'}`}>
               <div>
                 <h3 className="text-sm font-extrabold text-white tracking-wide">Properties Config</h3>
-                <p className="text-[10px] font-bold text-slate-400 mt-0.5">Select a block on the canvas to configure settings</p>
+                <p className="text-[10px] font-bold text-gray-400 mt-0.5">Select a block on the canvas to configure settings</p>
               </div>
 
               {activeField ? (
                 <div className="mt-6 space-y-5 animate-in fade-in duration-200">
-                  <div className="p-3.5 bg-[#0B0F19]/40 border border-[#2D334A]/60 rounded-2xl flex items-center justify-between shadow-inner">
+                  <div className="p-3.5 bg-black/40 border border-[#222222]/60 rounded-2xl flex items-center justify-between shadow-inner">
                     <div className="flex items-center gap-2">
-                      <span className="text-[9px] font-black text-violet-400 uppercase tracking-widest bg-violet-500/10 border border-violet-500/20 px-2.5 py-1 rounded-lg">
+                      <span className="text-[9px] font-black text-yellow-400 uppercase tracking-widest bg-yellow-500/10 border border-yellow-500/20 px-2.5 py-1 rounded-lg">
                         {activeField.type}
                       </span>
                     </div>
@@ -939,14 +939,14 @@ const FormBuilderEditor = () => {
                   </div>
 
                   {/* Property Tabs */}
-                  <div className="flex bg-[#0B0F19]/40 border border-[#2D334A]/50 p-1 rounded-xl shadow-inner">
+                  <div className="flex bg-black/40 border border-[#222222]/50 p-1 rounded-xl shadow-inner">
                     <button
                       type="button"
                       onClick={() => setActivePropertySection('general')}
                       className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all duration-300 cursor-pointer ${
                         activePropertySection === 'general'
-                          ? 'bg-[#1E243D] text-violet-400 border border-[#2D334A]/60 shadow'
-                          : 'text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#1A1A1A] text-yellow-400 border border-[#222222]/60 shadow'
+                          : 'text-gray-400 hover:text-gray-200'
                       }`}
                     >
                       General
@@ -956,8 +956,8 @@ const FormBuilderEditor = () => {
                       onClick={() => setActivePropertySection('validation')}
                       className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all duration-300 cursor-pointer ${
                         activePropertySection === 'validation'
-                          ? 'bg-[#1E243D] text-violet-400 border border-[#2D334A]/60 shadow'
-                          : 'text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#1A1A1A] text-yellow-400 border border-[#222222]/60 shadow'
+                          : 'text-gray-400 hover:text-gray-200'
                       }`}
                     >
                       Rules
@@ -967,8 +967,8 @@ const FormBuilderEditor = () => {
                       onClick={() => setActivePropertySection('visibility')}
                       className={`flex-1 py-2 text-[10px] font-bold rounded-lg transition-all duration-300 cursor-pointer ${
                         activePropertySection === 'visibility'
-                          ? 'bg-[#1E243D] text-violet-400 border border-[#2D334A]/60 shadow'
-                          : 'text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#1A1A1A] text-yellow-400 border border-[#222222]/60 shadow'
+                          : 'text-gray-400 hover:text-gray-200'
                       }`}
                     >
                       Visibility
@@ -982,12 +982,12 @@ const FormBuilderEditor = () => {
                       <div className="space-y-4 animate-in slide-in-from-top-1 duration-200">
                         {/* Label config */}
                         <div className="space-y-1.5">
-                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Field Label Title</label>
+                          <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Field Label Title</label>
                           <input
                             type="text"
                             value={activeField.label}
                             onChange={(e) => updateFieldProperty(activeField.id, 'label', e.target.value)}
-                            className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-3.5 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                            className="w-full rounded-xl border border-[#222222]/60 bg-black/40 px-3.5 py-3 text-xs text-white focus:outline-none focus:border-yellow-500 transition-all font-semibold shadow-inner"
                             placeholder="e.g. Enter full name"
                           />
                         </div>
@@ -995,12 +995,12 @@ const FormBuilderEditor = () => {
                         {/* Placeholder */}
                         {!['divider', 'heading', 'paragraph', 'imageBlock', 'date', 'time', 'rating', 'toggle', 'signature'].includes(activeField.type) && (
                           <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Placeholder Text</label>
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Placeholder Text</label>
                             <input
                               type="text"
                               value={activeField.placeholder}
                               onChange={(e) => updateFieldProperty(activeField.id, 'placeholder', e.target.value)}
-                              className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-3.5 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                              className="w-full rounded-xl border border-[#222222]/60 bg-black/40 px-3.5 py-3 text-xs text-white focus:outline-none focus:border-yellow-500 transition-all font-semibold shadow-inner"
                               placeholder="e.g. Type here..."
                             />
                           </div>
@@ -1009,12 +1009,12 @@ const FormBuilderEditor = () => {
                         {/* Help text */}
                         {!['divider', 'imageBlock'].includes(activeField.type) && (
                           <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Guidance Description</label>
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Guidance Description</label>
                             <input
                               type="text"
                               value={activeField.helpText}
                               onChange={(e) => updateFieldProperty(activeField.id, 'helpText', e.target.value)}
-                              className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 px-3.5 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                              className="w-full rounded-xl border border-[#222222]/60 bg-black/40 px-3.5 py-3 text-xs text-white focus:outline-none focus:border-yellow-500 transition-all font-semibold shadow-inner"
                               placeholder="e.g. Sub-text guide details"
                             />
                           </div>
@@ -1022,13 +1022,13 @@ const FormBuilderEditor = () => {
 
                         {/* Selection Choices List */}
                         {['dropdown', 'radio', 'checkbox', 'multiSelect'].includes(activeField.type) && (
-                          <div className="space-y-2.5 pt-3 border-t border-[#2D334A]/40">
+                          <div className="space-y-2.5 pt-3 border-t border-[#222222]/40">
                             <div className="flex justify-between items-center px-0.5">
-                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Selection Choices</label>
+                              <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Selection Choices</label>
                               <button
                                 type="button"
                                 onClick={() => handleAddFieldOption(activeField.id)}
-                                className="text-[10px] font-black text-violet-400 hover:text-violet-300 flex items-center gap-1 cursor-pointer transition-colors"
+                                className="text-[10px] font-black text-yellow-400 hover:text-yellow-300 flex items-center gap-1 cursor-pointer transition-colors"
                               >
                                 <PlusCircle className="w-3.5 h-3.5" />
                                 Add Option
@@ -1042,7 +1042,7 @@ const FormBuilderEditor = () => {
                                     type="text"
                                     value={opt}
                                     onChange={(e) => handleUpdateFieldOption(activeField.id, oIdx, e.target.value)}
-                                    className="flex-1 rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-2.5 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                                    className="flex-1 rounded-xl border border-[#222222]/60 bg-black/40 p-2.5 text-xs text-white focus:outline-none focus:border-yellow-500 transition-all font-semibold shadow-inner"
                                   />
                                   <button
                                     type="button"
@@ -1065,10 +1065,10 @@ const FormBuilderEditor = () => {
                         {/* Required toggle switch */}
                         {!['divider', 'heading', 'paragraph', 'imageBlock'].includes(activeField.type) ? (
                           <div className="space-y-3">
-                            <label className="flex items-center justify-between p-3.5 bg-[#0B0F19]/25 border border-[#2D334A]/50 rounded-2xl cursor-pointer hover:bg-[#1E243D]/25 transition-colors select-none shadow-sm">
+                            <label className="flex items-center justify-between p-3.5 bg-black/25 border border-[#222222]/50 rounded-2xl cursor-pointer hover:bg-[#1A1A1A]/25 transition-colors select-none shadow-sm">
                               <div className="flex flex-col">
-                                <span className="text-xs font-bold text-slate-200">Required Field</span>
-                                <span className="text-[9px] text-slate-500 font-semibold mt-0.5">Force submitters to fill this block</span>
+                                <span className="text-xs font-bold text-gray-200">Required Field</span>
+                                <span className="text-[9px] text-gray-500 font-semibold mt-0.5">Force submitters to fill this block</span>
                               </div>
                               <div className="relative">
                                 <input
@@ -1077,35 +1077,35 @@ const FormBuilderEditor = () => {
                                   onChange={(e) => updateFieldProperty(activeField.id, 'required', e.target.checked)}
                                   className="sr-only peer"
                                 />
-                                <div className="w-9 h-5 bg-[#0B0F19] border border-[#2D334A] rounded-full peer peer-checked:bg-violet-600 peer-checked:border-violet-500/30 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-slate-400 peer-checked:after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:after:translate-x-4"></div>
+                                <div className="w-9 h-5 bg-black border border-[#222222] rounded-full peer peer-checked:bg-yellow-500 peer-checked:border-yellow-500/30 after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-gray-400 peer-checked:after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:after:trangray-x-4"></div>
                               </div>
                             </label>
                           </div>
                         ) : (
-                          <div className="text-[10px] text-slate-500 font-bold p-6 border border-dashed border-[#2D334A]/80 rounded-2xl text-center bg-[#0B0F19]/10 select-none animate-in fade-in duration-200">
+                          <div className="text-[10px] text-gray-500 font-bold p-6 border border-dashed border-[#222222]/80 rounded-2xl text-center bg-black/10 select-none animate-in fade-in duration-200">
                             No validation constraints applicable for layout modules
                           </div>
                         )}
 
                         {/* Text inputs min/max length */}
                         {['shortText', 'longText'].includes(activeField.type) && (
-                          <div className="grid grid-cols-2 gap-3 mt-2 border-t border-[#2D334A]/40 pt-4 animate-in fade-in duration-200">
+                          <div className="grid grid-cols-2 gap-3 mt-2 border-t border-[#222222]/40 pt-4 animate-in fade-in duration-200">
                             <div className="space-y-1.5">
-                              <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Min Characters</label>
+                              <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Min Characters</label>
                               <input
                                 type="number"
                                 value={activeField.validation?.minLength || ''}
                                 onChange={(e) => updateFieldValidation(activeField.id, 'minLength', e.target.value)}
-                                className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                                className="w-full rounded-xl border border-[#222222]/60 bg-black/40 p-3 text-xs text-white focus:outline-none focus:border-yellow-500 transition-all font-semibold shadow-inner"
                               />
                             </div>
                             <div className="space-y-1.5">
-                              <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Max Characters</label>
+                              <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Max Characters</label>
                               <input
                                 type="number"
                                 value={activeField.validation?.maxLength || ''}
                                 onChange={(e) => updateFieldValidation(activeField.id, 'maxLength', e.target.value)}
-                                className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                                className="w-full rounded-xl border border-[#222222]/60 bg-black/40 p-3 text-xs text-white focus:outline-none focus:border-yellow-500 transition-all font-semibold shadow-inner"
                               />
                             </div>
                           </div>
@@ -1113,13 +1113,13 @@ const FormBuilderEditor = () => {
 
                         {/* File size limits */}
                         {['fileUpload', 'imageUpload'].includes(activeField.type) && (
-                          <div className="space-y-1.5 mt-2 border-t border-[#2D334A]/40 pt-4 animate-in fade-in duration-200">
-                            <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Max Allowed File Size (MB)</label>
+                          <div className="space-y-1.5 mt-2 border-t border-[#222222]/40 pt-4 animate-in fade-in duration-200">
+                            <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Max Allowed File Size (MB)</label>
                             <input
                               type="number"
                               value={activeField.validation?.maxFileSize || 5}
                               onChange={(e) => updateFieldValidation(activeField.id, 'maxFileSize', e.target.value)}
-                              className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all font-semibold shadow-inner"
+                              className="w-full rounded-xl border border-[#222222]/60 bg-black/40 p-3 text-xs text-white focus:outline-none focus:border-yellow-500 transition-all font-semibold shadow-inner"
                               placeholder="5"
                             />
                           </div>
@@ -1127,15 +1127,15 @@ const FormBuilderEditor = () => {
 
                         {/* Rating scale limit */}
                         {activeField.type === 'rating' && (
-                          <div className="space-y-1.5 mt-2 border-t border-[#2D334A]/40 pt-4 animate-in fade-in duration-200">
-                            <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Rating Scale Maximum</label>
+                          <div className="space-y-1.5 mt-2 border-t border-[#222222]/40 pt-4 animate-in fade-in duration-200">
+                            <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Rating Scale Maximum</label>
                             <select
                               value={activeField.validation?.ratingMax || 5}
                               onChange={(e) => updateFieldValidation(activeField.id, 'ratingMax', parseInt(e.target.value))}
-                              className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 transition-all cursor-pointer font-semibold shadow-inner"
+                              className="w-full rounded-xl border border-[#222222]/60 bg-black/40 p-3 text-xs text-gray-300 focus:outline-none focus:border-yellow-500 transition-all cursor-pointer font-semibold shadow-inner"
                             >
-                              <option value="5" className="bg-[#0B0F19] text-white">5 Star Scale</option>
-                              <option value="10" className="bg-[#0B0F19] text-white">10 Star Scale</option>
+                              <option value="5" className="bg-black text-white">5 Star Scale</option>
+                              <option value="10" className="bg-black text-white">10 Star Scale</option>
                             </select>
                           </div>
                         )}
@@ -1146,27 +1146,27 @@ const FormBuilderEditor = () => {
                       <div className="space-y-4 animate-in slide-in-from-top-1 duration-200">
                         {!['divider'].includes(activeField.type) ? (
                           <div className="space-y-3">
-                            <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Conditional Rendering Rules</div>
+                            <div className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Conditional Rendering Rules</div>
                             
-                            <div className="p-4 bg-[#0B0F19]/25 border border-[#2D334A]/60 rounded-2xl space-y-3 shadow-inner">
-                              <div className="text-[10px] font-bold text-slate-300">IF Question Block:</div>
+                            <div className="p-4 bg-black/25 border border-[#222222]/60 rounded-2xl space-y-3 shadow-inner">
+                              <div className="text-[10px] font-bold text-gray-300">IF Question Block:</div>
                               <select
                                 value={activeField.visibleIf?.fieldId || ''}
                                 onChange={(e) => {
                                   updateFieldVisibleIf(activeField.id, 'fieldId', e.target.value);
                                   updateFieldVisibleIf(activeField.id, 'value', '');
                                 }}
-                                className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 cursor-pointer font-semibold shadow-inner"
+                                className="w-full rounded-xl border border-[#222222]/60 bg-black/40 p-3 text-xs text-gray-300 focus:outline-none focus:border-yellow-500 cursor-pointer font-semibold shadow-inner"
                               >
-                                <option value="" className="bg-[#0B0F19]">Always Visible (None)</option>
+                                <option value="" className="bg-black">Always Visible (None)</option>
                                 {eligibleConditionFields.map(f => (
-                                  <option key={f.id} value={f.id} className="bg-[#0B0F19]">{f.label || f.id}</option>
+                                  <option key={f.id} value={f.id} className="bg-black">{f.label || f.id}</option>
                                 ))}
                               </select>
 
                               {activeField.visibleIf?.fieldId && (
                                 <>
-                                  <div className="text-[10px] font-bold text-slate-300 mt-2">EQUALS selected value:</div>
+                                  <div className="text-[10px] font-bold text-gray-300 mt-2">EQUALS selected value:</div>
                                   
                                   {(() => {
                                     const targetField = fields.find(f => f.id === activeField.visibleIf.fieldId);
@@ -1175,11 +1175,11 @@ const FormBuilderEditor = () => {
                                         <select
                                           value={activeField.visibleIf?.value || ''}
                                           onChange={(e) => updateFieldVisibleIf(activeField.id, 'value', e.target.value)}
-                                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 cursor-pointer font-semibold shadow-inner"
+                                          className="w-full rounded-xl border border-[#222222]/60 bg-black/40 p-3 text-xs text-gray-300 focus:outline-none focus:border-yellow-500 cursor-pointer font-semibold shadow-inner"
                                         >
-                                          <option value="" className="bg-[#0B0F19]">Select option...</option>
+                                          <option value="" className="bg-black">Select option...</option>
                                           {targetField.options.map((opt, idx) => (
-                                            <option key={idx} value={opt} className="bg-[#0B0F19]">{opt}</option>
+                                            <option key={idx} value={opt} className="bg-black">{opt}</option>
                                           ))}
                                         </select>
                                       );
@@ -1188,11 +1188,11 @@ const FormBuilderEditor = () => {
                                         <select
                                           value={activeField.visibleIf?.value || ''}
                                           onChange={(e) => updateFieldVisibleIf(activeField.id, 'value', e.target.value)}
-                                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-slate-300 focus:outline-none focus:border-violet-500 cursor-pointer font-semibold shadow-inner"
+                                          className="w-full rounded-xl border border-[#222222]/60 bg-black/40 p-3 text-xs text-gray-300 focus:outline-none focus:border-yellow-500 cursor-pointer font-semibold shadow-inner"
                                         >
-                                          <option value="" className="bg-[#0B0F19]">Select value...</option>
-                                          <option value="yes" className="bg-[#0B0F19]">Yes</option>
-                                          <option value="no" className="bg-[#0B0F19]">No</option>
+                                          <option value="" className="bg-black">Select value...</option>
+                                          <option value="yes" className="bg-black">Yes</option>
+                                          <option value="no" className="bg-black">No</option>
                                         </select>
                                       );
                                     } else {
@@ -1201,7 +1201,7 @@ const FormBuilderEditor = () => {
                                           type="text"
                                           value={activeField.visibleIf?.value || ''}
                                           onChange={(e) => updateFieldVisibleIf(activeField.id, 'value', e.target.value)}
-                                          className="w-full rounded-xl border border-[#2D334A]/60 bg-[#0B0F19]/40 p-3 text-xs text-white focus:outline-none focus:border-violet-500 font-semibold shadow-inner"
+                                          className="w-full rounded-xl border border-[#222222]/60 bg-black/40 p-3 text-xs text-white focus:outline-none focus:border-yellow-500 font-semibold shadow-inner"
                                           placeholder="Enter equality value"
                                         />
                                       );
@@ -1212,7 +1212,7 @@ const FormBuilderEditor = () => {
                             </div>
                           </div>
                         ) : (
-                          <div className="text-[10px] text-slate-500 font-bold p-6 border border-dashed border-[#2D334A]/80 rounded-2xl text-center bg-[#0B0F19]/10 select-none animate-in fade-in duration-200">
+                          <div className="text-[10px] text-gray-500 font-bold p-6 border border-dashed border-[#222222]/80 rounded-2xl text-center bg-black/10 select-none animate-in fade-in duration-200">
                             Conditional rendering rules not applicable for divider layouts
                           </div>
                         )}
@@ -1222,12 +1222,12 @@ const FormBuilderEditor = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center py-24 text-slate-500 text-center select-none">
-                  <div className="w-12 h-12 rounded-2xl bg-[#0B0F19]/40 border border-[#2D334A]/60 flex items-center justify-center mb-3">
-                    <Sliders className="w-5 h-5 text-slate-500 animate-pulse" />
+                <div className="flex flex-col items-center justify-center py-24 text-gray-500 text-center select-none">
+                  <div className="w-12 h-12 rounded-2xl bg-black/40 border border-[#222222]/60 flex items-center justify-center mb-3">
+                    <Sliders className="w-5 h-5 text-gray-500 animate-pulse" />
                   </div>
-                  <p className="text-xs font-bold text-slate-300">No active block selected</p>
-                  <p className="text-[9px] text-slate-500 mt-1 max-w-[180px] font-semibold">Select a custom field card on the form canvas to edit properties</p>
+                  <p className="text-xs font-bold text-gray-300">No active block selected</p>
+                  <p className="text-[9px] text-gray-500 mt-1 max-w-[180px] font-semibold">Select a custom field card on the form canvas to edit properties</p>
                 </div>
               )}
             </div>

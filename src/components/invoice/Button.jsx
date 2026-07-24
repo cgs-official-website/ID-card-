@@ -3,8 +3,8 @@ import React from "react";
 const Button = ({ children, onClick, type = "button", variant = "primary", icon: Icon, disabled, style, className = "" }) => {
   const baseStyle = "flex items-center justify-center gap-2 font-bold rounded-xl text-sm transition-all cursor-pointer select-none disabled:opacity-50";
   const variants = {
-    primary: "bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white shadow-lg shadow-violet-500/20 px-6 py-3.5",
-    secondary: "bg-[#1E243D] hover:bg-[#252B48] text-white border border-[#2D334A]/50 px-6 py-3.5"
+    primary: "bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white shadow-lg shadow-yellow-500/20 px-6 py-3.5",
+    secondary: "bg-[#1A1A1A] hover:bg-[#252B48] text-white border border-[#222222]/50 px-6 py-3.5"
   };
 
   return (

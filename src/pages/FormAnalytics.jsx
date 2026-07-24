@@ -178,8 +178,8 @@ const FormAnalytics = () => {
   const circumference = 2 * Math.PI * r;
 
   const choiceColors = [
-    'stroke-violet-500', 'stroke-blue-500', 'stroke-emerald-500', 
-    'stroke-amber-500', 'stroke-rose-500', 'stroke-pink-500', 'stroke-indigo-500'
+    'stroke-yellow-500', 'stroke-yellow-500', 'stroke-yellow-500', 
+    'stroke-yellow-500', 'stroke-rose-500', 'stroke-pink-500', 'stroke-indigo-500'
   ];
 
   const eligibleFields = fields.filter(f => 
@@ -190,44 +190,44 @@ const FormAnalytics = () => {
     <div className="space-y-8 bg-transparent">
       
       {/* Header bar */}
-      <div className="flex items-center gap-3 bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-lg">
-        <Link to="/form-builder" className="p-2 hover:bg-[#1E243D] text-slate-400 hover:text-white rounded-xl transition-all cursor-pointer">
+      <div className="flex items-center gap-3 bg-[#111111]/80 backdrop-blur-md p-6 rounded-3xl border border-[#222222]/50 shadow-lg">
+        <Link to="/form-builder" className="p-2 hover:bg-[#1A1A1A] text-gray-400 hover:text-white rounded-xl transition-all cursor-pointer">
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
           <h2 className="text-3xl font-bold text-white tracking-tight mb-1">{form?.title || 'Form Analytics'}</h2>
-          <p className="text-slate-400 text-sm font-medium">Visual submission metrics and field distributions</p>
+          <p className="text-gray-400 text-sm font-medium">Visual submission metrics and field distributions</p>
         </div>
       </div>
 
       {/* Analytics Counter metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Total Views Card */}
-        <div className="bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-[0_8px_30px_rgb(0,0,0,0.3)] flex items-center justify-between">
+        <div className="bg-[#111111]/80 backdrop-blur-md p-6 rounded-3xl border border-[#222222]/50 shadow-[0_8px_30px_rgb(0,0,0,0.3)] flex items-center justify-between">
           <div>
-            <p className="text-slate-400 font-bold uppercase tracking-wider text-xs mb-1">Total Form Views</p>
+            <p className="text-gray-400 font-bold uppercase tracking-wider text-xs mb-1">Total Form Views</p>
             <h3 className="text-4xl font-black text-white">{totalViews}</h3>
           </div>
-          <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/20 text-blue-400">
+          <div className="w-14 h-14 bg-yellow-500/10 rounded-2xl flex items-center justify-center border border-yellow-500/20 text-yellow-400">
             <Eye className="w-6 h-6" />
           </div>
         </div>
 
         {/* Total Submissions Card */}
-        <div className="bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-[0_8px_30px_rgb(0,0,0,0.3)] flex items-center justify-between">
+        <div className="bg-[#111111]/80 backdrop-blur-md p-6 rounded-3xl border border-[#222222]/50 shadow-[0_8px_30px_rgb(0,0,0,0.3)] flex items-center justify-between">
           <div>
-            <p className="text-slate-400 font-bold uppercase tracking-wider text-xs mb-1">Submissions</p>
+            <p className="text-gray-400 font-bold uppercase tracking-wider text-xs mb-1">Submissions</p>
             <h3 className="text-4xl font-black text-white">{totalSubmissions}</h3>
           </div>
-          <div className="w-14 h-14 bg-violet-500/10 rounded-2xl flex items-center justify-center border border-violet-500/20 text-violet-400">
+          <div className="w-14 h-14 bg-yellow-500/10 rounded-2xl flex items-center justify-center border border-yellow-500/20 text-yellow-400">
             <CheckCircle className="w-6 h-6" />
           </div>
         </div>
 
         {/* Conversion Rate Card with SVG circular visual */}
-        <div className="bg-[#131726]/80 backdrop-blur-md p-6 rounded-3xl border border-[#2D334A]/50 shadow-[0_8px_30px_rgb(0,0,0,0.3)] flex items-center justify-between">
+        <div className="bg-[#111111]/80 backdrop-blur-md p-6 rounded-3xl border border-[#222222]/50 shadow-[0_8px_30px_rgb(0,0,0,0.3)] flex items-center justify-between">
           <div>
-            <p className="text-slate-400 font-bold uppercase tracking-wider text-xs mb-1">Conversion Rate</p>
+            <p className="text-gray-400 font-bold uppercase tracking-wider text-xs mb-1">Conversion Rate</p>
             <h3 className="text-4xl font-black text-white">{conversionRate}%</h3>
           </div>
           
@@ -237,7 +237,7 @@ const FormAnalytics = () => {
                 cx="32"
                 cy="32"
                 r="26"
-                className="stroke-[#2D334A]/40"
+                className="stroke-[#222222]/40"
                 strokeWidth="5"
                 fill="transparent"
               />
@@ -245,39 +245,39 @@ const FormAnalytics = () => {
                 cx="32"
                 cy="32"
                 r="26"
-                className="stroke-violet-500 transition-all duration-1000"
+                className="stroke-yellow-500 transition-all duration-1000"
                 strokeWidth="5"
                 fill="transparent"
                 strokeDasharray="163.3"
                 strokeDashoffset={163.3 - (163.3 * Math.min(parseFloat(conversionRate), 100)) / 100}
               />
             </svg>
-            <div className="absolute text-[10px] font-black text-violet-400">%</div>
+            <div className="absolute text-[10px] font-black text-yellow-400">%</div>
           </div>
         </div>
       </div>
 
       {loading ? (
-        <div className="bg-[#131726]/80 border border-[#2D334A]/50 rounded-3xl p-16 text-center text-white">
-          <RefreshCw className="w-8 h-8 text-violet-500 animate-spin mx-auto mb-3" />
+        <div className="bg-[#111111]/80 border border-[#222222]/50 rounded-3xl p-16 text-center text-white">
+          <RefreshCw className="w-8 h-8 text-yellow-500 animate-spin mx-auto mb-3" />
           <span className="font-semibold text-sm">Analyzing submissions...</span>
         </div>
       ) : responses.length === 0 ? (
-        <div className="bg-[#131726]/80 border border-[#2D334A]/50 rounded-3xl p-16 text-center text-slate-400 shadow-md">
-          <BarChart2 className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+        <div className="bg-[#111111]/80 border border-[#222222]/50 rounded-3xl p-16 text-center text-gray-400 shadow-md">
+          <BarChart2 className="w-12 h-12 text-gray-600 mx-auto mb-3" />
           <p className="font-bold text-white text-base">No responses recorded yet</p>
-          <p className="text-xs text-slate-500 mt-1">Analytics will be generated automatically once users submit answers.</p>
+          <p className="text-xs text-gray-500 mt-1">Analytics will be generated automatically once users submit answers.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
           {/* DAILY SUBMISSION TREND LINE GRAPH (7 cols) */}
-          <div className="lg:col-span-7 bg-[#131726]/80 backdrop-blur-md rounded-3xl border border-[#2D334A]/50 p-6 shadow-xl space-y-4">
+          <div className="lg:col-span-7 bg-[#111111]/80 backdrop-blur-md rounded-3xl border border-[#222222]/50 p-6 shadow-xl space-y-4">
             <div className="flex items-center gap-2">
-              <LineIcon className="w-5 h-5 text-violet-400" />
+              <LineIcon className="w-5 h-5 text-yellow-400" />
               <div>
                 <h4 className="text-base font-bold text-white">Daily Submissions</h4>
-                <p className="text-[10px] text-slate-500 font-semibold uppercase mt-0.5">Submission volumes over last 10 days</p>
+                <p className="text-[10px] text-gray-500 font-semibold uppercase mt-0.5">Submission volumes over last 10 days</p>
               </div>
             </div>
 
@@ -309,7 +309,7 @@ const FormAnalytics = () => {
                         y1={yVal} 
                         x2={chartWidth - paddingRight} 
                         y2={yVal} 
-                        className="stroke-[#2D334A]/20" 
+                        className="stroke-[#222222]/20" 
                         strokeWidth="1"
                         strokeDasharray="4 4"
                       />
@@ -317,7 +317,7 @@ const FormAnalytics = () => {
                         x={paddingLeft - 8} 
                         y={yVal + 3} 
                         textAnchor="end" 
-                        className="fill-slate-500 text-[8px] font-mono font-bold"
+                        className="fill-gray-500 text-[8px] font-mono font-bold"
                       >
                         {countLabel}
                       </text>
@@ -349,20 +349,20 @@ const FormAnalytics = () => {
                       cx={p.x} 
                       cy={p.y} 
                       r="4" 
-                      className="fill-violet-400 stroke-[#131726]" 
+                      className="fill-yellow-400 stroke-[#111111]" 
                       strokeWidth="2"
                     />
                     <circle 
                       cx={p.x} 
                       cy={p.y} 
                       r="9" 
-                      className="fill-violet-500/0 hover:fill-violet-500/10 cursor-pointer"
+                      className="fill-yellow-500/0 hover:fill-yellow-500/10 cursor-pointer"
                     />
                     <text
                       x={p.x}
                       y={p.y - 10}
                       textAnchor="middle"
-                      className="fill-white text-[9px] font-black font-mono bg-[#0B0F19] hidden group-hover/dot:block"
+                      className="fill-white text-[9px] font-black font-mono bg-black hidden group-hover/dot:block"
                     >
                       {p.count}
                     </text>
@@ -376,7 +376,7 @@ const FormAnalytics = () => {
                     x={p.x}
                     y={chartHeight - 6}
                     textAnchor="middle"
-                    className="fill-slate-500 text-[8px] font-bold"
+                    className="fill-gray-500 text-[8px] font-bold"
                   >
                     {p.label}
                   </text>
@@ -388,7 +388,7 @@ const FormAnalytics = () => {
                   y1={chartHeight - paddingBottom} 
                   x2={chartWidth - paddingRight} 
                   y2={chartHeight - paddingBottom} 
-                  className="stroke-[#2D334A]/50" 
+                  className="stroke-[#222222]/50" 
                   strokeWidth="1.5"
                 />
               </svg>
@@ -396,14 +396,14 @@ const FormAnalytics = () => {
           </div>
 
           {/* CHOICE SPLIT PIE/DONUT & BAR CHART (5 cols) */}
-          <div className="lg:col-span-5 bg-[#131726]/80 backdrop-blur-md rounded-3xl border border-[#2D334A]/50 p-6 shadow-xl space-y-6 flex flex-col justify-between">
+          <div className="lg:col-span-5 bg-[#111111]/80 backdrop-blur-md rounded-3xl border border-[#222222]/50 p-6 shadow-xl space-y-6 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                 <div className="flex items-center gap-2">
-                  <PieIcon className="w-5 h-5 text-violet-400" />
+                  <PieIcon className="w-5 h-5 text-yellow-400" />
                   <div>
                     <h4 className="text-base font-bold text-white">Choice Analysis</h4>
-                    <p className="text-[10px] text-slate-500 font-semibold uppercase mt-0.5 font-sans">Option frequency splits</p>
+                    <p className="text-[10px] text-gray-500 font-semibold uppercase mt-0.5 font-sans">Option frequency splits</p>
                   </div>
                 </div>
                 
@@ -412,7 +412,7 @@ const FormAnalytics = () => {
                   <select
                     value={selectedChoiceFieldId}
                     onChange={(e) => setSelectedChoiceFieldId(e.target.value)}
-                    className="rounded-xl border border-[#2D334A]/50 bg-[#0B0F19]/50 px-3.5 py-2 text-[10px] font-bold text-white focus:outline-none focus:border-violet-500 max-w-[150px] cursor-pointer"
+                    className="rounded-xl border border-[#222222]/50 bg-black/50 px-3.5 py-2 text-[10px] font-bold text-white focus:outline-none focus:border-yellow-500 max-w-[150px] cursor-pointer"
                   >
                     {eligibleFields.map(f => (
                       <option key={f.id} value={f.id}>{f.label}</option>
@@ -423,7 +423,7 @@ const FormAnalytics = () => {
 
               {selectedChoiceFieldId ? (
                 donutTotal === 0 ? (
-                  <div className="text-center py-12 text-xs font-bold text-slate-500 bg-[#0B0F19]/20 border border-dashed border-[#2D334A]/60 rounded-2xl">
+                  <div className="text-center py-12 text-xs font-bold text-gray-500 bg-black/20 border border-dashed border-[#222222]/60 rounded-2xl">
                     No answer data provided for this field
                   </div>
                 ) : (
@@ -455,7 +455,7 @@ const FormAnalytics = () => {
                         })}
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                        <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Responses</span>
+                        <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">Responses</span>
                         <span className="text-2xl font-black text-white">{donutTotal}</span>
                       </div>
                     </div>
@@ -472,11 +472,11 @@ const FormAnalytics = () => {
                           <div key={idx} className="flex items-center justify-between text-xs font-semibold gap-2.5">
                             <div className="flex items-center gap-2 truncate">
                               <div className={`w-3 h-3 rounded-md shrink-0 ${cleanColor}`} />
-                              <span className="text-slate-300 font-bold capitalize truncate max-w-[100px]">{item.name}</span>
+                              <span className="text-gray-300 font-bold capitalize truncate max-w-[100px]">{item.name}</span>
                             </div>
                             <div className="text-right whitespace-nowrap">
-                              <span className="text-slate-200 font-black">{item.count}</span>
-                              <span className="text-slate-500 font-bold ml-1.5">{percent}%</span>
+                              <span className="text-gray-200 font-black">{item.count}</span>
+                              <span className="text-gray-500 font-bold ml-1.5">{percent}%</span>
                             </div>
                           </div>
                         );
@@ -486,7 +486,7 @@ const FormAnalytics = () => {
                   </div>
                 )
               ) : (
-                <div className="text-center py-12 text-xs font-bold text-slate-500 bg-[#0B0F19]/20 border border-dashed border-[#2D334A]/60 rounded-2xl">
+                <div className="text-center py-12 text-xs font-bold text-gray-500 bg-black/20 border border-dashed border-[#222222]/60 rounded-2xl">
                   No checkbox/multiple choice questions found in this form
                 </div>
               )}
@@ -494,21 +494,21 @@ const FormAnalytics = () => {
 
             {/* Horizontal Bar Chart listing for choice options */}
             {selectedChoiceFieldId && donutTotal > 0 && (
-              <div className="space-y-3 pt-5 border-t border-[#2D334A]/40 mt-4">
-                <div className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Bar Distribution</div>
+              <div className="space-y-3 pt-5 border-t border-[#222222]/40 mt-4">
+                <div className="text-[9px] font-black text-gray-500 uppercase tracking-widest">Bar Distribution</div>
                 <div className="space-y-2.5">
                   {choiceDistribution.map((item, idx) => {
                     const ratio = donutTotal > 0 ? (item.count / donutTotal) * 100 : 0;
                     const fillGrad = choiceColors[idx % choiceColors.length]
-                      .replace('stroke-', 'from-') + ' to-violet-600';
+                      .replace('stroke-', 'from-') + ' to-yellow-500';
                     
                     return (
                       <div key={idx} className="space-y-1">
-                        <div className="flex justify-between text-[11px] font-bold text-slate-300">
+                        <div className="flex justify-between text-[11px] font-bold text-gray-300">
                           <span className="capitalize">{item.name}</span>
                           <span>{item.count} ({ratio.toFixed(0)}%)</span>
                         </div>
-                        <div className="h-2 w-full bg-slate-900 rounded-full overflow-hidden border border-[#2D334A]/60">
+                        <div className="h-2 w-full bg-gray-900 rounded-full overflow-hidden border border-[#222222]/60">
                           <div 
                             className={`h-full bg-gradient-to-r ${fillGrad} rounded-full transition-all duration-1000`}
                             style={{ width: `${ratio}%` }}

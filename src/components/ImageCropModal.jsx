@@ -126,17 +126,17 @@ const ImageCropModal = ({ imageSrc, onCropComplete, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-[#131726] border border-[#2D334A]/70 rounded-[2.5rem] shadow-2xl w-full max-w-md overflow-hidden">
-        <div className="flex items-center justify-between p-6 border-b border-[#2D334A]/50">
+      <div className="bg-[#111111] border border-[#222222]/70 rounded-[2.5rem] shadow-2xl w-full max-w-md overflow-hidden">
+        <div className="flex items-center justify-between p-6 border-b border-[#222222]/50">
           <h3 className="text-xl font-black text-white">Crop Photo</h3>
-          <button onClick={onClose} className="p-2 hover:bg-[#1E243D] rounded-full transition-colors">
-            <X className="w-5 h-5 text-slate-400" />
+          <button onClick={onClose} className="p-2 hover:bg-[#1A1A1A] rounded-full transition-colors">
+            <X className="w-5 h-5 text-gray-400" />
           </button>
         </div>
         <div className="p-6 flex flex-col items-center gap-4">
-          <p className="text-sm text-slate-400">Drag to reposition. Use the zoom controls below.</p>
+          <p className="text-sm text-gray-400">Drag to reposition. Use the zoom controls below.</p>
           <div
-            className="rounded-full overflow-hidden cursor-grab active:cursor-grabbing select-none shadow-2xl border-2 border-violet-500/40"
+            className="rounded-full overflow-hidden cursor-grab active:cursor-grabbing select-none shadow-2xl border-2 border-yellow-500/40"
             style={{ width: CROP_SIZE, height: CROP_SIZE, touchAction: 'none' }}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
@@ -152,24 +152,24 @@ const ImageCropModal = ({ imageSrc, onCropComplete, onClose }) => {
           <div className="flex items-center gap-3 w-full justify-center">
             <button
               onClick={() => setScale(s => Math.max(0.5, s - 0.1))}
-              className="p-3 rounded-2xl bg-[#1E243D] hover:bg-[#252B48] border border-[#2D334A]/50 text-white transition-all"
+              className="p-3 rounded-2xl bg-[#1A1A1A] hover:bg-[#252B48] border border-[#222222]/50 text-white transition-all"
             >
               <ZoomOut className="w-5 h-5" />
             </button>
             <input
               type="range" min={0.5} max={3} step={0.05} value={scale}
               onChange={e => setScale(parseFloat(e.target.value))}
-              className="flex-1 accent-violet-500"
+              className="flex-1 accent-yellow-500"
             />
             <button
               onClick={() => setScale(s => Math.min(3, s + 0.1))}
-              className="p-3 rounded-2xl bg-[#1E243D] hover:bg-[#252B48] border border-[#2D334A]/50 text-white transition-all"
+              className="p-3 rounded-2xl bg-[#1A1A1A] hover:bg-[#252B48] border border-[#222222]/50 text-white transition-all"
             >
               <ZoomIn className="w-5 h-5" />
             </button>
             <button
               onClick={() => { setScale(1); setOffset({ x: 0, y: 0 }); }}
-              className="p-3 rounded-2xl bg-[#1E243D] hover:bg-[#252B48] border border-[#2D334A]/50 text-slate-400 transition-all"
+              className="p-3 rounded-2xl bg-[#1A1A1A] hover:bg-[#252B48] border border-[#222222]/50 text-gray-400 transition-all"
             >
               <RotateCcw className="w-5 h-5" />
             </button>
@@ -178,13 +178,13 @@ const ImageCropModal = ({ imageSrc, onCropComplete, onClose }) => {
           <div className="flex gap-3 w-full pt-2">
             <button
               onClick={onClose}
-              className="flex-1 py-3 rounded-2xl border border-[#2D334A]/50 text-slate-300 font-bold hover:bg-[#1E243D] transition-all"
+              className="flex-1 py-3 rounded-2xl border border-[#222222]/50 text-gray-300 font-bold hover:bg-[#1A1A1A] transition-all"
             >
               Cancel
             </button>
             <button
               onClick={handleConfirm}
-              className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-violet-500/20"
+              className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-yellow-500/20"
             >
               <Check className="w-5 h-5" />
               Apply Crop

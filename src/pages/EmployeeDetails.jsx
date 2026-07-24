@@ -34,14 +34,14 @@ const EmployeeDetails = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="flex flex-col items-center gap-5">
           <div className="relative w-20 h-20">
-            <div className="absolute inset-0 border-4 border-[#2D334A]/40 rounded-full" />
-            <div className="absolute inset-0 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
-            <div className="absolute inset-[6px] border-4 border-blue-500/30 border-b-transparent rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
+            <div className="absolute inset-0 border-4 border-[#222222]/40 rounded-full" />
+            <div className="absolute inset-0 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin" />
+            <div className="absolute inset-[6px] border-4 border-yellow-500/30 border-b-transparent rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
           </div>
-          <p className="text-slate-400 font-bold text-xs tracking-[0.4em] uppercase">Validating Identity...</p>
+          <p className="text-gray-400 font-bold text-xs tracking-[0.4em] uppercase">Validating Identity...</p>
         </div>
       </div>
     );
@@ -49,20 +49,20 @@ const EmployeeDetails = () => {
 
   if (error || !employee) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-black flex items-center justify-center p-4">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="bg-[#131726]/80 backdrop-blur-md p-12 rounded-[3rem] border border-[#2D334A]/50 max-w-sm w-full text-center shadow-2xl"
+          className="bg-[#111111]/80 backdrop-blur-md p-12 rounded-[3rem] border border-[#222222]/50 max-w-sm w-full text-center shadow-2xl"
         >
           <div className="w-20 h-20 bg-rose-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-rose-500/20">
             <ShieldCheck className="w-10 h-10 text-rose-400" />
           </div>
           <h2 className="text-2xl font-black text-white mb-3">Access Denied</h2>
-          <p className="text-slate-400 text-sm mb-8 leading-relaxed">{error}</p>
+          <p className="text-gray-400 text-sm mb-8 leading-relaxed">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="w-full py-4 bg-gradient-to-r from-violet-600 to-blue-600 text-white font-bold rounded-2xl hover:from-violet-500 hover:to-blue-500 transition-all"
+            className="w-full py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-bold rounded-2xl hover:from-yellow-300 hover:to-yellow-400 transition-all"
           >
             Retry
           </button>
@@ -75,7 +75,7 @@ const EmployeeDetails = () => {
   const fadeUp = { hidden: { y: 24, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 90, damping: 18 } } };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-white overflow-x-hidden selection:bg-violet-500/30">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden selection:bg-yellow-500/30">
       {/* Ambient glows */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-0 right-0 w-[55%] h-[55%] bg-violet-700/10 blur-[160px] rounded-full" />
@@ -86,12 +86,12 @@ const EmployeeDetails = () => {
 
         {/* ── Header ── */}
         <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex flex-col items-center gap-3 mb-4">
-          <div className="flex items-center gap-3 bg-[#131726]/80 backdrop-blur-md px-6 py-3 rounded-full border border-[#2D334A]/60 shadow-xl">
+          <div className="flex items-center gap-3 bg-[#111111]/80 backdrop-blur-md px-6 py-3 rounded-full border border-[#222222]/60 shadow-xl">
             <img src="/logo.png" alt="CGS" className="w-9 h-9 object-contain bg-white p-1.5 rounded-xl shadow-sm" />
-            <div className="h-6 w-px bg-[#2D334A]" />
+            <div className="h-6 w-px bg-[#222222]" />
             <span className="text-base font-black tracking-wider text-white uppercase">CGS Verified ID</span>
           </div>
-          <div className="flex items-center gap-2 bg-violet-500/10 text-violet-300 text-[10px] font-black uppercase tracking-[0.25em] px-4 py-1.5 rounded-full border border-violet-500/25">
+          <div className="flex items-center gap-2 bg-yellow-500/10 text-yellow-300 text-[10px] font-black uppercase tracking-[0.25em] px-4 py-1.5 rounded-full border border-yellow-500/25">
             <ShieldCheck className="w-3.5 h-3.5" /> Authenticated Identity
           </div>
         </motion.div>
@@ -100,50 +100,50 @@ const EmployeeDetails = () => {
 
           {/* ── Hero Card ── */}
           <motion.div variants={fadeUp}>
-            <div className="relative bg-gradient-to-br from-[#131726] to-[#0d1220] rounded-[3rem] border border-[#2D334A]/60 shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden">
+            <div className="relative bg-gradient-to-br from-[#111111] to-[#0d1220] rounded-[3rem] border border-[#222222]/60 shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden">
               {/* decorative gradient bar at top */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-600 via-blue-500 to-violet-600" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-500" />
               {/* decorative circles */}
-              <div className="absolute -top-24 -right-24 w-64 h-64 bg-violet-600/5 rounded-full border border-violet-500/10" />
-              <div className="absolute -bottom-20 -left-20 w-56 h-56 bg-blue-600/5 rounded-full border border-blue-500/10" />
+              <div className="absolute -top-24 -right-24 w-64 h-64 bg-yellow-500/5 rounded-full border border-yellow-500/10" />
+              <div className="absolute -bottom-20 -left-20 w-56 h-56 bg-yellow-500/5 rounded-full border border-yellow-500/10" />
 
               <div className="relative p-8 md:p-14 flex flex-col md:flex-row items-center md:items-start gap-10">
                 {/* Photo */}
                 <div className="relative flex-shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-violet-600 to-blue-500 rounded-[3rem] blur-xl opacity-20" />
-                  <div className="relative w-44 h-44 md:w-56 md:h-56 rounded-[2.5rem] overflow-hidden bg-[#1E243D] border-2 border-[#2D334A]/60 shadow-2xl">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-yellow-400 to-yellow-500 rounded-[3rem] blur-xl opacity-20" />
+                  <div className="relative w-44 h-44 md:w-56 md:h-56 rounded-[2.5rem] overflow-hidden bg-[#1A1A1A] border-2 border-[#222222]/60 shadow-2xl">
                     {employee.photoUrl ? (
                       <img src={employee.photoUrl} alt={employee.name} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-600/20 to-blue-600/20">
-                        <UserCircle2 className="w-28 h-28 text-slate-600" />
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-yellow-400/20 to-yellow-500/20">
+                        <UserCircle2 className="w-28 h-28 text-gray-600" />
                       </div>
                     )}
                   </div>
                   {/* badge */}
-                  <div className="absolute -bottom-3 -right-3 w-12 h-12 bg-gradient-to-tr from-violet-600 to-blue-500 rounded-2xl flex items-center justify-center shadow-xl shadow-violet-500/30 border border-white/10">
+                  <div className="absolute -bottom-3 -right-3 w-12 h-12 bg-gradient-to-tr from-yellow-400 to-yellow-500 rounded-2xl flex items-center justify-center shadow-xl shadow-yellow-500/30 border border-white/10">
                     <Award className="w-5 h-5 text-white" />
                   </div>
                 </div>
 
                 {/* Info */}
                 <div className="flex-1 text-center md:text-left">
-                  <span className="inline-flex items-center gap-2 px-3 py-1 bg-violet-500/15 text-violet-300 text-[10px] font-black uppercase tracking-widest rounded-full border border-violet-500/25 mb-5">
+                  <span className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-500/15 text-yellow-300 text-[10px] font-black uppercase tracking-widest rounded-full border border-yellow-500/25 mb-5">
                     {employee.employeeType || 'Full-time Employee'}
                   </span>
 
                   <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter leading-none mb-2">
                     {employee.name}
                   </h2>
-                  <p className="text-violet-400 font-bold text-lg mb-6 flex items-center justify-center md:justify-start gap-2">
+                  <p className="text-yellow-400 font-bold text-lg mb-6 flex items-center justify-center md:justify-start gap-2">
                     <Briefcase className="w-4 h-4" />
                     {employee.role || 'Professional'} · {employee.department}
                   </p>
 
                   {/* Quick stats row */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-7">
-                    <div className="bg-[#0B0F19]/60 border border-[#2D334A]/50 rounded-2xl px-4 py-3">
-                      <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-0.5">Employee ID</p>
+                    <div className="bg-black/60 border border-[#222222]/50 rounded-2xl px-4 py-3">
+                      <p className="text-[9px] font-black text-gray-500 uppercase tracking-widest mb-0.5">Employee ID</p>
                       <p className="text-white font-black text-sm">{employee.id}</p>
                     </div>
                     <div className="bg-rose-500/8 border border-rose-500/20 rounded-2xl px-4 py-3">
@@ -152,9 +152,9 @@ const EmployeeDetails = () => {
                         <HeartPulse className="w-3.5 h-3.5" />{employee.bloodGroup || 'N/A'}
                       </p>
                     </div>
-                    <div className="bg-blue-500/8 border border-blue-500/20 rounded-2xl px-4 py-3 col-span-2 md:col-span-1">
-                      <p className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-0.5">Department</p>
-                      <p className="text-blue-300 font-black text-sm">{employee.department}</p>
+                    <div className="bg-yellow-500/8 border border-yellow-500/20 rounded-2xl px-4 py-3 col-span-2 md:col-span-1">
+                      <p className="text-[9px] font-black text-yellow-400 uppercase tracking-widest mb-0.5">Department</p>
+                      <p className="text-yellow-300 font-black text-sm">{employee.department}</p>
                     </div>
                   </div>
 
@@ -162,7 +162,7 @@ const EmployeeDetails = () => {
                   <div className="flex gap-3 justify-center md:justify-start">
                     <a
                       href={`tel:${employee.phoneNumber || employee.personalContact}`}
-                      className="flex-1 md:flex-none flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white font-bold text-sm shadow-lg shadow-violet-500/25 transition-all hover:scale-[1.02] active:scale-95"
+                      className="flex-1 md:flex-none flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-white font-bold text-sm shadow-lg shadow-yellow-500/25 transition-all hover:scale-[1.02] active:scale-95"
                     >
                       <Phone className="w-4 h-4" /> Call Now
                     </a>
@@ -182,25 +182,25 @@ const EmployeeDetails = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             {/* Contact */}
-            <motion.div variants={fadeUp} className="bg-[#131726]/80 backdrop-blur-md rounded-[2.5rem] border border-[#2D334A]/50 p-8 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
+            <motion.div variants={fadeUp} className="bg-[#111111]/80 backdrop-blur-md rounded-[2.5rem] border border-[#222222]/50 p-8 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 bg-blue-500/15 rounded-2xl flex items-center justify-center border border-blue-500/20">
-                  <Phone className="w-5 h-5 text-blue-400" />
+                <div className="w-10 h-10 bg-yellow-500/15 rounded-2xl flex items-center justify-center border border-yellow-500/20">
+                  <Phone className="w-5 h-5 text-yellow-400" />
                 </div>
-                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.25em]">Contact Details</h3>
+                <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-[0.25em]">Contact Details</h3>
               </div>
               <div className="space-y-5">
                 {[
-                  { icon: <Mail className="w-4 h-4" />, label: 'Email', value: employee.email, href: `mailto:${employee.email}`, color: 'text-violet-400' },
-                  { icon: <Phone className="w-4 h-4" />, label: 'Phone', value: employee.phoneNumber || employee.personalContact || 'N/A', href: `tel:${employee.phoneNumber || employee.personalContact}`, color: 'text-emerald-400' },
-                  { icon: <MapPin className="w-4 h-4" />, label: 'Address', value: employee.currentAddress || 'N/A', href: null, color: 'text-amber-400' },
+                  { icon: <Mail className="w-4 h-4" />, label: 'Email', value: employee.email, href: `mailto:${employee.email}`, color: 'text-yellow-400' },
+                  { icon: <Phone className="w-4 h-4" />, label: 'Phone', value: employee.phoneNumber || employee.personalContact || 'N/A', href: `tel:${employee.phoneNumber || employee.personalContact}`, color: 'text-yellow-400' },
+                  { icon: <MapPin className="w-4 h-4" />, label: 'Address', value: employee.currentAddress || 'N/A', href: null, color: 'text-yellow-400' },
                 ].map(({ icon, label, value, href, color }) => (
                   <div key={label} className="flex items-start gap-4 group">
-                    <div className={`w-9 h-9 rounded-xl bg-[#1E243D] flex items-center justify-center flex-shrink-0 border border-[#2D334A]/40 ${color}`}>
+                    <div className={`w-9 h-9 rounded-xl bg-[#1A1A1A] flex items-center justify-center flex-shrink-0 border border-[#222222]/40 ${color}`}>
                       {icon}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-0.5">{label}</p>
+                      <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-0.5">{label}</p>
                       {href ? (
                         <a href={href} className={`font-bold break-all text-sm ${color} hover:underline underline-offset-2 transition-all`}>{value}</a>
                       ) : (
@@ -213,25 +213,25 @@ const EmployeeDetails = () => {
             </motion.div>
 
             {/* Registry */}
-            <motion.div variants={fadeUp} className="bg-[#131726]/80 backdrop-blur-md rounded-[2.5rem] border border-[#2D334A]/50 p-8 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
+            <motion.div variants={fadeUp} className="bg-[#111111]/80 backdrop-blur-md rounded-[2.5rem] border border-[#222222]/50 p-8 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 bg-amber-500/15 rounded-2xl flex items-center justify-center border border-amber-500/20">
-                  <Calendar className="w-5 h-5 text-amber-400" />
+                <div className="w-10 h-10 bg-yellow-500/15 rounded-2xl flex items-center justify-center border border-yellow-500/20">
+                  <Calendar className="w-5 h-5 text-yellow-400" />
                 </div>
-                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.25em]">Registry Details</h3>
+                <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-[0.25em]">Registry Details</h3>
               </div>
               <div className="space-y-5">
                 {[
-                  { icon: <Zap className="w-4 h-4" />, label: 'Joining Date', value: employee.dateOfJoining || 'N/A', color: 'text-violet-400' },
+                  { icon: <Zap className="w-4 h-4" />, label: 'Joining Date', value: employee.dateOfJoining || 'N/A', color: 'text-yellow-400' },
                   { icon: <Cake className="w-4 h-4" />, label: 'Date of Birth', value: employee.dateOfBirth || 'N/A', color: 'text-pink-400' },
-                  { icon: <Briefcase className="w-4 h-4" />, label: 'Employment Type', value: employee.employeeType || 'Full-time', color: 'text-blue-400' },
+                  { icon: <Briefcase className="w-4 h-4" />, label: 'Employment Type', value: employee.employeeType || 'Full-time', color: 'text-yellow-400' },
                 ].map(({ icon, label, value, color }) => (
                   <div key={label} className="flex items-start gap-4">
-                    <div className={`w-9 h-9 rounded-xl bg-[#1E243D] flex items-center justify-center flex-shrink-0 border border-[#2D334A]/40 ${color}`}>
+                    <div className={`w-9 h-9 rounded-xl bg-[#1A1A1A] flex items-center justify-center flex-shrink-0 border border-[#222222]/40 ${color}`}>
                       {icon}
                     </div>
                     <div>
-                      <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-0.5">{label}</p>
+                      <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-0.5">{label}</p>
                       <p className="text-white font-semibold text-sm">{value}</p>
                     </div>
                   </div>
@@ -257,12 +257,12 @@ const EmployeeDetails = () => {
           <motion.div variants={fadeUp} className="text-center pt-4 pb-8">
             <div className="inline-flex flex-col items-center gap-4">
               <div className="flex items-center gap-3">
-                <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#2D334A]" />
-                <ShieldCheck className="w-4 h-4 text-slate-500" />
-                <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#2D334A]" />
+                <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#222222]" />
+                <ShieldCheck className="w-4 h-4 text-gray-500" />
+                <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#222222]" />
               </div>
-              <p className="text-slate-600 text-[11px] font-bold uppercase tracking-[0.3em]">Official Secure Registry</p>
-              <p className="text-slate-600 text-xs max-w-xs leading-relaxed">
+              <p className="text-gray-600 text-[11px] font-bold uppercase tracking-[0.3em]">Official Secure Registry</p>
+              <p className="text-gray-600 text-xs max-w-xs leading-relaxed">
                 Verified & authorized by CGS security protocols · {new Date().toLocaleDateString()}
               </p>
             </div>

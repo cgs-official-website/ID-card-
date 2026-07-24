@@ -14,7 +14,7 @@ export default function ChatMessage({ message, compact = false }) {
     <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'} items-end mb-4`}>
       {/* Bot Avatar */}
       {!isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700 flex items-center justify-center shadow-lg shadow-blue-500/20 text-white border border-white/10">
+        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-yellow-500 via-yellow-500 to-indigo-700 flex items-center justify-center shadow-lg shadow-yellow-500/20 text-white border border-white/10">
           <Bot className="w-4.5 h-4.5" />
         </div>
       )}
@@ -25,7 +25,7 @@ export default function ChatMessage({ message, compact = false }) {
           className={`
             relative px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed shadow-md transition-colors duration-200
             ${isUser
-              ? 'bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700 text-white rounded-br-sm border border-blue-500/20 shadow-blue-500/5'
+              ? 'bg-gradient-to-br from-yellow-500 via-blue-700 to-indigo-700 text-white rounded-br-sm border border-yellow-500/20 shadow-yellow-500/5'
               : isError
               ? 'bg-red-950/40 border border-red-500/30 text-red-300 rounded-bl-sm'
               : 'bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] text-gray-200 backdrop-blur-sm rounded-bl-sm shadow-black/10'
@@ -42,14 +42,14 @@ export default function ChatMessage({ message, compact = false }) {
           ) : (
             <div className="prose prose-invert max-w-none
               [&>*]:text-sm [&>p]:my-1 [&>ul]:my-1 [&>ul]:pl-0 [&>ul]:list-none [&>li]:my-1
-              [&>strong]:text-blue-300 [&>strong]:font-semibold
+              [&>strong]:text-yellow-300 [&>strong]:font-semibold
               [&>h1]:text-blue-200 [&>h2]:text-blue-200 [&>h3]:text-blue-200
-              [&>a]:text-blue-400 hover:[&>a]:underline [&>code]:text-blue-300 [&>code]:bg-black/30 [&>code]:px-1.5 [&>code]:py-0.5 [&>code]:rounded [&>code]:font-mono [&>code]:text-xs [&>p]:text-gray-200">
+              [&>a]:text-yellow-400 hover:[&>a]:underline [&>code]:text-yellow-300 [&>code]:bg-black/30 [&>code]:px-1.5 [&>code]:py-0.5 [&>code]:rounded [&>code]:font-mono [&>code]:text-xs [&>p]:text-gray-200">
               <ReactMarkdown
                 components={{
                   li: ({ node, ...props }) => (
                     <li className="flex items-start gap-1.5" {...props}>
-                      <ChevronRight className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                      <ChevronRight className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                       <span>{props.children}</span>
                     </li>
                   )
@@ -67,7 +67,7 @@ export default function ChatMessage({ message, compact = false }) {
 
       {/* User Avatar */}
       {isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-slate-600 to-slate-700 flex items-center justify-center text-white text-xs font-black shadow border border-white/10">
+        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center text-white text-xs font-black shadow border border-white/10">
           Y
         </div>
       )}

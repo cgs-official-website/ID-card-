@@ -69,10 +69,10 @@ const InvoiceGenerator = () => {
     <div className="space-y-8 max-w-4xl mx-auto py-6">
       <div className="text-center md:text-left mb-6">
         <h1 className="text-3xl font-black text-white tracking-tight mb-2">Invoice Generator</h1>
-        <p className="text-slate-400 font-medium">Generate professional internship training invoices instantly.</p>
+        <p className="text-gray-400 font-medium">Generate professional internship training invoices instantly.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-[#131726]/80 backdrop-blur-md rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-[#2D334A]/50 p-8 md:p-10 space-y-6">
+      <form onSubmit={handleSubmit} className="premium-card p-8 md:p-10 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input 
             label="Candidate Name *" 
@@ -113,15 +113,15 @@ const InvoiceGenerator = () => {
           />
           <div className="space-y-1">
             <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Base Amount (₹) *</label>
+              <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Base Amount (₹) *</label>
               <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={() => setCandidate({ ...candidate, baseAmount: 3500 })}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
                     candidate.baseAmount == 3500
-                      ? "bg-violet-500/20 text-violet-300 border-violet-500"
-                      : "bg-[#0B0F19]/50 text-slate-400 border-[#2D334A]/50 hover:text-white"
+                      ? "bg-yellow-500/20 text-yellow-300 border-yellow-500"
+                      : "bg-black/50 text-gray-400 border-[#222222]/50 hover:text-white"
                   }`}
                 >
                   ₹3,500
@@ -131,8 +131,8 @@ const InvoiceGenerator = () => {
                   onClick={() => setCandidate({ ...candidate, baseAmount: 4130 })}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
                     candidate.baseAmount == 4130
-                      ? "bg-amber-500/20 text-amber-300 border-amber-500"
-                      : "bg-[#0B0F19]/50 text-slate-400 border-[#2D334A]/50 hover:text-white"
+                      ? "bg-yellow-500/20 text-yellow-300 border-yellow-500"
+                      : "bg-black/50 text-gray-400 border-[#222222]/50 hover:text-white"
                   }`}
                 >
                   ₹4,130 (GST)
@@ -180,18 +180,18 @@ const InvoiceGenerator = () => {
         </div>
 
         {/* Invoice Summary Box */}
-        <div className="p-6 bg-violet-500/5 rounded-2xl border border-violet-500/10 space-y-3">
-          <h4 className="text-sm font-bold text-violet-400 uppercase tracking-wider">Invoice Summary</h4>
-          <div className="grid grid-cols-2 gap-2 text-sm text-slate-300">
+        <div className="p-6 bg-yellow-500/5 rounded-2xl border border-yellow-500/10 space-y-3">
+          <h4 className="text-sm font-bold text-yellow-400 uppercase tracking-wider">Invoice Summary</h4>
+          <div className="grid grid-cols-2 gap-2 text-sm text-gray-300">
             <span>Duration:</span> <span className="font-semibold text-white text-right">{candidate.duration || "N/A"}</span>
-            <span className="text-base text-white pt-3 border-t border-[#2D334A]/50">Total Amount:</span> 
-            <span className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400 pt-3 border-t border-[#2D334A]/50 text-right">₹ {totalAmount.toLocaleString("en-IN")}</span>
+            <span className="text-base text-white pt-3 border-t border-[#222222]/50">Total Amount:</span> 
+            <span className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-400 pt-3 border-t border-[#222222]/50 text-right">₹ {totalAmount.toLocaleString("en-IN")}</span>
           </div>
         </div>
 
         {/* Payment Method Selector */}
         <div className="space-y-3">
-          <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Payment Method</h4>
+          <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Payment Method</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Radio 
               label="UPI Payment" 
@@ -244,7 +244,7 @@ const InvoiceGenerator = () => {
       </form>
 
       {success && (
-        <div className="p-4 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-2xl text-center font-bold">
+        <div className="p-4 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 rounded-2xl text-center font-bold">
           Invoice saved successfully! PDF download started.
         </div>
       )}
