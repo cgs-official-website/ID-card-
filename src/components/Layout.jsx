@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, LogOut, Copy, Award, Check, ReceiptText, History, FileText, Menu, X, ClipboardCheck, ChevronRight, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, LogOut, Copy, Award, Check, ReceiptText, History, FileText, Menu, X, ClipboardCheck, ChevronRight, Sun, Moon, Table } from 'lucide-react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useState } from 'react';
@@ -53,6 +53,7 @@ const Layout = () => {
     { name: 'Invoice History', mobileName: 'History', path: '/invoice-history', icon: History },
     { name: 'Form Builder', mobileName: 'Forms', path: '/form-builder', icon: FileText },
     { name: 'Attendance Tracker', mobileName: 'Attendance', path: '/attendance-tracker', icon: ClipboardCheck },
+    { name: 'Live Sheets', mobileName: 'Sheets', path: '/live-sheets', icon: Table },
   ];
 
   return (
@@ -329,6 +330,28 @@ const Layout = () => {
                   <div>
                     <div className="text-sm font-extrabold">Attendance Tracker</div>
                     <div className="text-[10px] text-gray-500 font-semibold mt-0.5">Aggregate, separate & download logs</div>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-500" />
+              </Link>
+
+              {/* Live Sheets */}
+              <Link
+                to="/live-sheets"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`p-4.5 rounded-2xl border flex items-center justify-between gap-4 transition-all ${
+                  location.pathname === '/live-sheets'
+                    ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-white border-transparent shadow-lg shadow-yellow-500/10'
+                    : 'bg-black/40 border-[#222222]/50 text-gray-300 hover:text-white hover:border-[#222222]'
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <div className={`p-3 rounded-xl ${location.pathname === '/live-sheets' ? 'bg-white/10 text-white' : 'bg-yellow-500/10 text-yellow-400'}`}>
+                    <Table className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-extrabold">Live Sheets</div>
+                    <div className="text-[10px] text-gray-500 font-semibold mt-0.5">Live Excel-like sheets</div>
                   </div>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-500" />

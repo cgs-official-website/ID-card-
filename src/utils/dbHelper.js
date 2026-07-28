@@ -639,3 +639,92 @@ const incrementFormViewsLocal = (formId) => {
     saveFormsToLocal(forms);
   }
 };
+
+// --- Live Sheets LocalStorage Helpers ---
+const getLiveSheetsFromLocal = () => JSON.parse(localStorage.getItem('cgs_livesheets') || '[]');
+const saveLiveSheetsToLocal = (sheets) => localStorage.setItem('cgs_livesheets', JSON.stringify(sheets));
+
+// --- Live Sheets Helpers ---
+export const fetchLiveSheetsList = async () => {
+  try {
+    const q = query(collection(db, 'liveSheets'), orderBy('updatedAt', 'desc'));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("Error fetching live sheets:", error);
+    return [];
+  }
+};
+
+export const fetchLiveSheetDetails = async (sheetId) => {
+  try {
+    const snap = await getDoc(doc(db, 'liveSheets', sheetId));
+    return snap.exists() ? { id: snap.id, ...snap.data() } : null;
+  } catch (error) {
+    console.error("Error fetching live sheet details:", error);
+    return { error: error.message };
+  }
+};
+
+export const saveLiveSheetObj = async (sheetId, sheetData) => {
+  try {
+    await setDoc(doc(db, 'liveSheets', sheetId), { ...sheetData, updatedAt: new Date().toISOString() }, { merge: true });
+    return { success: true };
+  } catch (error) {
+    console.error("Error saving live sheet:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const deleteLiveSheetObj = async (sheetId) => {
+  try {
+    await deleteDoc(doc(db, 'liveSheets', sheetId));
+    return true;
+  } catch (error) {
+    console.error("Error deleting live sheet:", error);
+    return false;
+  }
+};
+
+export const addLiveSheetOperation = async (sheetId, ops, clientId) => {
+  try {
+    const { serverTimestamp } = await import('firebase/firestore');
+    await addDoc(collection(db, `liveSheets/${sheetId}/operations`), {
+      ops,
+      clientId,
+      timestamp: serverTimestamp()
+    });
+  } catch (error) {
+    console.error("Error syncing operation:", error);
+  }
+};
+
+export const getLiveSheetOperationsQuery = (sheetId) => {
+  return query(collection(db, `liveSheets/${sheetId}/operations`), orderBy('timestamp', 'asc'));
+};
+
+export const submitLiveSheetResponse = async (templateId, responseData) => {
+  try {
+    await addDoc(collection(db, 'liveSheetResponses'), {
+      templateId,
+      ...responseData,
+      submittedAt: new Date().toISOString()
+    });
+    return { success: true };
+  } catch (error) {
+    console.error("Error submitting live sheet response:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const fetchLiveSheetResponses = async (templateId) => {
+  try {
+    const q = query(collection(db, 'liveSheetResponses'), orderBy('submittedAt', 'desc'));
+    const snapshot = await getDocs(q);
+    const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return docs.filter(d => d.templateId === templateId);
+  } catch (error) {
+    console.error("Error fetching live sheet responses:", error);
+    return [];
+  }
+};

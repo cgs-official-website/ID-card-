@@ -22,6 +22,14 @@ import FormAnalytics from './pages/FormAnalytics';
 import { useEffect } from 'react';
 import ChatWidget from './components/ChatWidget';
 import AttendanceTracker from './pages/AttendanceTracker';
+import LiveSheetDashboard from './pages/LiveSheetDashboard';
+import LiveSheetEditor from './pages/LiveSheetEditor';
+import LiveSheetPublicView from './pages/LiveSheetPublicView';
+import LiveSheetResponses from './pages/LiveSheetResponses';
+
+import { setupGlobalAlert } from './utils/notify';
+
+setupGlobalAlert();
 
 function App() {
   useEffect(() => {
@@ -44,6 +52,7 @@ function App() {
           <Route path="/employee/:id" element={<EmployeeDetails />} />
           <Route path="/certificate/:id" element={<CertificatePortfolio />} />
           <Route path="/f/:id" element={<FormPublicView />} />
+          <Route path="/public/sheet/:id" element={<LiveSheetPublicView />} />
           
           {/* Protected Admin Routes */}
           <Route path="/" element={
@@ -66,6 +75,11 @@ function App() {
             <Route path="form-builder/edit/:id" element={<FormBuilderEditor />} />
             <Route path="form-builder/responses/:id" element={<FormResponses />} />
             <Route path="form-builder/analytics/:id" element={<FormAnalytics />} />
+            
+            {/* Live Sheets Module */}
+            <Route path="live-sheets" element={<LiveSheetDashboard />} />
+            <Route path="live-sheets/edit/:id" element={<LiveSheetEditor />} />
+            <Route path="live-sheets/:id/responses" element={<LiveSheetResponses />} />
           </Route>
         </Routes>
       </BrowserRouter>

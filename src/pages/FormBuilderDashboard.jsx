@@ -11,6 +11,7 @@ import {
   fetchAuditLogsList, createAuditLogObj, fetchFormResponses, fetchFormFields,
   updateFormStatusObj, getNextFormId
 } from '../utils/dbHelper';
+import NotifyModal from '../components/NotifyModal';
 
 const FormBuilderDashboard = () => {
   const { currentUser } = useAuth();
@@ -18,6 +19,7 @@ const FormBuilderDashboard = () => {
   
   const [forms, setForms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modalConfig, setModalConfig] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   
@@ -167,7 +169,7 @@ const FormBuilderDashboard = () => {
       await fetchForms();
     } catch (error) {
       console.error("Error updating form status:", error);
-      alert("Failed to update status. Check console logs.");
+      setModalConfig({ type: 'error', title: 'Update Failed', message: 'Failed to update status. Check console logs.' });
     } finally {
       setLoading(false);
       setConfirmModal(null);
@@ -192,8 +194,8 @@ const FormBuilderDashboard = () => {
     try {
       const responses = await fetchFormResponses(form.id);
 
-      if (responses.length === 0) {
-        alert("No responses available to export.");
+      if (!responses || responses.length === 0) {
+        setModalConfig({ type: 'info', title: 'Export Failed', message: 'No responses available to export.' });
         return;
       }
 
@@ -884,6 +886,9 @@ const FormBuilderDashboard = () => {
             </div>
           </div>
         </div>
+      )}
+      {modalConfig && (
+        <NotifyModal {...modalConfig} onClose={() => setModalConfig(null)} />
       )}
     </div>
   );
