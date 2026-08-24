@@ -19,6 +19,7 @@ import FormBuilderEditor from './pages/FormBuilderEditor';
 import FormPublicView from './pages/FormPublicView';
 import FormResponses from './pages/FormResponses';
 import FormAnalytics from './pages/FormAnalytics';
+import OfferLetterGenerator from './pages/OfferLetterGenerator';
 import { useEffect } from 'react';
 import ChatWidget from './components/ChatWidget';
 import AttendanceTracker from './pages/AttendanceTracker';
@@ -68,6 +69,7 @@ function App() {
             <Route path="invoice-generator" element={<InvoiceGenerator />} />
             <Route path="invoice-history" element={<InvoiceHistory />} />
             <Route path="attendance-tracker" element={<AttendanceTracker />} />
+            <Route path="offer-letter" element={<OfferLetterGenerator />} />
             
             {/* Custom Form Builder Module */}
             <Route path="form-builder" element={<FormBuilderDashboard />} />

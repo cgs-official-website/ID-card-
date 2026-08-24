@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, LogOut, Copy, Award, Check, ReceiptText, History, FileText, Menu, X, ClipboardCheck, ChevronRight, Sun, Moon, Table } from 'lucide-react';
+import { LayoutDashboard, LogOut, Copy, Award, Check, ReceiptText, History, FileText, Menu, X, ClipboardCheck, ChevronRight, Sun, Moon, Table, Briefcase } from 'lucide-react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useState } from 'react';
@@ -51,6 +51,7 @@ const Layout = () => {
     { name: 'Certificates', mobileName: 'Certs', path: '/certificates', icon: Award },
     { name: 'Invoice Generator', mobileName: 'Invoice', path: '/invoice-generator', icon: ReceiptText },
     { name: 'Invoice History', mobileName: 'History', path: '/invoice-history', icon: History },
+    { name: 'Offer Letter', mobileName: 'Offer', path: '/offer-letter', icon: Briefcase },
     { name: 'Form Builder', mobileName: 'Forms', path: '/form-builder', icon: FileText },
     { name: 'Attendance Tracker', mobileName: 'Attendance', path: '/attendance-tracker', icon: ClipboardCheck },
     { name: 'Live Sheets', mobileName: 'Sheets', path: '/live-sheets', icon: Table },
