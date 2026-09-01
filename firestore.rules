@@ -46,15 +46,17 @@ service cloud.firestore {
     // ─── EMPLOYEES / ID CARDS ─────────────────────────────────────────────────
     match /employees/{empId} {
       allow read: if true;   // Public scan of ID cards
-      allow write: if request.auth != null
-                      && !request.auth.token.firebase.sign_in_provider.matches('anonymous');
+      allow create: if true; // Public self-registration allowed
+      allow update, delete: if request.auth != null
+                               && !request.auth.token.firebase.sign_in_provider.matches('anonymous');
     }
 
     // ─── CERTIFICATES ─────────────────────────────────────────────────────────
     match /certificates/{certId} {
       allow read: if true;   // Public certificate verification
-      allow write: if request.auth != null
-                      && !request.auth.token.firebase.sign_in_provider.matches('anonymous');
+      allow create: if true; // Public certificate registration allowed
+      allow update, delete: if request.auth != null
+                               && !request.auth.token.firebase.sign_in_provider.matches('anonymous');
     }
 
     // ─── LIVE SHEETS ──────────────────────────────────────────────────────────

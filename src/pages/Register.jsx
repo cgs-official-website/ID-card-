@@ -46,43 +46,71 @@ const Register = () => {
       let photoUrl = '';
 
       if (croppedBlob) {
-        const formData = new FormData();
-        formData.append('file', croppedBlob, 'photo.png');
-        formData.append('upload_preset', UPLOAD_PRESET);
-        const response = await fetch(
-          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-          { method: 'POST', body: formData }
-        );
-        const cloudinaryData = await response.json();
-        photoUrl = cloudinaryData.secure_url;
+        if (CLOUD_NAME && UPLOAD_PRESET) {
+          try {
+            const formData = new FormData();
+            formData.append('file', croppedBlob, 'photo.png');
+            formData.append('upload_preset', UPLOAD_PRESET);
+            const response = await fetch(
+              `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+              { method: 'POST', body: formData }
+            );
+            if (response.ok) {
+              const cloudinaryData = await response.json();
+              if (cloudinaryData.secure_url) {
+                photoUrl = cloudinaryData.secure_url;
+              }
+            }
+          } catch (uploadErr) {
+            console.warn("Cloudinary upload failed, falling back to data URL:", uploadErr);
+          }
+        }
+        if (!photoUrl && previewImage) {
+          photoUrl = previewImage;
+        }
       } else if (data.photo && data.photo[0]) {
         const file = data.photo[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', UPLOAD_PRESET);
-        const response = await fetch(
-          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-          { method: 'POST', body: formData }
-        );
-        const cloudinaryData = await response.json();
-        photoUrl = cloudinaryData.secure_url;
+        if (CLOUD_NAME && UPLOAD_PRESET) {
+          try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', UPLOAD_PRESET);
+            const response = await fetch(
+              `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+              { method: 'POST', body: formData }
+            );
+            if (response.ok) {
+              const cloudinaryData = await response.json();
+              if (cloudinaryData.secure_url) {
+                photoUrl = cloudinaryData.secure_url;
+              }
+            }
+          } catch (uploadErr) {
+            console.warn("Cloudinary upload failed:", uploadErr);
+          }
+        }
+        if (!photoUrl && previewImage) {
+          photoUrl = previewImage;
+        }
+      } else if (previewImage) {
+        photoUrl = previewImage;
       }
 
       const employeeData = {
         id: empId,
-        name: data.name,
-        role: data.role,
-        department: data.department,
-        email: data.email,
-        phoneNumber: data.phoneNumber,
-        emergencyContact: data.emergencyContact,
-        dateOfJoining: data.dateOfJoining,
-        dateOfBirth: data.dateOfBirth,
+        name: data.name?.trim() || '',
+        role: data.role?.trim() || '',
+        department: data.department || '',
+        email: data.email?.trim() || '',
+        phoneNumber: data.phoneNumber?.trim() || '',
+        emergencyContact: data.emergencyContact?.trim() || '',
+        dateOfJoining: data.dateOfJoining || '',
+        dateOfBirth: data.dateOfBirth || '',
         employeeType: data.employeeType || 'Full-time',
-        bloodGroup: data.bloodGroup,
-        currentAddress: data.currentAddress,
-        permanentAddress: data.permanentAddress || data.currentAddress,
-        photoUrl: photoUrl,
+        bloodGroup: data.bloodGroup || '',
+        currentAddress: data.currentAddress?.trim() || '',
+        permanentAddress: data.permanentAddress?.trim() || data.currentAddress?.trim() || '',
+        photoUrl: photoUrl || '',
         createdAt: serverTimestamp()
       };
 
@@ -90,7 +118,7 @@ const Register = () => {
       setSuccess(true);
     } catch (error) {
       console.error("Error adding employee:", error);
-      showNotify('error', 'Registration Failed', 'Error submitting registration. Please try again.');
+      showNotify('error', 'Registration Failed', error?.message || 'Error submitting registration. Please try again.');
     } finally {
       setLoading(false);
     }
